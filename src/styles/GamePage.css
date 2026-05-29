@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: Georgia, serif;
+}
+
+.game-page {
+    width: 100%;
+    height: 100vh;
+
+    background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+    background-size: cover;
+    background-position: center;
+
+    position: relative;
+}
+
+.game-overlay {
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    position: relative;
+}
+
+/* TOP BAR */
+
+.top-bar {
+    width: 100%;
+
+    padding: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 15px;
+
+    background: rgba(25, 15, 10, 0.85);
+
+    border: 2px solid #8b6b3f;
+    border-radius: 14px;
+}
+
+.player-avatar {
+    width: 70px;
+    height: 70px;
+
+    border-radius: 50%;
+
+    background: #555;
+
+    border: 2px solid #d4af37;
+}
+
+.player-stats h2 {
+    color: #f3d9a4;
+
+    margin-bottom: 10px;
+}
+
+.health-bar,
+.mana-bar {
+    width: 220px;
+    height: 18px;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    margin-bottom: 8px;
+
+    background: #222;
+}
+
+.health-fill {
+    width: 80%;
+    height: 100%;
+
+    background: #b22222;
+}
+
+.mana-fill {
+    width: 60%;
+    height: 100%;
+
+    background: #4169e1;
+}
+
+/* HOTBAR */
+
+.hotbar {
+    position: absolute;
+
+    bottom: 30px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 12px;
+}
+
+.slot {
+    width: 70px;
+    height: 70px;
+
+    background: rgba(30, 20, 15, 0.9);
+
+    border: 2px solid #8b6b3f;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #f3d9a4;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.slot:hover {
+    transform: scale(1.05);
+
+    border-color: #d4af37;
+}
