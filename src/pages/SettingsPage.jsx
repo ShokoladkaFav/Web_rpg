@@ -30,7 +30,6 @@ function SettingsPage() {
                     <h1 className="settings-title">Settings</h1>
                     <p className="settings-subtitle">Configure your experience</p>
                 </header>
-
                 <div className="settings-panel">
                     <div className="setting-item">
                         <div className="setting-info">
@@ -46,7 +45,6 @@ function SettingsPage() {
                             className="modern-slider" 
                         />
                     </div>
-
                     <div className="setting-item">
                         <div className="setting-info">
                             <label>Sound Effects</label>
@@ -62,7 +60,6 @@ function SettingsPage() {
                         />
                     </div>
                 </div>
-
                 <button className="back-btn" onClick={() => navigate("/")}>
                     Back to Menu
                 </button>

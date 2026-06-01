@@ -83,6 +83,7 @@
     text-align: center;
 }
 
+/* Стилізація повзунка */
 .modern-slider {
     -webkit-appearance: none;
     width: 100%;
@@ -109,10 +110,11 @@
     background: #2563eb;
 }
 
+/* Кнопка назад */
 .back-btn {
     width: 100%;
     padding: 18px;
-    background-color: #09090b;
+    background-color: #09090b; /* Темна кнопка для акценту як у головному меню */
     color: #ffffff;
     border: none;
     border-radius: 16px;
