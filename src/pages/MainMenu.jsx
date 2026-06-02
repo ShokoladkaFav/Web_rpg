@@ -14,7 +14,7 @@ function MainMenu() {
                 </header>
 
                 <nav className="nav-menu">
-                    <button className="btn btn-primary" onClick={() => navigate("/game")}>
+                    <button className="btn btn-primary" onClick={() => navigate("/create")}>
                         Start Game
                     </button>
                     <button className="btn btn-secondary" onClick={() => navigate("/settings")}>

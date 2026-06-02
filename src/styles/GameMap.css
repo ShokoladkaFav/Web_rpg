@@ -1,0 +1,103 @@
+.map-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.map-window {
+    width: 85vw;
+    height: 75vh;
+    max-width: 1100px;
+    background: #ffffff;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.3);
+}
+
+.map-header {
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border-bottom: 1px solid #edf2f7;
+    z-index: 10;
+}
+
+.map-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.zoom-group {
+    display: flex;
+    align-items: center;
+    background: #f1f5f9;
+    border-radius: 12px;
+    padding: 2px;
+}
+
+.map-controls button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: 0.2s;
+}
+
+.map-controls button:hover {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.map-viewport {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a; /* Темний фон, якщо карта раптом не прогрузиться */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+}
+
+.map-image {
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: contain;
+    
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+
+    transition: transform 0.1s linear;
+    transform-origin: center center;
+}
+
+.map-footer {
+    padding: 10px;
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    background: #f8fafc;
+    border-top: 1px solid #edf2f7;
+}
+
+.close-map {
+    background: #fee2e2 !important;
+    color: #ef4444 !important;
+}
