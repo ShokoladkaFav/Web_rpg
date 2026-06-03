@@ -1,12 +1,19 @@
+/* Глобальне скидання для цієї сторінки */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .creation-page {
-    width: 100vw;
+    width: 100%; /* Замість 100vw, щоб не вилазило за межі */
     min-height: 100vh;
     background: #f1f5f9;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
+    padding: 40px 20px;
+    overflow-x: hidden; /* Захист від горизонтального скролу */
 }
 
 .creation-container {
@@ -14,8 +21,9 @@
     max-width: 500px;
     background: #ffffff;
     padding: 30px;
-    border-radius: 24px;
+    border-radius: 32px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
 }
 
 .creation-header {
@@ -29,8 +37,14 @@
     color: #1e293b;
 }
 
+.creation-header p {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-top: 5px;
+}
+
 .form-section {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .form-section label {
@@ -38,38 +52,42 @@
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 1px;
     color: #64748b;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .form-section input {
     width: 100%;
-    padding: 12px 15px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 12px;
     border: 2px solid #f1f5f9;
+    background: #f8fafc;
     font-size: 15px;
     outline: none;
+    transition: 0.2s;
+}
+
+.form-section input:focus {
+    border-color: #3b82f6;
+    background: #fff;
 }
 
 .icon-grid {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .icon-item {
-    width: 55px;
-    height: 55px;
-    border-radius: 12px;
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
     border: 2px solid #f1f5f9;
     cursor: pointer;
     overflow: hidden;
-    transition: 0.2s;
-}
-
-.icon-item.active {
-    border-color: #3b82f6;
-    transform: scale(1.1);
+    transition: all 0.2s ease;
 }
 
 .icon-item img {
@@ -78,17 +96,28 @@
     object-fit: cover;
 }
 
+.icon-item.active {
+    border-color: #3b82f6;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+}
+
 .traits-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .trait-card {
-    padding: 10px 15px;
-    border-radius: 12px;
+    padding: 12px 18px;
+    border-radius: 16px;
     border: 2px solid #f1f5f9;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.trait-card:hover {
+    border-color: #e2e8f0;
 }
 
 .trait-card.active {
@@ -99,37 +128,45 @@
 .trait-name {
     display: block;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 15px;
     color: #1e293b;
 }
 
 .trait-desc {
-    font-size: 11px;
+    font-size: 12px;
     color: #64748b;
 }
 
 .creation-footer {
     display: flex;
-    gap: 10px;
-    margin-top: 30px;
+    gap: 12px;
+    margin-top: 35px;
 }
 
 .btn-back {
     flex: 1;
-    padding: 14px;
-    border-radius: 12px;
+    padding: 16px;
+    border-radius: 14px;
     border: none;
     background: #f1f5f9;
+    color: #64748b;
+    font-weight: 600;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .btn-confirm {
     flex: 2;
-    padding: 14px;
-    border-radius: 12px;
+    padding: 16px;
+    border-radius: 14px;
     border: none;
     background: #0f172a;
     color: white;
     font-weight: 700;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-confirm:hover {
+    background: #3b82f6;
 }

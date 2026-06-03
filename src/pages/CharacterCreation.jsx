@@ -2,16 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/CharacterCreation.css";
 
-// Масив з назвами файлів іконок
-const iconNames = ["icon1.png", "icon2.png", "icon3.png"];
+const iconNames = ["icon1.png", "icon2.png", "icon3.png", "icon4.png", "icon5.png"];
 
 function CharacterCreation() {
     const navigate = useNavigate();
     const [nickname, setNickname] = useState("");
-    
-    // Створюємо повні шляхи до іконок
     const icons = iconNames.map(name => `/src/assets/player_icon/${name}`);
-    
     const [selectedIcon, setSelectedIcon] = useState(icons[0]);
     const [selectedTrait, setSelectedTrait] = useState(null);
 
@@ -24,12 +20,8 @@ function CharacterCreation() {
     ];
 
     const handleCreate = () => {
-        if (!nickname.trim()) {
-            alert("Будь ласка, введіть ім'я героя!");
-            return;
-        }
-        if (!selectedTrait) {
-            alert("Оберіть спеціалізацію!");
+        if (!nickname.trim() || !selectedTrait) {
+            alert("Заповніть всі поля!");
             return;
         }
 
@@ -38,8 +30,13 @@ function CharacterCreation() {
             icon: selectedIcon,
             trait: selectedTrait,
             level: 1,
+            xp: 0,         // Початковий досвід
+            maxXp: 100,    // Досвід до наступного рівня
             hp: 100,
-            mp: 100
+            mp: 100,
+            food: 100,
+            water: 100,
+            sleep: 100
         };
 
         localStorage.setItem("player_character", JSON.stringify(characterData));
@@ -51,62 +48,38 @@ function CharacterCreation() {
             <div className="creation-container">
                 <header className="creation-header">
                     <h1>Створення героя</h1>
-                    <p>Налаштуйте свого персонажа перед початком</p>
+                    <p>Налаштуйте параметри вашої пригоди</p>
                 </header>
-
                 <div className="creation-form">
                     <div className="form-section">
                         <label>Ім'я персонажа</label>
-                        <input 
-                            type="text" 
-                            placeholder="Наприклад: Ragnar..." 
-                            value={nickname}
-                            onChange={(e) => setNickname(e.target.value)}
-                            maxLength={15}
-                        />
+                        <input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} maxLength={15} placeholder="Нікнейм..."/>
                     </div>
-
                     <div className="form-section">
-                        <label>Зовнішність (Оберіть аватар)</label>
+                        <label>Аватар</label>
                         <div className="icon-grid">
-                            {icons.map((iconPath, index) => (
-                                <div 
-                                    key={index}
-                                    className={`icon-item ${selectedIcon === iconPath ? "active" : ""}`}
-                                    onClick={() => setSelectedIcon(iconPath)}
-                                >
-                                    <img 
-                                        src={iconPath} 
-                                        alt="Avatar" 
-                                        onError={(e) => {
-                                            e.target.src = "https://via.placeholder.com/64?text=Icon";
-                                        }} 
-                                    />
+                            {icons.map((icon, i) => (
+                                <div key={i} className={`icon-item ${selectedIcon === icon ? "active" : ""}`} onClick={() => setSelectedIcon(icon)}>
+                                    <img src={icon} alt="icon" onError={(e) => e.target.src = "https://via.placeholder.com/64"}/>
                                 </div>
                             ))}
                         </div>
                     </div>
-
                     <div className="form-section">
-                        <label>Спеціалізація</label>
+                        <label>Вміння</label>
                         <div className="traits-list">
-                            {traits.map((trait) => (
-                                <div 
-                                    key={trait.id}
-                                    className={`trait-card ${selectedTrait?.id === trait.id ? "active" : ""}`}
-                                    onClick={() => setSelectedTrait(trait)}
-                                >
-                                    <span className="trait-name">{trait.name}</span>
-                                    <span className="trait-desc">{trait.desc}</span>
+                            {traits.map(t => (
+                                <div key={t.id} className={`trait-card ${selectedTrait?.id === t.id ? "active" : ""}`} onClick={() => setSelectedTrait(t)}>
+                                    <span className="trait-name">{t.name}</span>
+                                    <span className="trait-desc">{t.desc}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
-
                 <footer className="creation-footer">
                     <button className="btn-back" onClick={() => navigate("/")}>Назад</button>
-                    <button className="btn-confirm" onClick={handleCreate}>Почати пригоду</button>
+                    <button className="btn-confirm" onClick={handleCreate}>Створити</button>
                 </footer>
             </div>
         </div>
