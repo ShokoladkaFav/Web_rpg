@@ -68,24 +68,74 @@
     flex: 1;
     position: relative;
     overflow: hidden;
-    background: #1a1a1a; /* Темний фон, якщо карта раптом не прогрузиться */
+    background: #1a1a1a;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: grab;
+}
+
+/* Новий контейнер вмісту */
+.map-content {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.1s linear;
+    transform-origin: center center;
 }
 
 .map-image {
+    display: block;
     min-width: 100%;
     min-height: 100%;
-    object-fit: contain;
-    
-    display: block;
     user-select: none;
     -webkit-user-drag: none;
+}
 
-    transition: transform 0.1s linear;
-    transform-origin: center center;
+/* Стилі маркера населеного пункту */
+.map-marker {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 100;
+}
+
+.marker-icon {
+    width: 36px;
+    height: 36px;
+    background: #ffffff;
+    border: 2px solid #3b82f6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.marker-label {
+    margin-top: 6px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.map-marker:hover .marker-icon {
+    transform: scale(1.2);
+    background: #3b82f6;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+.map-marker:hover .marker-label {
+    background: #3b82f6;
 }
 
 .map-footer {
@@ -100,4 +150,31 @@
 .close-map {
     background: #fee2e2 !important;
     color: #ef4444 !important;
+}
+
+.map-marker.player-here .marker-icon {
+    background: #3b82f6;
+    border-color: #ffffff;
+    color: #ffffff;
+    z-index: 101;
+}
+
+.map-marker.player-here .marker-label {
+    background: #3b82f6;
+}
+
+/* Ефект пульсації навколо гравця */
+.pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid #3b82f6;
+    animation: pulse 2s infinite;
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.5); opacity: 0; }
 }

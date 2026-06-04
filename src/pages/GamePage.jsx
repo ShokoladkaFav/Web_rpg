@@ -22,9 +22,18 @@ function GamePage() {
         }
     }, [navigate]);
 
+    const updateLocation = (newId, newName) => {
+        const updatedCharacter = { 
+            ...character, 
+            locationId: newId, 
+            locationName: newName 
+        };
+        setCharacter(updatedCharacter);
+        localStorage.setItem("player_character", JSON.stringify(updatedCharacter));
+    };
+
     if (!character) return null;
 
-    // Розрахунок відсотка XP
     const xpPercentage = (character.xp / character.maxXp) * 100;
 
     return (
@@ -39,7 +48,10 @@ function GamePage() {
                             <div className="player-meta">
                                 <h2 className="player-name">{character.nickname}</h2>
                                 <div className="level-xp-container">
-                                    <span className="player-level">Рівень {character.level}</span>
+                                    <div className="level-location-row">
+                                        <span className="player-level">Lvl. {character.level}</span>
+                                        <span className="player-location-tag">📍 {character.locationName}</span>
+                                    </div>
                                     <div className="mini-xp-bar">
                                         <div className="mini-xp-fill" style={{ width: `${xpPercentage}%` }}></div>
                                     </div>
@@ -66,7 +78,14 @@ function GamePage() {
                     {isLocationMenuOpen && <LocationMenu onClose={() => setIsLocationMenuOpen(false)} />}
                 </div>
 
-                {isMapOpen && <GameMap onClose={() => setIsMapOpen(false)} />}
+                {isMapOpen && (
+                    <GameMap 
+                        onClose={() => setIsMapOpen(false)} 
+                        playerLocationId={character.locationId}
+                        onSelectLocation={updateLocation} 
+                    />
+                )}
+                
                 {isStatsOpen && <PlayerStatsModal character={character} onClose={() => setIsStatsOpen(false)} />}
 
                 <div className="hotbar-container">

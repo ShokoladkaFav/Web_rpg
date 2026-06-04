@@ -30,13 +30,15 @@ function CharacterCreation() {
             icon: selectedIcon,
             trait: selectedTrait,
             level: 1,
-            xp: 0,         // Початковий досвід
-            maxXp: 100,    // Досвід до наступного рівня
+            xp: 0,
+            maxXp: 100,
             hp: 100,
             mp: 100,
             food: 100,
             water: 100,
-            sleep: 100
+            sleep: 100,
+            locationId: "start_village",
+            locationName: "Селище 'Початок'"
         };
 
         localStorage.setItem("player_character", JSON.stringify(characterData));

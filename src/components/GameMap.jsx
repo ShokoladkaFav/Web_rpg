@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import "../styles/GameMap.css";
 import mapImage from "../assets/map/map.png";
 
-function GameMap({ onClose }) {
+function GameMap({ onClose, playerLocationId, onSelectLocation }) {
     const [zoom, setZoom] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false);
@@ -11,18 +11,19 @@ function GameMap({ onClose }) {
     const viewportRef = useRef(null);
     const imgRef = useRef(null);
 
-    // Скидання позиції при зміні зуму, щоб уникнути багів з межами
+    const settlements = [
+        { id: "start_village", name: "Селище 'Початок'", x: 39, y: 56 },
+        { id: "village2", name: "Селище 'Прохідне'", x: 34, y: 60 },
+        { id: "capital", name: "Столиця 'Капітал'", x: 30.5, y: 66 }
+    ];
+
     useEffect(() => {
         setPosition({ x: 0, y: 0 });
     }, [zoom]);
 
     const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.5, 4));
-    const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.2, 1)); // Мінімум 1, щоб карта не була меншою за вікно
-
-    const handleReset = () => {
-        setZoom(1);
-        setPosition({ x: 0, y: 0 });
-    };
+    const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.2, 1));
+    const handleReset = () => { setZoom(1); setPosition({ x: 0, y: 0 }); };
 
     const onMouseDown = (e) => {
         setIsDragging(true);
@@ -31,30 +32,35 @@ function GameMap({ onClose }) {
 
     const onMouseMove = (e) => {
         if (!isDragging || !viewportRef.current || !imgRef.current) return;
-
         const vWidth = viewportRef.current.offsetWidth;
         const vHeight = viewportRef.current.offsetHeight;
-        
-        // Розміри картинки з урахуванням зуму
         const iWidth = imgRef.current.offsetWidth * zoom;
         const iHeight = imgRef.current.offsetHeight * zoom;
 
         let newX = e.clientX - startPos.x;
         let newY = e.clientY - startPos.y;
 
-        // ЛОГІКА ОБМЕЖЕННЯ (Clamping)
-        // Обчислюємо максимально допустиме зміщення в кожну сторону
         const maxX = Math.max(0, (iWidth - vWidth) / 2);
         const maxY = Math.max(0, (iHeight - vHeight) / 2);
 
-        // Затискаємо координати між -max та +max
         newX = Math.max(-maxX, Math.min(maxX, newX));
         newY = Math.max(-maxY, Math.min(maxY, newY));
-
         setPosition({ x: newX, y: newY });
     };
 
     const onMouseUp = () => setIsDragging(false);
+
+    const handleSettlementClick = (id, name) => {
+        if (id === playerLocationId) {
+            alert("Ви вже перебуваєте в цьому місці!");
+            return;
+        }
+        
+        if (window.confirm(`Вирушити до: ${name}?`)) {
+            onSelectLocation(id, name);
+            onClose();
+        }
+    };
 
     return (
         <div className="map-modal-overlay" onClick={onClose}>
@@ -80,21 +86,37 @@ function GameMap({ onClose }) {
                     onMouseUp={onMouseUp}
                     onMouseLeave={onMouseUp}
                 >
-                    <img 
-                        ref={imgRef}
-                        src={mapImage} 
-                        alt="Game Map" 
-                        className="map-image"
-                        draggable="false"
+                    <div 
+                        className="map-content"
                         style={{
                             transform: `translate(${position.x}px, ${position.y}px) scale(${zoom})`,
                             cursor: isDragging ? 'grabbing' : 'grab'
                         }}
-                    />
+                    >
+                        <img ref={imgRef} src={mapImage} alt="Map" className="map-image" draggable="false" />
+
+                        {settlements.map((s) => {
+                            const isPlayerHere = s.id === playerLocationId;
+                            return (
+                                <div 
+                                    key={s.id}
+                                    className={`map-marker ${isPlayerHere ? "player-here" : ""}`}
+                                    style={{ left: `${s.x}%`, top: `${s.y}%` }}
+                                    onClick={() => handleSettlementClick(s.id, s.name)}
+                                    onMouseDown={(e) => e.stopPropagation()}
+                                >
+                                    <div className="marker-icon">
+                                        {isPlayerHere ? "👤" : "🏰"}
+                                        {isPlayerHere && <div className="pulse-ring"></div>}
+                                    </div>
+                                    <span className="marker-label">
+                                        {isPlayerHere ? "Ви тут" : s.name}
+                                    </span>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
-                <footer className="map-footer">
-                    Межі карти обмежені розміром вікна
-                </footer>
             </div>
         </div>
     );

@@ -66,7 +66,7 @@
 
 .mini-xp-fill {
     height: 100%;
-    background: #eab308; /* Золотистий XP */
+    background: #eab308;
     border-radius: 10px;
 }
 
@@ -91,12 +91,11 @@
     transition: width 0.3s ease;
 }
 
-/* Оновлені кольори */
-.bar-fill.hp { background: #ef4444; }         /* Червоний */
-.bar-fill.mp { background: #1e40af; }         /* Темно-синій */
-.bar-fill.food { background: #7c2d12; }       /* Коричневий */
-.bar-fill.water { background: #60a5fa; }      /* Світло-синій */
-.bar-fill.sleep { background: #a855f7; }      /* Фіолетовий */
+.bar-fill.hp { background: #ef4444; }
+.bar-fill.mp { background: #1e40af; }
+.bar-fill.food { background: #7c2d12; }
+.bar-fill.water { background: #60a5fa; }
+.bar-fill.sleep { background: #a855f7; }
 
 .player-avatar {
     width: 60px;
@@ -167,3 +166,27 @@
 
 .slot:hover { border-color: #3b82f6; transform: translateY(-5px); }
 .slot-key { position: absolute; top: 4px; left: 6px; font-size: 9px; font-weight: 700; color: #94a3b8; }
+
+.level-location-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.player-location-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.mini-xp-bar {
+    width: 100%;
+    height: 4px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    margin-top: 4px;
+}
