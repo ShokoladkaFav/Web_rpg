@@ -16,17 +16,32 @@ function GamePage() {
     useEffect(() => {
         const savedData = localStorage.getItem("player_character");
         if (savedData) {
-            setCharacter(JSON.parse(savedData));
+            const parsedData = JSON.parse(savedData);
+            if (!parsedData.subLocationName) {
+                parsedData.subLocationName = "Центр";
+            }
+            setCharacter(parsedData);
         } else {
             navigate("/create");
         }
     }, [navigate]);
 
+    // Переміщення між містами
     const updateLocation = (newId, newName) => {
         const updatedCharacter = { 
             ...character, 
             locationId: newId, 
-            locationName: newName 
+            locationName: newName,
+            subLocationName: "Центр" 
+        };
+        setCharacter(updatedCharacter);
+        localStorage.setItem("player_character", JSON.stringify(updatedCharacter));
+    };
+
+    const updateSubLocation = (newSubName) => {
+        const updatedCharacter = { 
+            ...character, 
+            subLocationName: newSubName 
         };
         setCharacter(updatedCharacter);
         localStorage.setItem("player_character", JSON.stringify(updatedCharacter));
@@ -75,7 +90,14 @@ function GamePage() {
                         onMoveClick={() => { setIsLocationMenuOpen(!isLocationMenuOpen); setIsMapOpen(false); }}
                         isMoveOpen={isLocationMenuOpen}
                     />
-                    {isLocationMenuOpen && <LocationMenu onClose={() => setIsLocationMenuOpen(false)} />}
+                    
+                    {isLocationMenuOpen && (
+                        <LocationMenu 
+                            onClose={() => setIsLocationMenuOpen(false)} 
+                            currentLocationId={character.locationId}
+                            onSelectSubLocation={updateSubLocation}
+                        />
+                    )}
                 </div>
 
                 {isMapOpen && (
