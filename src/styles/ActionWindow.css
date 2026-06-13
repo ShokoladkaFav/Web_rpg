@@ -1,0 +1,86 @@
+.action-window-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(4px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1200;
+}
+
+.action-window {
+    width: 400px;
+    background: #ffffff;
+    border-radius: 32px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f1f5f9;
+    overflow: hidden;
+    animation: actionPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.action-header {
+    padding: 20px 25px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #f8fafc;
+}
+
+.action-loc-info {
+    display: flex; align-items: center; gap: 15px;
+}
+
+.loc-icon {
+    font-size: 24px; width: 45px; height: 45px;
+    background: #eff6ff; border-radius: 14px;
+    display: flex; justify-content: center; align-items: center;
+}
+
+.loc-name { font-size: 18px; font-weight: 800; color: #1e293b; margin: 0; }
+.loc-type { font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase; margin: 0; }
+
+.close-action-btn {
+    background: #f1f5f9; border: none; width: 28px; height: 28px;
+    border-radius: 50%; cursor: pointer; color: #94a3b8;
+}
+
+.action-body {
+    padding: 25px;
+    display: flex; flex-direction: column; gap: 20px;
+}
+
+.action-section label {
+    display: block; font-size: 11px; font-weight: 800;
+    text-transform: uppercase; color: #cbd5e1;
+    margin-bottom: 10px; letter-spacing: 0.5px;
+}
+
+.action-list {
+    display: flex; flex-direction: column; gap: 8px;
+}
+
+.action-item-btn {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px; background: #f8fafc;
+    border: 1px solid #f1f5f9; border-radius: 16px;
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    font-weight: 600; color: #475569;
+    cursor: pointer; transition: 0.2s; text-align: left;
+}
+
+.btn-icon { font-size: 18px; }
+
+.action-item-btn:hover {
+    background: #ffffff; border-color: #e2e8f0;
+    transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.action-item-btn.unique {
+    background: #eff6ff; border-color: #dbeafe; color: #1d4ed8;
+}
+
+.action-item-btn.unique:hover {
+    background: #3b82f6; color: #ffffff; border-color: #3b82f6;
+}
+
+@keyframes actionPop {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}

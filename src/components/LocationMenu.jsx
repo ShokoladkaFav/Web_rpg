@@ -1,6 +1,7 @@
 import "../styles/LocationMenu.css";
 
 function LocationMenu({ onClose, currentLocationId, onSelectSubLocation }) {
+    // База даних внутрішніх локацій для кожного поселення
     const settlementSubLocations = {
         "start_village": [
             { id: "forest", name: "Ліс", icon: "🌲" },
@@ -20,10 +21,13 @@ function LocationMenu({ onClose, currentLocationId, onSelectSubLocation }) {
         ]
     };
 
+    // Визначаємо список під-локацій для поточного місця перебування гравця
     const currentSubLocations = settlementSubLocations[currentLocationId] || [];
 
-    const handleSubLocationMove = (name) => {
-        onSelectSubLocation(name);
+    // Функція обробки вибору локації
+    const handleSubLocationMove = (loc) => {
+        // Передаємо весь об'єкт {id, name, icon} у GamePage
+        onSelectSubLocation(loc);
         onClose();
     };
 
@@ -41,7 +45,7 @@ function LocationMenu({ onClose, currentLocationId, onSelectSubLocation }) {
                             <button 
                                 key={loc.id} 
                                 className="sub-location-btn"
-                                onClick={() => handleSubLocationMove(loc.name)}
+                                onClick={() => handleSubLocationMove(loc)}
                             >
                                 <span className="sub-loc-icon">{loc.icon}</span>
                                 <span className="sub-loc-name">{loc.name}</span>
@@ -50,7 +54,7 @@ function LocationMenu({ onClose, currentLocationId, onSelectSubLocation }) {
                     </div>
                 ) : (
                     <div className="empty-locations">
-                        <p>Тут немає відомих місць</p>
+                        <p>Тут немає відомих місць для дослідження</p>
                     </div>
                 )}
             </div>
