@@ -38,7 +38,16 @@ function CharacterCreation() {
             water: 100,
             sleep: 100,
             locationId: "start_village",
-            locationName: "Селище 'Початок'"
+            locationName: "Селище 'Початок'",
+            // НОВЕ: Спорядження та Інвентар
+            equipment: {
+                head: null,
+                chest: null,
+                legs: null,
+                weapon: null,
+                shield: null
+            },
+            inventory: [] 
         };
 
         localStorage.setItem("player_character", JSON.stringify(characterData));

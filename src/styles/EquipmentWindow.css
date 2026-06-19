@@ -1,0 +1,150 @@
+.eq-menu-panel {
+    width: 320px;
+    background: #ffffff;
+    border-radius: 28px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f5f9;
+    overflow: hidden;
+    animation: slideInEq 0.3s ease-out;
+    margin-left: 20px; /* Відступ від BAR_Navigation */
+    display: flex;
+    flex-direction: column;
+}
+
+.eq-header {
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f8fafc;
+    background: #fdfdfd;
+}
+
+.eq-title-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.eq-icon {
+    font-size: 20px;
+    background: #fff7ed;
+    padding: 8px;
+    border-radius: 12px;
+}
+
+.eq-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+}
+
+.eq-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+}
+
+.eq-content {
+    padding: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.eq-section {
+    margin-bottom: 15px;
+}
+
+.sub-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+/* Список слотів спорядження */
+.eq-slots-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* В два стовпчики для економії місця */
+    gap: 10px;
+}
+
+.eq-slot-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafc;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+}
+
+.mini-slot-box {
+    width: 32px;
+    height: 32px;
+    background: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+.slot-placeholder { opacity: 0.3; filter: grayscale(1); }
+.mini-slot-label { font-size: 11px; font-weight: 600; color: #64748b; }
+
+.eq-divider {
+    height: 1px;
+    background: #f1f5f9;
+    margin: 15px 0;
+}
+
+/* Сітка інвентарю */
+.mini-inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.mini-inventory-slot {
+    aspect-ratio: 1/1;
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.mini-inventory-slot:hover {
+    border-color: #3b82f6;
+    background: #ffffff;
+}
+
+@keyframes slideInEq {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Стиль для кнопки закриття (як у інших меню) */
+.close-small-btn {
+    background: #f1f5f9;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
