@@ -103,7 +103,17 @@ function GamePage() {
                     />
                     
                     {isLocationMenuOpen && <LocationMenu onClose={() => setIsLocationMenuOpen(false)} currentLocationId={character.locationId} onSelectSubLocation={handleSelectSubLocation} />}
-                    {isSettlementMenuOpen && <SettlementMenu onClose={() => setIsSettlementMenuOpen(false)} settlementName={character.locationName} />}
+                    {isSettlementMenuOpen && (
+                        <SettlementMenu 
+                            onClose={() => setIsSettlementMenuOpen(false)} 
+                            settlementName={character.locationName} 
+                            character={character}
+                            onUpdateCharacter={(updated) => {
+                                setCharacter(updated);
+                                localStorage.setItem("player_character", JSON.stringify(updated));
+                            }}
+                        />
+                    )}
                     {isEquipmentOpen && <EquipmentWindow character={character} onClose={() => setIsEquipmentOpen(false)} />}
                 </div>
 
