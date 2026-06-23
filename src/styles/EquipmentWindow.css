@@ -1,40 +1,188 @@
-.eq-menu-panel {
-    width: 320px;
+/* Загальний контейнер нашого модального вікна, аналогічно до ActionWindow */
+.eq-modal-window {
+    width: 860px;
+    max-width: 95vw;
+    height: 560px;
+    display: flex;
+    flex-direction: column;
     background: #ffffff;
-    border-radius: 28px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-    border: 1px solid #f1f5f9;
+    border-radius: 36px;
     overflow: hidden;
-    animation: slideInEq 0.3s ease-out;
-    margin-left: 20px; /* Відступ від BAR_Navigation */
+    box-shadow: 0 40px 100px rgba(15, 23, 42, 0.25);
+    border: 1px solid rgba(241, 245, 249, 0.8);
+}
+
+/* Ліва колонка: Характеристики, екіпірування */
+.eq-character-col {
+    flex: 1.1;
+    width: 50%;
+    padding: 24px;
+    overflow-y: auto;
+    border-right: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background: #ffffff;
+}
+
+/* Права колонка: Рюкзак (тепер повністю біла/світла) */
+.eq-inventory-col {
+    flex: 1;
+    width: 50%;
+    background: #f8fafc; /* Легкий світлий фон */
+    border-left: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Картка персонажа */
+.eq-character-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.eq-char-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.eq-char-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    object-fit: cover;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    padding: 4px;
+}
+
+.eq-char-name-box {
     display: flex;
     flex-direction: column;
 }
 
-.eq-header {
-    padding: 18px 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #f8fafc;
-    background: #fdfdfd;
+.eq-char-nickname {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
 }
 
-.eq-title-box {
+.eq-char-level {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+/* Статистика гравця */
+.eq-stats-mini-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.eq-stat-row-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 700;
+    gap: 10px;
+}
+
+.eq-stat-lbl {
+    color: #475569;
+    min-width: 75px;
+}
+
+.eq-bar-outer {
+    flex-grow: 1;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+}
+
+.eq-bar-inner {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.3s ease;
+}
+
+.eq-bar-inner.hp { background: #ef4444; }
+.eq-bar-inner.mp { background: #3b82f6; }
+.eq-bar-inner.food { background: #f97316; }
+.eq-bar-inner.water { background: #06b6d4; }
+.eq-bar-inner.sleep { background: #8b5cf6; }
+
+.eq-stat-val {
+    color: #1e293b;
+    font-family: monospace;
+    font-size: 11px;
+    text-align: right;
+    min-width: 45px;
+}
+
+/* Секція сучасного екіпірування */
+.eq-slots-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.eq-slots-grid-modern {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.eq-slot-card-modern {
     display: flex;
     align-items: center;
     gap: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 10px 14px;
+    border-radius: 16px;
+    transition: all 0.2s ease;
 }
 
-.eq-icon {
-    font-size: 20px;
-    background: #fff7ed;
-    padding: 8px;
-    border-radius: 12px;
+.eq-slot-card-modern:hover {
+    border-color: #cbd5e1;
+    background: #f1f5f9;
 }
 
-.eq-label {
-    display: block;
+.mini-slot-box-modern {
+    width: 38px;
+    height: 38px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    overflow: hidden;
+}
+
+.slot-placeholder-modern {
+    opacity: 0.35;
+    filter: grayscale(1);
+}
+
+.eq-slot-label-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.eq-slot-lbl-type {
     font-size: 10px;
     font-weight: 800;
     text-transform: uppercase;
@@ -42,109 +190,267 @@
     letter-spacing: 0.5px;
 }
 
-.eq-name {
-    font-size: 15px;
+.eq-slot-lbl-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #334155;
+}
+
+/* Заголовок інвентаря */
+.eq-inventory-header {
+    padding: 16px 24px;
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1e293b;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.eq-inventory-title {
+    color: #1e293b;
+}
+
+.inventory-indicator {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.08);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+}
+
+.eq-inventory-container-scroll {
+    flex-grow: 1;
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Сітка інвентарю */
+.mini-inventory-grid-modern {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.mini-inventory-slot-modern {
+    aspect-ratio: 1/1;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+}
+
+.mini-inventory-slot-modern:hover {
+    transform: translateY(-2px);
+    background: #ffffff;
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.mini-inventory-slot-modern.selected {
+    border-color: #3b82f6 !important;
+    background: #eff6ff !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Раритетність предметів (бордери) */
+.mini-inventory-slot-modern.rarity-uncommon {
+    border-color: #bbf7d0;
+    background: #f0fdf4;
+}
+.mini-inventory-slot-modern.rarity-uncommon:hover {
+    border-color: #4ade80;
+}
+
+.mini-inventory-slot-modern.rarity-rare {
+    border-color: #bfdbfe;
+    background: #eff6ff;
+}
+.mini-inventory-slot-modern.rarity-rare:hover {
+    border-color: #60a5fa;
+}
+
+.mini-inventory-slot-modern.rarity-epic {
+    border-color: #e9d5ff;
+    background: #faf5ff;
+}
+.mini-inventory-slot-modern.rarity-epic:hover {
+    border-color: #c084fc;
+}
+
+/* Детальна інформаційна панель обраного предмету (Сучасна світла) */
+.item-details-panel-modern {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 24px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: detailsFadeInModern 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.details-header-modern {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.details-icon-modern {
+    width: 46px;
+    height: 46px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.details-meta-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.details-name-modern {
+    font-size: 14px;
     font-weight: 800;
     color: #1e293b;
     margin: 0;
 }
 
-.eq-content {
-    padding: 20px;
-    max-height: 500px;
-    overflow-y: auto;
+.details-rarity-badge-modern {
+    align-self: flex-start;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 6px;
+    text-transform: uppercase;
 }
 
-.eq-section {
-    margin-bottom: 15px;
+.details-description-modern {
+    font-size: 11px;
+    line-height: 1.6;
+    color: #64748b;
+    margin: 0;
+    font-style: italic;
 }
 
-.sub-label {
-    display: block;
+.details-footer-modern {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details-price-modern {
     font-size: 11px;
     font-weight: 700;
-    color: #cbd5e1;
-    text-transform: uppercase;
-    margin-bottom: 12px;
+    color: #1e293b;
 }
 
-/* Список слотів спорядження */
-.eq-slots-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* В два стовпчики для економії місця */
-    gap: 10px;
-}
-
-.eq-slot-row {
+.details-actions-modern {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #f8fafc;
-    padding: 6px;
-    border-radius: 12px;
-    border: 1px solid #f1f5f9;
-}
-
-.mini-slot-box {
-    width: 32px;
-    height: 32px;
-    background: #ffffff;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-}
-
-.slot-placeholder { opacity: 0.3; filter: grayscale(1); }
-.mini-slot-label { font-size: 11px; font-weight: 600; color: #64748b; }
-
-.eq-divider {
-    height: 1px;
-    background: #f1f5f9;
-    margin: 15px 0;
-}
-
-/* Сітка інвентарю */
-.mini-inventory-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
 }
 
-.mini-inventory-slot {
-    aspect-ratio: 1/1;
-    background: #f8fafc;
-    border: 1px solid #f1f5f9;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
+.btn-use-modern, .btn-discard-modern {
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 12px;
     cursor: pointer;
-    transition: 0.2s;
-}
-
-.mini-inventory-slot:hover {
-    border-color: #3b82f6;
-    background: #ffffff;
-}
-
-@keyframes slideInEq {
-    from { opacity: 0; transform: translateX(-15px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-/* Стиль для кнопки закриття (як у інших меню) */
-.close-small-btn {
-    background: #f1f5f9;
     border: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-    color: #64748b;
+    transition: all 0.2s;
+}
+
+.btn-use-modern {
+    background: #10b981;
+    color: #ffffff;
+}
+
+.btn-use-modern:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+.btn-discard-modern {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.btn-discard-modern:hover {
+    background: #fca5a5;
+    color: #b91c1c;
+    transform: translateY(-1px);
+}
+
+/* Плейсхолдер при пустому виборі */
+.item-details-placeholder-modern {
+    padding: 24px;
+    border: 1.5px dashed #cbd5e1;
+    border-radius: 24px;
+    text-align: center;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    color: #94a3b8;
+}
+
+.placeholder-icon-eq {
+    font-size: 28px;
+    opacity: 0.5;
+}
+
+.item-details-placeholder-modern p {
+    font-size: 11px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 220px;
+}
+
+/* Спеціальні зображення та анімації */
+.eq-slot-img, .inventory-item-img, .details-item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+}
+
+.mini-inventory-slot-modern:hover .inventory-item-img {
+    transform: scale(1.1);
+}
+
+.item-emoji-fallback {
+    display: inline-block;
+    line-height: 1;
+    transform: scale(1);
+    transition: transform 0.2s ease;
+}
+
+.mini-inventory-slot-modern:hover .item-emoji-fallback {
+    transform: scale(1.1);
+}
+
+@keyframes detailsFadeInModern {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

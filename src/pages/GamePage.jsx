@@ -114,12 +114,32 @@ function GamePage() {
                             }}
                         />
                     )}
-                    {isEquipmentOpen && <EquipmentWindow character={character} onClose={() => setIsEquipmentOpen(false)} />}
                 </div>
+
+                {isEquipmentOpen && (
+                    <EquipmentWindow 
+                        character={character} 
+                        onClose={() => setIsEquipmentOpen(false)} 
+                        onUpdateCharacter={(updated) => {
+                            setCharacter(updated);
+                            localStorage.setItem("player_character", JSON.stringify(updated));
+                        }}
+                    />
+                )}
 
                 {isMapOpen && <GameMap onClose={() => setIsMapOpen(false)} playerLocationId={character.locationId} onSelectLocation={updateLocation} />}
                 {isStatsOpen && <PlayerStatsModal character={character} onClose={() => setIsStatsOpen(false)} />}
-                {isActionWindowOpen && <ActionWindow subLocation={activeSubLocation} onClose={() => setIsActionWindowOpen(false)} />}
+                {isActionWindowOpen && (
+                    <ActionWindow 
+                        subLocation={activeSubLocation} 
+                        onClose={() => setIsActionWindowOpen(false)} 
+                        character={character}
+                        onUpdateCharacter={(updated) => {
+                            setCharacter(updated);
+                            localStorage.setItem("player_character", JSON.stringify(updated));
+                        }}
+                    />
+                )}
             </div>
         </div>
     );
