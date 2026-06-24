@@ -12,9 +12,29 @@ function GameMap({ onClose, playerLocationId, onSelectLocation }) {
     const imgRef = useRef(null);
 
     const settlements = [
-        { id: "start_village", name: "Селище 'Початок'", x: 39, y: 56 },
-        { id: "village2", name: "Селище 'Прохідне'", x: 34, y: 60 },
-        { id: "capital", name: "Столиця 'Капітал'", x: 30.5, y: 66 }
+        { id: "start_village", name: "Селище 'Дьювотер'", x: 39, y: 56 },
+        { id: "village2", name: "Слітденн", x: 34, y: 60 },
+        { id: "capital", name: "Столиця 'Емберхолд'", x: 30.5, y: 66 },
+        { id: "village3", name: "Мітгейт", x: 33, y: 90 },
+        { id: "village4", name: "Бран", x: 24.5, y: 66 },
+        { id: "village5", name: "Доункрест", x: 20, y: 74 },
+        { id: "village6", name: "Стілмедоу", x: 19, y: 55 },
+        { id: "village7", name: "Елдерхенд", x: 12, y: 61 },
+        { id: "village8", name: "Шіммерспайр", x: 19, y: 55 },
+        { id: "village9", name: "Руїни старої фортеці", x: 6, y: 58 },
+        { id: "village10", name: "Фарвінд", x: 8, y: 48 },
+        { id: "village11", name: "Мідспайр", x: 17.5, y: 38 },
+        { id: "village12", name: "Велике Дерево", x: 19.7, y: 34 },
+        { id: "village13", name: "Бріджмаут", x: 39, y: 37 },
+        { id: "village14", name: "Фолфорд", x: 55.5, y: 41.5 },
+        { id: "village15", name: "Мадвінд", x: 91.5, y: 39.5 },
+        { id: "village16", name: "Фортеця дворфів", x: 77.7, y: 53 },
+        { id: "village17", name: "Шіммерглен", x: 59.5, y: 58 },
+        { id: "village18", name: "Віндхем", x: 55, y: 74.5 },
+        { id: "village19", name: "Шрауд'ярд", x: 68.5, y: 64.6 },
+        { id: "village20", name: "Рейвенхоллоу", x: 76.8, y: 69 },
+        { id: "village21", name: "Амбервік", x: 89.4, y: 69 },
+        { id: "village22", name: "Мадфрост", x: 74.5, y: 39 },
     ];
 
     useEffect(() => {
