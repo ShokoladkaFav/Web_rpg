@@ -44,6 +44,114 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
         "abvol_rock": [
             { id: "rock_plants", name: "Пошук корисних скелястих рослин", icon: "🌵" },
             { id: "flying_monsters", name: "Пошук літаючих монстрів", icon: "🦅" }
+        ],
+        // Слітденн (village1)
+        "carrow_plain": [
+            { id: "carrow_herbs", name: "Пошук корисних рослин рівнин", icon: "🌱" },
+            { id: "carrow_monsters", name: "Пошук монстрів на рівнині", icon: "⚔️" }
+        ],
+        "dead_plain": [
+            { id: "dead_plain_undead", name: "Битва із нежиттю", icon: "💀" }
+        ],
+        "forest_outskirts": [
+            { id: "forest_outskirts_herbs", name: "Пошук лісних корисних рослин", icon: "🌱" },
+            { id: "forest_outskirts_mysteries", name: "Пошук лісних цікавинок", icon: "🔍" }
+        ],
+        // Столиця 'Емберхолд' (capital)
+        "wild_lands": [
+            { id: "wild_lands_search", name: "Пошук корисних речей диких земель", icon: "🎒" }
+        ],
+        "slums": [
+            { id: "slums_fight", name: "Поєдинок із людиною із нетрів", icon: "🥊" },
+            { id: "slums_search", name: "Пошук в нетрях", icon: "🔍" }
+        ],
+        // Мітгейт (town_1)
+        "silver_forest": [
+            { id: "silver_forest_herbs", name: "Пошук корисних рослин \"Срібного лісу\"", icon: "🌱" },
+            { id: "silver_forest_monsters", name: "Пошук лісних монстрів", icon: "⚔️" }
+        ],
+        "sea_bay": [
+            { id: "sea_bay_monsters", name: "Пошук морських монстрів", icon: "🐉" }
+        ],
+        "outskirts": [
+            { id: "outskirts_dungeon", name: "Зайти в підземелля", icon: "🕳️" }
+        ],
+        "old_settlement_ruins": [
+            { id: "old_settlement_ruins_dungeon", name: "Зайти в підземелля", icon: "🕳️" }
+        ],
+        // Бран (desert_village1)
+        "desert_land": [
+            { id: "desert_land_herbs", name: "Пошук пустельних корисних рослин", icon: "🌱" }
+        ],
+        "wasteland": [
+            { id: "wasteland_search", name: "Пошук в пустці", icon: "🔍" },
+            { id: "wasteland_gems", name: "Пошук корисних речей пустки", icon: "💎" }
+        ],
+        "desert_ruins": [
+            { id: "desert_ruins_dungeon", name: "Зайти в підземелля", icon: "🕳️" }
+        ],
+        // Доункрест (desert_village2)
+        "old_settlements_ruins": [
+            { id: "old_settlements_ruins_search", name: "Дослідити руїни", icon: "🔍" }
+        ],
+        "oasis": [
+            { id: "oasis_herbs", name: "Пошук корисних рослин оазиса", icon: "🌱" }
+        ],
+        "old_volcano": [
+            { id: "old_volcano_search", name: "Пошук корисних речей біля вулкана", icon: "🎒" }
+        ],
+        // Шіммерспайр (desert_village5)
+        "desert_rocks": [
+            { id: "desert_rocks_fruits", name: "Пошук пустельних плодів", icon: "🌵" }
+        ],
+        "desert_gorge": [
+            { id: "desert_gorge_search", name: "Пошук корисних речей в пустельній ущелині", icon: "🎒" }
+        ],
+        // Елдерхенд (desert_village4)
+        "desert_wasteland": [
+            { id: "desert_wasteland_search", name: "Пошук корисних речей пустки", icon: "🎒" }
+        ],
+        // Руїни старої фортеці (desert_destroy)
+        "small_sea_bay": [
+            { id: "small_sea_bay_search", name: "Пошук корисних речей малої морської бухти", icon: "🎒" }
+        ],
+        "desert_lands": [
+            { id: "desert_lands_search", name: "Пошук чогось в пустелі", icon: "🔍" },
+            { id: "desert_lands_bandits", name: "Пошук пустельних бандитів", icon: "⛺" }
+        ],
+        // Фарвінд (desert_town)
+        "desert_sea_forest": [
+            { id: "desert_sea_forest_monsters", name: "Пошук пустельних монстрів", icon: "👾" }
+        ],
+        "grand_bay": [
+            { id: "grand_bay_search", name: "Пошук корисних морських речей", icon: "⚓" }
+        ],
+        "forest_plateau": [
+            { id: "forest_plateau_search", name: "Пошук лісних речей", icon: "🎒" }
+        ],
+        // Мідспайр (town_2)
+        "deep_old_forest": [
+            { id: "deep_old_forest_herbs", name: "Пошук корисних рослин старого лісу", icon: "🌱" }
+        ],
+        "old_forest_outskirts": [
+            { id: "old_forest_outskirts_monsters", name: "Пошук сильних лісних монстрів", icon: "👹" }
+        ],
+        "ancient_lands_journey": [
+            { id: "ancient_lands_expedition", name: "ЕКСПЕДИЦІЯ (ДОДАМО ПІЗНІШЕ)", icon: "🗺️" }
+        ],
+        "forest_city_dungeon": [
+            { id: "forest_city_dungeon_enter", name: "Зайти в підземелля (ПІДЗЕМЕЛЛЯ ДОДАМО ПІЗНІШЕ)", icon: "🕳️" }
+        ],
+        // Велике Дерево (elf_capital)
+        "sea_territory_old_forest": [
+            { id: "sea_territory_old_forest_monsters", name: "Пошук сильних морських монстрів", icon: "🐉" }
+        ],
+        // Бріджмаут (port_town_1)
+        "lake_bay": [
+            { id: "lake_bay_search", name: "Пошук морських корисних речей", icon: "🌊" }
+        ],
+        "sea_ruins": [
+            { id: "sea_ruins_enter", name: "Зайти в підземелля (ДОДАМО ПІЗНІШЕ)", icon: "🕳️" }
         ]
     };
 
@@ -53,7 +161,14 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
     const herbDropsByAction = {
         "forest_plants": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
         "water_plants": ["pink_crested_lily", "seaweed", "sea_herb", "mint"],
-        "rock_plants": ["golden_flower", "rozrovochky", "hermit_herb", "spicy_herb"]
+        "rock_plants": ["golden_flower", "rozrovochky", "hermit_herb", "spicy_herb"],
+        "carrow_herbs": ["golden_flower", "mint", "birds_herb", "gribiscus"],
+        "forest_outskirts_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
+        "silver_forest_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
+        "desert_land_herbs": ["spicy_herb", "rozrovochky", "hermit_herb"],
+        "oasis_herbs": ["mint", "pink_crested_lily", "seaweed"],
+        "desert_rocks_fruits": ["rozrovochky", "spicy_herb", "hermit_herb"],
+        "deep_old_forest_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"]
     };
 
     // Зважений вибір трави на основі рідкості
@@ -92,7 +207,7 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
         const inventory = Array.isArray(character.inventory) ? character.inventory : [];
 
         // Перевірка на заповненість інвентарю для пошуку трав
-        const isGatheringAction = ["forest_plants", "water_plants", "rock_plants"].includes(actionId);
+        const isGatheringAction = Object.keys(herbDropsByAction).includes(actionId);
         if (isGatheringAction && inventory.length >= 12) {
             addLog({
                 type: "error",
@@ -172,6 +287,261 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
                 xpGained = 5;
                 logText = "⛏️ Ви оглянули скелясті тріщини та суху траву, але корисних ресурсів не виявлено.";
             }
+        }
+        else if (actionId === "carrow_monsters") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 22 : 8;
+            logText = success 
+                ? "⚔️ Битва на Рівнині Карроу! Ви успішно вистежили та здолали степового вовка." 
+                : "⚔️ Ви обійшли всю Рівнину Карроу, але не зустріли жодних небезпечних істот.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "dead_plain_undead") {
+            const success = Math.random() < 0.75;
+            xpGained = success ? 26 : 10;
+            logText = success 
+                ? "💀 Ви зустріли блукаючого кістяка на Рівнині мерців та вщент розбили його!" 
+                : "💀 Могильна тиша огортає Рівнину мерців, ворогів наразі не виявлено.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "forest_outskirts_mysteries") {
+            const success = Math.random() < 0.50;
+            xpGained = success ? 18 : 6;
+            logText = success 
+                ? "🔍 Досліджуючи околиці лісу, ви знайшли стару покинуту схованку мандрівника." 
+                : "🔍 Околиці лісу виявилися спокійними, нічого дивного не помічено.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "wild_lands_search") {
+            const success = Math.random() < 0.60;
+            xpGained = success ? 20 : 8;
+            if (success && Math.random() < 0.50) {
+                const allHerbs = items["Alchemical-Herbs"].map(h => h.id);
+                foundItem = getWeightedHerb(allHerbs);
+                if (foundItem) {
+                    logText = `🎒 Ви знайшли цінні речі колишніх експедицій у Диких землях, серед яких була: "${foundItem.name}"!`;
+                    logType = "loot";
+                } else {
+                    logText = "🎒 Ви знайшли цінні залишки колишніх експедицій у Диких землях.";
+                    logType = "success";
+                }
+            } else {
+                logText = success 
+                    ? "🎒 Ви знайшли цінні залишки колишніх експедицій у Диких землях." 
+                    : "🎒 Дикі землі нещадні й пусті, ви знайшли лише пісок та гілки.";
+                logType = success ? "success" : "info";
+            }
+        }
+        else if (actionId === "slums_fight") {
+            const success = Math.random() < 0.65;
+            xpGained = success ? 24 : 12;
+            logText = success 
+                ? "🥊 Перемога у важкому кулачному двобої із зухвалим мешканцем нетрів!" 
+                : "🥊 Противник виявився спритнішим та наніс вам кілька синців, перш ніж ви відступили.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "slums_search") {
+            const success = Math.random() < 0.55;
+            xpGained = success ? 16 : 6;
+            if (success && Math.random() < 0.40) {
+                const allHerbs = items["Alchemical-Herbs"].map(h => h.id);
+                foundItem = getWeightedHerb(allHerbs);
+                if (foundItem) {
+                    logText = `🔍 Порпаючись у темних закутках нетрів, ви знайшли дещо цінне: "${foundItem.name}"!`;
+                    logType = "loot";
+                } else {
+                    logText = "🔍 Порпаючись у темних закутках нетрів, ви знайшли старий гаманець із мідними монетами.";
+                    logType = "success";
+                }
+            } else {
+                logText = success 
+                    ? "🔍 Порпаючись у темних закутках нетрів, ви знайшли старий гаманець із мідними монетами." 
+                    : "🔍 Брудні вулиці нетрів виявилися порожніми.";
+                logType = success ? "success" : "info";
+            }
+        }
+        else if (actionId === "silver_forest_monsters") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 24 : 10;
+            logText = success 
+                ? "⚔️ У Срібному лісі ви успішно здолали рідкісного срібнокликого вовка!" 
+                : "⚔️ Срібний ліс здавався затишним і спокійним, жодних монстрів.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "sea_bay_monsters") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 24 : 10;
+            logText = success 
+                ? "🐉 Ви зустріли та перемогли агресивного річкового ящера у морській бухті!" 
+                : "🐉 Хвилі б'ються об каміння, жодних ознак морських монстрів.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "outskirts_dungeon" || actionId === "old_settlement_ruins_dungeon" || actionId === "desert_ruins_dungeon") {
+            const success = Math.random() < 0.60;
+            xpGained = success ? 25 : 10;
+            logText = success 
+                ? "🕳️ Ви спустилися у темне вологе підземелля та вивчили його верхній ярус!" 
+                : "🕳️ Спуск виявився заблокований завалом, вам не вдалося пробратися глибше.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "wasteland_search") {
+            const success = Math.random() < 0.50;
+            xpGained = success ? 18 : 6;
+            if (success && Math.random() < 0.50) {
+                const allowed = ["spicy_herb", "hermit_herb"];
+                foundItem = getWeightedHerb(allowed);
+                if (foundItem) {
+                    logText = `🔍 Дослідивши пустку, ви натрапили на живучу рослину: "${foundItem.name}"!`;
+                    logType = "loot";
+                } else {
+                    logText = "🔍 Спека та пил — це все, що вдалося знайти у цій безкрайній пустці.";
+                    logType = "info";
+                }
+            } else {
+                logText = success 
+                    ? "🔍 Дослідивши пустку, ви знайшли стару флягу з водою мандрівника." 
+                    : "🔍 Спека та пил — це все, що вдалося знайти у цій безкрайній пустці.";
+                logType = success ? "success" : "info";
+            }
+        }
+        else if (actionId === "wasteland_gems") {
+            const success = Math.random() < 0.40;
+            xpGained = success ? 22 : 8;
+            logText = success 
+                ? "💎 Серед гарячих скель пустки ви відшукали блискучий кристалічний уламок!" 
+                : "💎 Лише розпечене каміння виблискує під пекучим сонцем.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "old_settlements_ruins_search") {
+            const success = Math.random() < 0.60;
+            xpGained = success ? 20 : 8;
+            logText = success 
+                ? "🔍 Ви детально дослідили напівзруйновані древні споруди та дізналися більше про минуле." 
+                : "🔍 Стіни руїн надто нестабільні для проведення безпечних досліджень.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "old_volcano_search") {
+            const success = Math.random() < 0.50;
+            xpGained = success ? 20 : 8;
+            logText = success 
+                ? "🎒 Біля підніжжя старого вулкана ви виявили рідкісні обсидіанові відкладення." 
+                : "🎒 Тільки гаряча сірка та хмари попелу здіймаються в повітря біля вулкана.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "desert_gorge_search") {
+            const success = Math.random() < 0.50;
+            xpGained = success ? 20 : 8;
+            logText = success 
+                ? "🎒 Ви обережно спустилися в пустельну ущелину та знайшли прохолодне джерело води." 
+                : "🎒 Ущелина занадто крута і слизька для детального обстеження.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "desert_wasteland_search") {
+            const success = Math.random() < 0.50;
+            xpGained = success ? 18 : 6;
+            logText = success 
+                ? "🎒 Ви перетнули небезпечну ділянку пустельної пустки та підібрали стару амфору." 
+                : "🎒 ...Пустеля безжальна — гарячий вітер швидко виснажує ваші сили.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "small_sea_bay_search") {
+            const success = Math.random() < 0.50;
+            xpGained = success ? 18 : 6;
+            logText = success 
+                ? "🎒 На березі малої бухти ви знайшли викинуту штормом скриньку з матеріалами." 
+                : "🎒 Тільки солона морська піна та порожні мушлі лежать на березі.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "desert_lands_search") {
+            const success = Math.random() < 0.50;
+            xpGained = success ? 16 : 6;
+            logText = success 
+                ? "🔍 Ви помітили дивні знаки на піску пустелі, що вказують на давнє сховище." 
+                : "🔍 Вітер за мить замітає будь-які помічені сліди серед дюн.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "desert_lands_bandits") {
+            const success = Math.random() < 0.65;
+            xpGained = success ? 25 : 10;
+            logText = success 
+                ? "⛺ Ви вистежили та успішно розігнали невеликий табір пустельних бандитів!" 
+                : "⛺ Сліди розбійників загубилися серед безмежних гарячих пісків.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "desert_sea_forest_monsters") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 24 : 10;
+            logText = success 
+                ? "👾 Ви здолали отруйного шипохвоста у пустельно-морському лісі!" 
+                : "👾 Сухий ліс здається абсолютно мертвим і нерухомим.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "grand_bay_search") {
+            const success = Math.random() < 0.55;
+            xpGained = success ? 20 : 8;
+            logText = success 
+                ? "⚓ Серед уламків старого корабля у Великій бухті ви знайшли корисний якірний ланцюг." 
+                : "⚓ Морська вода надто глибока та каламутна для успішного пошуку.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "forest_plateau_search") {
+            const success = Math.random() < 0.50;
+            xpGained = success ? 18 : 6;
+            logText = success 
+                ? "🎒 На високогірному лісному плато ви знайшли гніздо рідкісного грифа та цінні пір'їни." 
+                : "🎒 Плато затягнуло густим туманом, що унеможливило будь-які пошуки.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "old_forest_outskirts_monsters") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 28 : 12;
+            logText = success 
+                ? "👹 Битва з лісовим тролем на околицях старого лісу завершилися вашою впевненою перемогою!" 
+                : "👹 Ви чули страшні звуки у гущавині, але вирішили не ризикувати та обійти небезпеку.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "ancient_lands_expedition") {
+            xpGained = 15;
+            logText = "🗺️ ЕКСПЕДИЦІЯ (ДОДАМО ПІЗНІШЕ) - Ви провели ретельну розвідку кордонів стародавніх земель.";
+            logType = "info";
+        }
+        else if (actionId === "forest_city_dungeon_enter") {
+            xpGained = 15;
+            logText = "🕳️ Зайти в підземелля (ПІДЗЕМЕЛЛЯ ДОДАМО ПІЗНІШЕ) - Сходи надійно запечатані магією.";
+            logType = "info";
+        }
+        else if (actionId === "sea_territory_old_forest_monsters") {
+            const success = Math.random() < 0.65;
+            xpGained = success ? 30 : 12;
+            logText = success 
+                ? "🐉 Битва з велетенським кракеном у морі старого лісу принесла вам велику славу!" 
+                : "🐉 На морі піднявся потужний шторм, завадивши вашому полюванню.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "lake_bay_search") {
+            const success = Math.random() < 0.50;
+            xpGained = success ? 18 : 6;
+            if (success && Math.random() < 0.40) {
+                const allowed = ["seaweed", "sea_herb", "pink_crested_lily"];
+                foundItem = getWeightedHerb(allowed);
+                if (foundItem) {
+                    logText = `🌊 Ви виловили кілька блискучих перлин та чудовий водяний зразок: "${foundItem.name}"!`;
+                    logType = "loot";
+                } else {
+                    logText = "🌊 Ви виловили кілька блискучих перлин та інші корисні речі в озері-бухті.";
+                    logType = "success";
+                }
+            } else {
+                logText = success 
+                    ? "🌊 Ви виловили кілька блискучих перлин та інші корисні речі в озері-бухті." 
+                    : "🌊 Хвилі бухти викинули на берег лише купу мокрих водоростей.";
+                logType = success ? "success" : "info";
+            }
+        }
+        else if (actionId === "sea_ruins_enter") {
+            xpGained = 15;
+            logText = "🕳️ Зайти в підземелля (ДОДАМО ПІЗНІШЕ) - Ви дослідили напівзатоплені арки древнього храму.";
+            logType = "info";
         }
         else if (actionId === "hunt_beast") {
             const success = Math.random() < 0.65;
