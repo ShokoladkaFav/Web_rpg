@@ -152,6 +152,61 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
         ],
         "sea_ruins": [
             { id: "sea_ruins_enter", name: "Зайти в підземелля (ДОДАМО ПІЗНІШЕ)", icon: "🕳️" }
+        ],
+        "fishing_spot": [
+            { id: "catch_fish", name: "Зловити рибу", icon: "🐟" }
+        ],
+        "folford_hunting": [
+            { id: "folford_hunt_animals", name: "Пошук диких тварин", icon: "🦌" }
+        ],
+        "zalda_plain": [
+            { id: "zalda_search_ancient", name: "Пошук чогось стародавнього", icon: "🏺" }
+        ],
+        "dwarven_mines": [
+            { id: "dwarf_mines_enter", name: "Зайти в шахту (БУДЕ ДОДАНО ПІЗНІШЕ)", icon: "🚪" }
+        ],
+        "shimmerglen_fruit_plains": [
+            { id: "shimmerglen_search_food", name: "Пошук чогось їстівного", icon: "🍇" }
+        ],
+        "shimmerglen_old_fortress": [
+            { id: "shimmerglen_old_fortress_enter", name: "Зайти в підземелля (БУДЕ ДОДАНО ПІЗНІШЕ)", icon: "🕳️" }
+        ],
+        "ogryzok": [
+            { id: "ogryzok_search_craft", name: "Пошук ресурсів для крафту", icon: "🛠️" }
+        ],
+        "vlassa_lake": [
+            { id: "vlassa_search_marine", name: "Пошук морських ресурсів", icon: "🐚" },
+            { id: "vlassa_fishing", name: "Порибачити", icon: "🎣" }
+        ],
+        "shraudy_fruit_plains": [
+            { id: "shraudy_search_food", name: "Пошук чогось їстівного", icon: "🍓" }
+        ],
+        "grand_forest": [
+            { id: "grand_forest_herbs", name: "Пошук корисних лісних ресурсів", icon: "🌱" },
+            { id: "grand_forest_craft", name: "Пошук лісних ресурсів для крафту", icon: "🪵" }
+        ],
+        "raven_grand_bay": [
+            { id: "raven_sea_enemies", name: "Пошук морських ворогів", icon: "🦈" },
+            { id: "raven_fishing", name: "Рибалка", icon: "🎣" },
+            { id: "raven_sea_resources", name: "Пошук морських ресурсів", icon: "🐚" }
+        ],
+        "raven_hunting_grounds": [
+            { id: "raven_hunt_beasts", name: "Пошук диких тварин", icon: "🦌" }
+        ],
+        "amber_grand_bay": [
+            { id: "amber_sea_enemies", name: "Пошук морських ворогів", icon: "🦈" },
+            { id: "amber_fishing", name: "Рибалка", icon: "🎣" },
+            { id: "amber_sea_resources", name: "Пошук морських ресурсів", icon: "🐚" }
+        ],
+        "amber_old_lands": [
+            { id: "amber_craft_resources", name: "Пошук ресурсів для крафту", icon: "⛏️" },
+            { id: "amber_desert_resources", name: "Пошук пустельних корисних ресурсів", icon: "🌵" }
+        ],
+        "mudfrost_fruit_plains": [
+            { id: "mudfrost_search_food", name: "Пошук чогось їстівного", icon: "🍓" }
+        ],
+        "mudfrost_swamp": [
+            { id: "mudfrost_swamp_exp_start", name: "почати експедицію в болотну землю (БУДЕ ДОДАНО ПІЗНІШЕ)", icon: "🧭" }
         ]
     };
 
@@ -168,7 +223,9 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
         "desert_land_herbs": ["spicy_herb", "rozrovochky", "hermit_herb"],
         "oasis_herbs": ["mint", "pink_crested_lily", "seaweed"],
         "desert_rocks_fruits": ["rozrovochky", "spicy_herb", "hermit_herb"],
-        "deep_old_forest_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"]
+        "deep_old_forest_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
+        "grand_forest_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
+        "amber_desert_resources": ["spicy_herb", "rozrovochky", "hermit_herb"]
     };
 
     // Зважений вибір трави на основі рідкості
@@ -590,6 +647,165 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
                 ? "⚔️ Ви зіткнулися з блукаючим монстром і здолали його у запеклій сутичці!" 
                 : "⚔️ Пошуки чудовиськ затягнулися, ви лише поблукали небезпечними стежками.";
             logType = success ? "success" : "info";
+        }
+        else if (actionId === "catch_fish") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 14 : 5;
+            logText = success 
+                ? "🎣 Поплавок замиготів і пішов під воду! Ви успішно зловили свіжу рибу." 
+                : "🎣 Рибалка не вдалася — риба зірвалася з гачка у найостанніший момент.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "folford_hunt_animals") {
+            const success = Math.random() < 0.65;
+            xpGained = success ? 20 : 8;
+            logText = success 
+                ? "🦌 Ви заглибилися в лісові хащі й успішно вполювали прекрасного дикого оленя!" 
+                : "🦌 Мисливські стежки виявилися порожніми, жодної дикої тварини не зустрінуто.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "zalda_search_ancient") {
+            const success = Math.random() < 0.55;
+            xpGained = success ? 22 : 8;
+            logText = success 
+                ? "🏺 Розкопуючи стародавні кургани на рівнині Залда, ви виявили уламок стародавньої амфори!" 
+                : "🏺 Ви витратили кілька годин на пошуки стародавніх речей, але знайшли лише звичайні уламки скель.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "dwarf_mines_enter") {
+            xpGained = 15;
+            logText = "⛏️ Зайти в шахту (БУДЕ ДОДАНО ПІЗНІШЕ) - Двері до глибоких шахт зачинені масивною брамою.";
+            logType = "info";
+        }
+        else if (actionId === "shimmerglen_search_food") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 15 : 5;
+            logText = success 
+                ? "🍇 Ви ретельно оглянули кущі та дикі дерева, знайшовши жменю стиглих солодких ягід!" 
+                : "🍇 Дикі плодові дерева виявилися порожніми в цю пору року.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "shimmerglen_old_fortress_enter") {
+            xpGained = 15;
+            logText = "🕳️ Зайти в підземелля (БУДЕ ДОДАНО ПІЗНІШЕ) - Вхід у занедбане підземелля старої фортеці завалений камінням.";
+            logType = "info";
+        }
+        else if (actionId === "ogryzok_search_craft") {
+            const success = Math.random() < 0.60;
+            xpGained = success ? 18 : 6;
+            logText = success 
+                ? "🛠️ Серед куп брухту та деревини ви знайшли чудові шкіряні обрізки та міцні залізні гвинти!" 
+                : "🛠️ Ви оглянули околиці Огризка, але не знайшли нічого придатного для створення предметів.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "vlassa_search_marine") {
+            const success = Math.random() < 0.60;
+            xpGained = success ? 18 : 6;
+            logText = success 
+                ? "🐚 На берегах озера Власса ви знайшли блискучі мушлі та цілющі водорості." 
+                : "🐚 Озеро спокійне, жодних цінних ресурсів на березі не знайдено.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "vlassa_fishing") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 14 : 5;
+            logText = success 
+                ? "🎣 Ви вдало закинули вудку в озеро Власса і витягли жирного коропа!" 
+                : "🎣 На озері Власса сьогодні немає кльову, риба ігнорує гачок.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "shraudy_search_food") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 15 : 5;
+            logText = success 
+                ? "🍓 Ви знайшли чудову лісову суницю та соковиту дику вишню на плодових рівнинах!" 
+                : "🍓 На жаль, більшість ягід уже зібрано іншими мандрівниками.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "grand_forest_craft") {
+            const success = Math.random() < 0.60;
+            xpGained = success ? 18 : 6;
+            logText = success 
+                ? "🪵 Ви зібрали міцні гілки залізного дерева та шматки смоли для майбутнього крафту." 
+                : "🪵 Спроба знайти якісну деревину в гущавині виявилися невдалою.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "raven_sea_enemies") {
+            const success = Math.random() < 0.65;
+            xpGained = success ? 26 : 12;
+            logText = success 
+                ? "🦈 Ви помітили небезпечну акулу-людожера біля скель бухти та успішно вполювали її!" 
+                : "🦈 Води Великої бухти спокійні, морських хижаків наразі не виявлено.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "raven_fishing") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 15 : 5;
+            logText = success 
+                ? "🎣 З глибин Великої бухти Рейвенхоллоу ви витягли гігантського тунця!" 
+                : "🎣 На жаль, риба сьогодні занадто обережна і зривається з гачка.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "raven_sea_resources") {
+            const success = Math.random() < 0.60;
+            xpGained = success ? 18 : 6;
+            logText = success 
+                ? "🐚 На скелястому узбережжі бухти ви назбирали рідкісні сині устриці та цінні мушлі." 
+                : "🐚 Сильні припливи затопили берегову смугу, ускладнивши пошук ресурсів.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "raven_hunt_beasts") {
+            const success = Math.random() < 0.65;
+            xpGained = success ? 20 : 8;
+            logText = success 
+                ? "🦌 Ви вистежили та успішно вполювали спритну дику козу в густих заростях!" 
+                : "🦌 Жодних слідів великих тварин на мисливських угіддях Рейвенхоллоу.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "amber_sea_enemies") {
+            const success = Math.random() < 0.65;
+            xpGained = success ? 26 : 12;
+            logText = success 
+                ? "🦈 Ви билися з лютими піратами на підступах до бухти Амбервіка і здобули перемогу!" 
+                : "🦈 Горизонт чистий, морські розбійники сьогодні не показувалися.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "amber_fishing") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 15 : 5;
+            logText = success 
+                ? "🎣 Ви закинули вудку з пірсу Амбервіка і виловили чудову королівську макрель!" 
+                : "🎣 Вода надто холодна, кльову немає.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "amber_sea_resources") {
+            const success = Math.random() < 0.60;
+            xpGained = success ? 18 : 6;
+            logText = success 
+                ? "🐚 На березі бухти ви знайшли викинуті штормом цінні шматки бурштину!" 
+                : "🐚 Хвилі принесли лише купу марного піску та каміння.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "amber_craft_resources") {
+            const success = Math.random() < 0.60;
+            xpGained = success ? 20 : 8;
+            logText = success 
+                ? "⛏️ У Старих землях ви відшукали пласти пластичного сланцю та мідну руду." 
+                : "⛏️ Старі землі спустошені, пошук корисних копалин не приніс результату.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "mudfrost_search_food") {
+            const success = Math.random() < 0.70;
+            xpGained = success ? 15 : 5;
+            logText = success 
+                ? "🍓 Незважаючи на холодний клімат Мадфроста, ви знайшли кущі з соковитою морошкою!" 
+                : "🍓 Рівнини вкриті памороззю, жодних ягід не знайдено.";
+            logType = success ? "success" : "info";
+        }
+        else if (actionId === "mudfrost_swamp_exp_start") {
+            xpGained = 15;
+            logText = "🧭 почати експедицію в болотну землю (БУДЕ ДОДАНО ПІЗНІШЕ) - Болота затягнуті непроглядним отруйним туманом.";
+            logType = "info";
         }
         else if (actionId === "wander") {
             const options = [

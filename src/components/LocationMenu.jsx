@@ -8,11 +8,12 @@ function LocationMenu({ onClose, currentLocationId, onSelectSubLocation }) {
             { id: "lake", name: "Озеро", icon: "🌊" },
             { id: "beach", name: "Пляж", icon: "🏖️" },
             { id: "north_forest", name: "Північний ліс", icon: "🌳" },
-            { id: "abvol_rock", name: "Скеля 'Абволь'", icon: "⛰️" }
+            { id: "abvol_rock", name: "Скеля 'Абволь'", icon: "⛰️" },
+            { id: "fishing_spot", name: "Рибалка", icon: "🎣" }
         ],
         "village2": [
-            { id: "main_square", name: "Головна площа", icon: "⚖️" },
-            { id: "old_well", name: "Стара криниця", icon: "🕳️" }
+            { id: "shimmerglen_fruit_plains", name: "Плодові рівнини", icon: "🍎" },
+            { id: "shimmerglen_old_fortress", name: "Підземелля 'Стара фортеця'", icon: "🏰" }
         ],
         "village1": [
             { id: "carrow_plain", name: "Рівнина Карроу", icon: "🌾" },
@@ -28,7 +29,8 @@ function LocationMenu({ onClose, currentLocationId, onSelectSubLocation }) {
             { id: "silver_forest", name: "Срібний ліс", icon: "🌲" },
             { id: "sea_bay", name: "Морська бухта", icon: "🌊" },
             { id: "outskirts", name: "Околиці", icon: "🏞️" },
-            { id: "old_settlement_ruins", name: "Руїни старого поселення", icon: "🏛️" }
+            { id: "old_settlement_ruins", name: "Руїни старого поселення", icon: "🏛️" },
+            { id: "fishing_spot", name: "Рибалка", icon: "🎣" }
         ],
         "desert_village1": [
             { id: "desert_land", name: "Пустельна земля", icon: "🏜️" },
@@ -51,13 +53,15 @@ function LocationMenu({ onClose, currentLocationId, onSelectSubLocation }) {
         "desert_destroy": [
             { id: "slums", name: "Нетрі", icon: "🏚️" },
             { id: "small_sea_bay", name: "Мала морська бухта", icon: "🌊" },
-            { id: "desert_lands", name: "Пустельні землі", icon: "🏜️" }
+            { id: "desert_lands", name: "Пустельні землі", icon: "🏜️" },
+            { id: "fishing_spot", name: "Рибалка", icon: "🎣" }
         ],
         "desert_town": [
             { id: "desert_sea_forest", name: "Пустельно-морський ліс", icon: "🌴" },
             { id: "desert_lands", name: "Пустельні землі", icon: "🏜️" },
             { id: "grand_bay", name: "Велика бухта", icon: "🌊" },
-            { id: "forest_plateau", name: "Лісне плато", icon: "🌲" }
+            { id: "forest_plateau", name: "Лісне плато", icon: "🌲" },
+            { id: "fishing_spot", name: "Рибалка", icon: "🎣" }
         ],
         "town_2": [
             { id: "deep_old_forest", name: "Глибокий старий ліс", icon: "🌲" },
@@ -73,7 +77,37 @@ function LocationMenu({ onClose, currentLocationId, onSelectSubLocation }) {
         "port_town_1": [
             { id: "north_forest", name: "Північний ліс", icon: "🌲" },
             { id: "lake_bay", name: "Озеро-бухта", icon: "🌊" },
-            { id: "sea_ruins", name: "Морські руїни", icon: "🏛️" }
+            { id: "sea_ruins", name: "Морські руїни", icon: "🏛️" },
+            { id: "fishing_spot", name: "Рибалка", icon: "🎣" }
+        ],
+        "port_town_2": [
+            { id: "folford_hunting", name: "Мисливські угіддя", icon: "🏹" }
+        ],
+        "town_3": [
+            { id: "zalda_plain", name: "Рівнина Залда", icon: "🌾" }
+        ],
+        "dwarf_capital": [
+            { id: "dwarven_mines", name: "Дворфські шахти", icon: "⛏️" }
+        ],
+        "port_town_3": [
+            { id: "ogryzok", name: "Огризок", icon: "🪵" }
+        ],
+        "village3": [
+            { id: "vlassa_lake", name: "Озеро Власса", icon: "🌊" },
+            { id: "shraudy_fruit_plains", name: "Плодові рівнини", icon: "🍎" },
+            { id: "grand_forest", name: "Великий ліс", icon: "🌲" }
+        ],
+        "port_town_5": [
+            { id: "raven_grand_bay", name: "Велика бухта", icon: "🌊" },
+            { id: "raven_hunting_grounds", name: "Мисливські угіддя", icon: "🏹" }
+        ],
+        "port_town_4": [
+            { id: "amber_grand_bay", name: "Велика бухта", icon: "🌊" },
+            { id: "amber_old_lands", name: "Старі землі", icon: "🏜️" }
+        ],
+        "village4": [
+            { id: "mudfrost_fruit_plains", name: "Плодові рівнини", icon: "🍎" },
+            { id: "mudfrost_swamp", name: "Експедиця в болотні землі", icon: "🧭" }
         ]
     };
 
