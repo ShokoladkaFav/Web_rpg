@@ -214,18 +214,30 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
 
     // Зони випадіння трав
     const herbDropsByAction = {
-        "forest_plants": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
-        "water_plants": ["pink_crested_lily", "seaweed", "sea_herb", "mint"],
-        "rock_plants": ["golden_flower", "rozrovochky", "hermit_herb", "spicy_herb"],
-        "carrow_herbs": ["golden_flower", "mint", "birds_herb", "gribiscus"],
-        "forest_outskirts_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
-        "silver_forest_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
-        "desert_land_herbs": ["spicy_herb", "rozrovochky", "hermit_herb"],
-        "oasis_herbs": ["mint", "pink_crested_lily", "seaweed"],
-        "desert_rocks_fruits": ["rozrovochky", "spicy_herb", "hermit_herb"],
-        "deep_old_forest_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
-        "grand_forest_herbs": ["golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
-        "amber_desert_resources": ["spicy_herb", "rozrovochky", "hermit_herb"]
+        "forest_plants": ["young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
+        "forest_outskirts_herbs": ["young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
+        "silver_forest_herbs": ["young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
+        "grand_forest_herbs": ["wooden_grass", "young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus"],
+        "deep_old_forest_herbs": ["wooden_grass", "twin_flower", "lovers_pair", "branch_healthy_tree", "leaves_healthy_tree", "stinky_flower", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "four_leaf_clover", "golden_flower", "hermit_herb", "gribiscus"],
+        "carrow_herbs": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "mint", "birds_herb", "gribiscus"],
+        "shimmerglen_fruit_plains": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "mint", "birds_herb"],
+        "shraudy_fruit_plains": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "mint"],
+        "mudfrost_fruit_plains": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower"],
+        "water_plants": ["marine_algae", "sea_laminaria", "sea_tentacles", "pink_crested_lily", "seaweed", "sea_herb", "mint"],
+        "oasis_herbs": ["marine_algae", "sea_laminaria", "mint", "pink_crested_lily", "seaweed", "sea_herb"],
+        "rock_plants": ["dye_flower", "blue_eyed_maiden", "blue_rose", "red_rose", "blue_azure", "gerdalf_grass", "golden_flower", "rozrovochky", "hermit_herb", "spicy_herb"],
+        "desert_rocks_fruits": ["dye_flower", "blue_eyed_maiden", "blue_rose", "red_rose", "blue_azure", "gerdalf_grass", "rozrovochky", "spicy_herb", "hermit_herb"],
+        "desert_land_herbs": ["dope_flower", "vera_aloe", "brambook", "bloody_lady", "lyapotyazhma", "spicy_herb", "rozrovochky", "hermit_herb"],
+        "amber_desert_resources": ["dope_flower", "vera_aloe", "brambook", "bloody_lady", "lyapotyazhma", "spicy_herb", "rozrovochky", "hermit_herb"],
+        "wasteland_search": ["mary_drop", "spicy_herb", "hermit_herb", "brambook", "lyapotyazhma"],
+        "desert_wasteland_search": ["mary_drop", "spicy_herb", "hermit_herb", "brambook", "lyapotyazhma"],
+        "old_settlement_ruins": ["pretrushka", "spicy_herb", "hermit_herb"],
+        "desert_ruins": ["pretrushka", "spicy_herb", "hermit_herb"],
+        "old_settlements_ruins_search": ["pretrushka", "spicy_herb", "hermit_herb"],
+        "search_caves": ["blue_eyed_maiden", "underground_flower", "ardruinda", "hermit_herb"],
+        "outskirts_dungeon": ["blue_lady", "underground_flower", "ardruinda"],
+        "old_settlement_ruins_dungeon": ["blue_lady", "underground_flower", "ardruinda"],
+        "desert_ruins_dungeon": ["blue_lady", "underground_flower", "ardruinda"]
     };
 
     // Зважений вибір трави на основі рідкості
@@ -315,12 +327,62 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
         if (isGatheringAction) {
             const success = Math.random() < 0.85; // Шанс успіху 85%
             if (success) {
-                const allowedHerbs = herbDropsByAction[actionId];
+                const allowedHerbs = herbDropsByAction[actionId] || [];
                 foundItem = getWeightedHerb(allowedHerbs);
                 if (foundItem) {
                     xpGained = foundItem.rarity === "epic" ? 22 : foundItem.rarity === "rare" ? 16 : foundItem.rarity === "uncommon" ? 12 : 8;
                     logText = `🌱 Ви ретельно оглянули територію і знайшли чудовий екземпляр: "${foundItem.name}"`;
                     logType = "loot";
+
+                    // Особливі події та механіки при зборі
+                    if (foundItem.id === "shvibald") {
+                        newSleep = Math.max(0, newSleep - 10);
+                        logText += " (Щоб дістати Швибальд з високого дерева, довелося витратити +10 додаткової Енергії)";
+                    } else if (foundItem.id === "firuerta") {
+                        const hasWeapon = (character.equipment?.weapon?.name || "").toLowerCase().includes("меч") ||
+                            (character.equipment?.weapon?.name || "").toLowerCase().includes("сокира") ||
+                            inventory.some(i => (i.name || "").toLowerCase().includes("меч") || (i.name || "").toLowerCase().includes("сокира"));
+                        if (hasWeapon) {
+                            logText += " (Завдяки наявності зброї ви безболісно прорубали шлях крізь колючки!)";
+                        } else {
+                            hpDamage += 10;
+                            newHp = Math.max(0, newHp - 10);
+                            logText += " (Пробираючись крізь колючі зарослі Фіруєрта, ви отримали подряпини: -10 HP)";
+                        }
+                    } else if (foundItem.id === "forest_persheval") {
+                        hpDamage += 10;
+                        newHp = Math.max(0, newHp - 10);
+                        logText += " (На впавших деревах під час збору із кущів вискочила змія та вкусила вас! -10 HP)";
+                    } else if (foundItem.id === "bright_lady") {
+                        hpDamage += 15;
+                        newHp = Math.max(0, newHp - 15);
+                        logText += " (Під час збору Яскравої Леді виділилися токсичні речовини: -15 HP)";
+                    } else if (foundItem.id === "bloody_lady") {
+                        hpDamage += 10;
+                        newHp = Math.max(0, newHp - 10);
+                        logText += " (Біля колючих зарослів під час збору Кривавої Леді ви покололи руки: -10 HP)";
+                    } else if (foundItem.id === "blue_azure") {
+                        hpDamage += 20;
+                        newHp = Math.max(0, newHp - 20);
+                        newSleep = Math.max(0, newSleep - 20);
+                        logText += " (Збір високо в горах супроводжувався сильним холодом та малим киснем: -20 HP, -20 Енергії)";
+                    } else if (foundItem.id === "sea_laminaria") {
+                        hpDamage += 20;
+                        newHp = Math.max(0, newHp - 20);
+                        logText += " (Рослина була глибоко під водою, під час збору ви виснажилися: -20 HP)";
+                    } else if (foundItem.id === "branch_healthy_tree") {
+                        newSleep = Math.max(0, newSleep - 10);
+                        logText += " (Збір міцної гілки з прадавнього дерева вимагав додаткових зусиль: -10 Енергії)";
+                    } else if (foundItem.id === "sea_tentacles") {
+                        hpDamage += 10;
+                        newHp = Math.max(0, newHp - 10);
+                        newSleep = Math.max(0, newSleep - 10);
+                        logText += " (Морські шупальця були глибоко у бухті: -10 HP, -10 Енергії)";
+                    } else if (foundItem.id === "stinky_flower") {
+                        hpDamage += 10;
+                        newHp = Math.max(0, newHp - 10);
+                        logText += " (Вонюча квітка у глибокому лісі виділила їдкий запах: -10 HP)";
+                    }
                 } else {
                     xpGained = 4;
                     logText = "🍂 Ви знайшли лише зів'яле коріння неотруйних рослин.";

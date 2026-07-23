@@ -7,13 +7,16 @@ function BAR_Navigation({
     isMoveOpen, 
     onSettlementClick, 
     isSettlementOpen,
-    onEquipmentClick,    // Новий пропс для відкриття спорядження
-    isEquipmentOpen      // Новий пропс для перевірки активності
+    onEquipmentClick,
+    isEquipmentOpen,
+    onAlmanacClick,
+    isAlmanacOpen
 }) {
     const actions = [
         { id: "move", label: "Переміститися", icon: "📍" },
         { id: "travel", label: "Подорожувати", icon: "🗺️" },
-        { id: "equipment", label: "Спорядження", icon: "🎒" }, // Нова дія
+        { id: "equipment", label: "Спорядження", icon: "🎒" },
+        { id: "almanac", label: "Альманах", icon: "📖" },
         { id: "craft", label: "Створити щось", icon: "🛠️" },
         { id: "settlement", label: "Зайти в населений пункт", icon: "🏰" },
     ];
@@ -22,7 +25,8 @@ function BAR_Navigation({
         if (id === "travel") onTravelClick();
         else if (id === "move") onMoveClick();
         else if (id === "settlement") onSettlementClick();
-        else if (id === "equipment") onEquipmentClick(); // Викликаємо функцію для спорядження
+        else if (id === "equipment") onEquipmentClick();
+        else if (id === "almanac") onAlmanacClick();
         else console.log(`Action: ${id}`);
     };
 
@@ -32,12 +36,12 @@ function BAR_Navigation({
                 <h3 className="panel-title">Доступні дії</h3>
                 <div className="actions-list">
                     {actions.map((action) => {
-                        // Визначаємо, чи активна кнопка в даний момент
                         let isActive = false;
                         if (action.id === "move") isActive = isMoveOpen;
                         if (action.id === "travel") isActive = isMapOpen;
                         if (action.id === "settlement") isActive = isSettlementOpen;
                         if (action.id === "equipment") isActive = isEquipmentOpen;
+                        if (action.id === "almanac") isActive = isAlmanacOpen;
                         
                         return (
                             <button 

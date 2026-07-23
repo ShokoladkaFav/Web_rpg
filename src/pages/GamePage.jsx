@@ -8,6 +8,7 @@ import SettlementMenu from "../components/SettlementMenu.jsx";
 import PlayerStatsModal from "../components/PlayerStatsModal.jsx";
 import ActionWindow from "../components/ActionWindow.jsx";
 import EquipmentWindow from "../components/EquipmentWindow.jsx";
+import AlmanacModal from "../components/AlmanacModal.jsx";
 
 function GamePage() {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ function GamePage() {
     const [isStatsOpen, setIsStatsOpen] = useState(false);
     const [isActionWindowOpen, setIsActionWindowOpen] = useState(false);
     const [isEquipmentOpen, setIsEquipmentOpen] = useState(false);
+    const [isAlmanacOpen, setIsAlmanacOpen] = useState(false);
     
     const [character, setCharacter] = useState(null);
     const [activeSubLocation, setActiveSubLocation] = useState(null);
@@ -57,10 +59,11 @@ function GamePage() {
         setIsActionWindowOpen(true);
     };
 
-    const toggleMove = () => { setIsLocationMenuOpen(!isLocationMenuOpen); setIsMapOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); };
-    const toggleTravel = () => { setIsMapOpen(!isMapOpen); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); };
-    const toggleSettlement = () => { setIsSettlementMenuOpen(!isSettlementMenuOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsEquipmentOpen(false); };
-    const toggleEquipment = () => { setIsEquipmentOpen(!isEquipmentOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); };
+    const toggleMove = () => { setIsLocationMenuOpen(!isLocationMenuOpen); setIsMapOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); };
+    const toggleTravel = () => { setIsMapOpen(!isMapOpen); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); };
+    const toggleSettlement = () => { setIsSettlementMenuOpen(!isSettlementMenuOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); };
+    const toggleEquipment = () => { setIsEquipmentOpen(!isEquipmentOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsAlmanacOpen(false); };
+    const toggleAlmanac = () => { setIsAlmanacOpen(!isAlmanacOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); };
 
     if (!character) return null;
 
@@ -100,6 +103,7 @@ function GamePage() {
                         onMoveClick={toggleMove} isMoveOpen={isLocationMenuOpen}
                         onSettlementClick={toggleSettlement} isSettlementOpen={isSettlementMenuOpen}
                         onEquipmentClick={toggleEquipment} isEquipmentOpen={isEquipmentOpen}
+                        onAlmanacClick={toggleAlmanac} isAlmanacOpen={isAlmanacOpen}
                     />
                     
                     {isLocationMenuOpen && <LocationMenu onClose={() => setIsLocationMenuOpen(false)} currentLocationId={character.locationId} onSelectSubLocation={handleSelectSubLocation} />}
@@ -127,6 +131,10 @@ function GamePage() {
                     />
                 )}
 
+                {isAlmanacOpen && (
+                    <AlmanacModal onClose={() => setIsAlmanacOpen(false)} />
+                )}
+
                 {isMapOpen && <GameMap onClose={() => setIsMapOpen(false)} playerLocationId={character.locationId} onSelectLocation={updateLocation} />}
                 {isStatsOpen && <PlayerStatsModal character={character} onClose={() => setIsStatsOpen(false)} />}
                 {isActionWindowOpen && (
@@ -146,5 +154,3 @@ function GamePage() {
 }
 
 export default GamePage;
-
-

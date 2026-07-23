@@ -83,10 +83,6 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
         if (selectedItemIndex === null || !onUpdateCharacter) return;
 
         const item = selectedItem;
-        
-        // Видаляємо предмет
-        const updatedInventory = [...inventory];
-        updatedInventory.splice(selectedItemIndex, 1);
 
         // Показники за дефолтом
         let hpGain = 0;
@@ -146,10 +142,203 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                 hpGain = 5;
                 message = "🌱 Легка Пташина трава дала приємну бадьорість та полегшила втому! (+8 сон, +5 здоров'я)";
                 break;
+            case "vera_aloe":
+                hpGain = 20;
+                message = "🌿 Вєра-Алоє відновлює тільки здоров'я! (+20 здоров'я)";
+                break;
+            case "forest_flower":
+                sleepGain = 5;
+                message = "🌸 Лісова Квітка відновлює 5 енергії! (+5 сон)";
+                break;
+            case "tea_sprout":
+                message = "🍃 Чайний паросток сам по собі не дає корисних ефектів, але цінується торгівцями.";
+                break;
+            case "dye_flower":
+                message = "🎨 Квітка-барвник використовується як фарба і не дає цілющих ефектів.";
+                break;
+            case "flycatcher_grass":
+                message = "🌿 Трава-Мухоловка не дає корисних ефектів при вживанні.";
+                break;
+            case "blue_azure":
+                message = "❄️ Синя блакить не дає корисних ефектів при вживанні.";
+                break;
+            case "sea_baron":
+                message = "🌊 Морський Барон є трофеєм і не має корисних цілющих ефектів.";
+                break;
+            case "stinky_flower":
+                message = "🥀 Вонюча квітка має їдкий запах і не дає корисних ефектів.";
+                break;
+            case "mary_drop":
+                waterGain = 30;
+                message = "💧 Капля Марії з пустки чудово втамувала спрагу! (+30 вода)";
+                break;
+            case "gerdalf_grass":
+                mpGain = 20;
+                message = "✨ Трава Гердальфа наповнила ваші магічні канали! (+20 мана)";
+                break;
+            case "four_leaf_clover":
+                hpGain = 25;
+                mpGain = 25;
+                sleepGain = 25;
+                message = "🍀 Чотирьох листий конюшина принесла неймовірну удачу! (+25 здоров'я, +25 мана, +25 сон)";
+                break;
+            case "nimble_grass":
+                sleepGain = 20;
+                message = "⚡ Трава-Шустряк дала потужний приплив бадьорості! (+20 сон)";
+                break;
+            case "romanshka":
+                hpGain = 8;
+                sleepGain = 5;
+                message = "🌼 Романшка заспокоїла та відновила сили! (+8 здоров'я, +5 сон)";
+                break;
+            case "marine_algae":
+                foodGain = 10;
+                waterGain = 10;
+                message = "🌊 Морська водоросль втамувала голод та спрагу! (+10 їжа, +10 вода)";
+                break;
+            case "young_tree_branch":
+                hpGain = 5;
+                message = "🪵 Гілка молодого дерева додала трохи сил. (+5 здоров'я)";
+                break;
+            case "blue_eyed_maiden":
+                hpGain = 15;
+                mpGain = 15;
+                message = "💙 Синьо Ока Діва відновила ваші сили та магію! (+15 здоров'я, +15 мана)";
+                break;
+            case "dope_flower":
+                sleepGain = 10;
+                hpGain = 10;
+                message = "🌿 Дурман-Квітка духмяно розійшлася тілом. (+10 здоров'я, +10 сон)";
+                break;
+            case "wooden_grass":
+                hpGain = 10;
+                message = "🌾 Трава Драв'яна зміцнила організм. (+10 здоров'я)";
+                break;
+            case "twin_flower":
+                hpGain = 12;
+                mpGain = 10;
+                message = "🌺 Квітка-Близнючка дала гармонійне відновлення. (+12 здоров'я, +10 мана)";
+                break;
+            case "blue_lady":
+                mpGain = 30;
+                message = "💙 Блакитна леді наповнила тіло магічною енергією! (+30 мана)";
+                break;
+            case "nettle":
+                hpGain = 10;
+                foodGain = 5;
+                message = "🌱 Кропива тонізує кровообіг! (+10 здоров'я, +5 їжа)";
+                break;
+            case "blue_rose":
+                hpGain = 25;
+                mpGain = 15;
+                message = "🌹 Блакитна Роза дарує гірську свіжість! (+25 здоров'я, +15 мана)";
+                break;
+            case "red_rose":
+                hpGain = 20;
+                mpGain = 10;
+                message = "🌹 Червона Роза зміцнює життєві сили! (+20 здоров'я, +10 мана)";
+                break;
+            case "firefly_grass":
+                mpGain = 20;
+                sleepGain = 10;
+                message = "✨ Трава-Світляшка осяює магічні канали! (+20 мана, +10 сон)";
+                break;
+            case "underground_flower":
+                hpGain = 18;
+                mpGain = 12;
+                message = "🌌 Підземна-Квітка загоює рани. (+18 здоров'я, +12 мана)";
+                break;
+            case "shvibald":
+                hpGain = 15;
+                sleepGain = 10;
+                message = "🌿 Швибальд додав вам сил. (+15 здоров'я, +10 сон)";
+                break;
+            case "pretrushka":
+                hpGain = 12;
+                message = "🌱 Претрушка зміцнює організм. (+12 здоров'я)";
+                break;
+            case "ardruinda":
+                mpGain = 25;
+                hpGain = 10;
+                message = "🔮 Ардруїнда дарує містичну силу печер. (+25 мана, +10 здоров'я)";
+                break;
+            case "firuerta":
+                hpGain = 20;
+                sleepGain = 10;
+                message = "🌿 Фіруєрта загоює тіло та знімає втому. (+20 здоров'я, +10 сон)";
+                break;
+            case "forest_persheval":
+                hpGain = 15;
+                sleepGain = 8;
+                message = "🌿 Лісний Першеваль дарує відновлення. (+15 здоров'я, +8 сон)";
+                break;
+            case "bright_lady":
+                hpGain = 15;
+                mpGain = 15;
+                message = "🌸 Яскрава Леді зміцнила ваше тіло та магію! (+15 здоров'я, +15 мана)";
+                break;
+            case "brambook":
+                waterGain = 15;
+                foodGain = 5;
+                message = "🎋 Брамбук містить свіжий пустельний сік! (+15 вода, +5 їжа)";
+                break;
+            case "bloody_lady":
+                hpGain = 22;
+                mpGain = 10;
+                message = "🩸 Кривава Леді миттєво загоює рани! (+22 здоров'я, +10 мана)";
+                break;
+            case "lovers_pair":
+                hpGain = 30;
+                mpGain = 20;
+                sleepGain = 15;
+                message = "💞 Пара закоханих дарує глибоке відновлення сил! (+30 здоров'я, +20 мана, +15 сон)";
+                break;
+            case "sea_laminaria":
+                foodGain = 12;
+                waterGain = 12;
+                message = "🌊 Морська ламінарія насичує організм. (+12 їжа, +12 вода)";
+                break;
+            case "branch_healthy_tree":
+                hpGain = 12;
+                message = "🪵 Гілка здорового дерева зміцнює тіло. (+12 здоров'я)";
+                break;
+            case "lyapotyazhma":
+                hpGain = 14;
+                waterGain = 8;
+                message = "🌿 Ляпотяжма надає сил. (+14 здоров'я, +8 вода)";
+                break;
+            case "leaves_healthy_tree":
+                hpGain = 10;
+                sleepGain = 5;
+                message = "🍃 Листя здорового дерева освіжає та дарує сили. (+10 здоров'я, +5 сон)";
+                break;
+            case "sea_tentacles":
+                foodGain = 10;
+                hpGain = 10;
+                message = "🌊 Морські шупальця підживлюють організм. (+10 їжа, +10 здоров'я)";
+                break;
+            case "mrakovyk":
+                hpGain = 12;
+                mpGain = 8;
+                message = "🍄 Мраковик відновлює життєву силу. (+12 здоров'я, +8 мана)";
+                break;
             default:
                 hpGain = 5;
                 message = `Ви використали предмет "${item.name}".`;
         }
+
+        // Перевіряємо, чи має предмет користь при споживанні
+        const hasEffect = hpGain > 0 || mpGain > 0 || sleepGain > 0 || foodGain > 0 || waterGain > 0;
+
+        if (!hasEffect) {
+            // Рослина не має корисних ефектів при вживанні — показуємо сповіщення та залишаємо предмет в інвентарі
+            alert(message || "Ця корисна рослина не дає корисних ефектів при вживанні.");
+            return;
+        }
+
+        // Якщо є ефект, видаляємо предмет з інвентаря
+        const updatedInventory = [...inventory];
+        updatedInventory.splice(selectedItemIndex, 1);
 
         // Оновлюємо статы з лімітом 100
         const updatedCharacter = {
@@ -166,7 +355,7 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
         setSelectedItem(null);
         setSelectedItemIndex(null);
 
-        // Показуємо приємне сповіщення про відновлення
+        // Показуємо сповіщення про відновлення
         alert(message);
     };
 
