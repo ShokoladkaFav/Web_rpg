@@ -16,6 +16,34 @@
     background: radial-gradient(circle at center, #ffffff 0%, #f3f4f6 100%);
     font-family: 'Inter', sans-serif;
     overflow: hidden;
+    transition: background 1s ease, filter 1s ease;
+}
+
+/* Атмосферні ефекти зміни дня і ночі */
+.game-page.sky-morning {
+    background: radial-gradient(circle at top, #fff3e0 0%, #f7f1e3 50%, #e2d9cc 100%) !important;
+}
+
+.game-page.sky-day {
+    background: radial-gradient(circle at center, #ffffff 0%, #f3f4f6 100%) !important;
+}
+
+.game-page.sky-evening {
+    background: radial-gradient(circle at top, #3d2338 0%, #2c1a2e 50%, #1a0f1d 100%) !important;
+}
+
+.game-page.sky-night {
+    background: radial-gradient(circle at top, #0f1423 0%, #090c15 50%, #030408 100%) !important;
+}
+
+.game-page.sky-night .player-info-card {
+    background: #141923;
+    border-color: rgba(162, 155, 254, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.game-page.sky-night .player-name {
+    color: #f1f5f9;
 }
 
 .game-ui {

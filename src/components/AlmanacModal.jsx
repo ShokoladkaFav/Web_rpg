@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { items } from "../data/items";
+import { items } from "../data/items.js";
 import "../styles/AlmanacModal.css";
+import { CoinsDisplay } from "../utils/currency.jsx";
 
 // Допоміжна мапа підказок про місця знаходження та особливості трав
 const HERB_LOCATIONS = {
@@ -257,8 +258,8 @@ function AlmanacModal({ onClose }) {
                                                             <span className={`rarity-pill rarity-${herb.rarity}`}>
                                                                 {RARITY_NAMES[herb.rarity] || herb.rarity}
                                                             </span>
-                                                            <span className="value-pill">
-                                                                🪙 {herb.value} зол.
+                                                            <span className="value-pill" style={{ display: "inline-flex", alignItems: "center" }}>
+                                                                <CoinsDisplay totalCopper={herb.value} size="small" />
                                                             </span>
                                                         </div>
                                                     </div>
@@ -314,7 +315,10 @@ function AlmanacModal({ onClose }) {
                                         {RARITY_NAMES[selectedItemDetail.rarity] || selectedItemDetail.rarity}
                                     </span>
                                     <h3 className="detail-name">{selectedItemDetail.name}</h3>
-                                    <span className="detail-price">Цінність продавця: 🪙 {selectedItemDetail.value} золота</span>
+                                    <span className="detail-price" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                                        <span>Цінність продавця:</span>
+                                        <CoinsDisplay totalCopper={selectedItemDetail.value} size="small" />
+                                    </span>
                                 </div>
                             </div>
 

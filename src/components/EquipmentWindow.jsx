@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../styles/EquipmentWindow.css";
 import { itemsById } from "../data/items.js";
+import { CoinsDisplay } from "../utils/currency.jsx";
 
 function ItemImageOrIcon({ item, className, fallbackSize = "20px" }) {
     const [imgError, setImgError] = useState(false);
@@ -421,6 +422,12 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                     <div className="eq-bar-outer"><div className="eq-bar-inner sleep" style={{ width: `${character.sleep}%` }}></div></div>
                                     <span className="eq-stat-val">{character.sleep}/100</span>
                                 </div>
+                                <div className="eq-stat-row-bar" style={{ marginTop: "4px", paddingTop: "4px", borderTop: "1px dashed rgba(255,255,255,0.1)" }}>
+                                    <span className="eq-stat-lbl">💰 Монети</span>
+                                    <div style={{ flex: 1, textAlign: "right" }}>
+                                        <CoinsDisplay totalCopper={character.copper || 0} size="small" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -491,7 +498,10 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                     </div>
                                     <p className="details-description-modern">{selectedItem.description}</p>
                                     <div className="details-footer-modern">
-                                        <span className="details-price-modern">💰 Цінність: {selectedItem.value} золота</span>
+                                        <span className="details-price-modern" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                                            <span>Цінність:</span>
+                                            <CoinsDisplay totalCopper={selectedItem.value || 0} size="small" />
+                                        </span>
                                         <div className="details-actions-modern">
                                             {selectedItem.category === "Alchemical-Herbs" && (
                                                 <button className="btn-use-modern" onClick={handleConsumeItem}>Спожити</button>

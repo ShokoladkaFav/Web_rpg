@@ -9,6 +9,8 @@ import PlayerStatsModal from "../components/PlayerStatsModal.jsx";
 import ActionWindow from "../components/ActionWindow.jsx";
 import EquipmentWindow from "../components/EquipmentWindow.jsx";
 import AlmanacModal from "../components/AlmanacModal.jsx";
+import { CoinsDisplay } from "../utils/currency.jsx";
+import { TimeDisplay, advanceTime, getTimePeriod } from "../utils/timeSystem.jsx";
 
 function GamePage() {
     const navigate = useNavigate();
@@ -36,6 +38,10 @@ function GamePage() {
                 subLocationName: "Центр",
                 xp: 0,
                 maxXp: 100,
+                copper: 150,
+                day: 1,
+                hour: 8,
+                minute: 0,
                 ...parsed // Перекриваємо дефолтні значення тими, що є в збереженні
             };
             
@@ -46,7 +52,9 @@ function GamePage() {
     }, [navigate]);
 
     const updateLocation = (newId, newName) => {
-        const updated = { ...character, locationId: newId, locationName: newName, subLocationName: "Центр" };
+        // Подорож між поселеннями на карті займає 2 години (120 хвилин)
+        const timeAdvancedChar = advanceTime(character, 120);
+        const updated = { ...timeAdvancedChar, locationId: newId, locationName: newName, subLocationName: "Центр" };
         setCharacter(updated);
         localStorage.setItem("player_character", JSON.stringify(updated));
     };
@@ -67,8 +75,10 @@ function GamePage() {
 
     if (!character) return null;
 
+    const period = getTimePeriod(character.hour ?? 8);
+
     return (
-        <div className="game-page">
+        <div className={`game-page ${period.skyClass}`} style={{ backgroundImage: period.bgGradient }}>
             <div className="game-ui">
                 <div className="top-bar">
                     <div className="player-info-card">
@@ -79,9 +89,13 @@ function GamePage() {
                             <div className="player-meta">
                                 <h2 className="player-name">{character.nickname}</h2>
                                 <div className="level-xp-container">
-                                    <div className="level-location-row">
+                                    <div className="level-location-row" style={{ flexWrap: "wrap", gap: "6px" }}>
                                         <span className="player-level">Lvl. {character.level}</span>
                                         <span className="player-location-tag">📍 {character.locationName}</span>
+                                        <span className="player-money-tag" style={{ background: "rgba(0,0,0,0.3)", padding: "2px 8px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.15)", display: "inline-flex", alignItems: "center" }}>
+                                            <CoinsDisplay totalCopper={character.copper || 0} size="small" />
+                                        </span>
+                                        <TimeDisplay character={character} size="small" />
                                     </div>
                                     <div className="mini-xp-bar"><div className="mini-xp-fill" style={{ width: `${(character.xp/character.maxXp)*100}%` }}></div></div>
                                 </div>

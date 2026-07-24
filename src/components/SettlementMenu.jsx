@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/SettlementMenu.css";
 import { npcs } from "../data/npcs.js";
 import NPCDialogue from "./NPCDialogue.jsx";
+import { restUntilMorning, TimeDisplay } from "../utils/timeSystem.jsx";
 
 // Гранично безпечний комопнент аватара NPC з фолбеком на першу літеру
 function NPCRowAvatar({ npc }) {
@@ -60,6 +61,11 @@ function SettlementMenu({ onClose, settlementName, character, onUpdateCharacter 
                         </h3>
                     </div>
                 </div>
+                {character && (
+                    <div style={{ marginLeft: "auto", marginRight: "12px" }}>
+                        <TimeDisplay character={character} size="small" />
+                    </div>
+                )}
                 {selectedPlace ? (
                     <button className="back-settlement-btn" onClick={() => setSelectedPlace(null)}>←</button>
                 ) : (
@@ -94,6 +100,26 @@ function SettlementMenu({ onClose, settlementName, character, onUpdateCharacter 
                     // Інтер'єр споруди
                     <div className="place-interior">
                         <p className="place-desc">"{selectedPlace.desc}"</p>
+                        
+                        {selectedPlace.id === "tavern" && character && onUpdateCharacter && (
+                            <div style={{ margin: "12px 0", background: "rgba(142, 68, 173, 0.15)", border: "1px solid rgba(162, 155, 254, 0.3)", padding: "12px", borderRadius: "10px", textAlign: "center" }}>
+                                <p style={{ margin: "0 0 8px 0", fontSize: "13px", color: "#e0d0ff" }}>
+                                    🛏️ <strong>Замовити кімнату у Корчмі</strong> — відпочити до ранку (08:00 AM) та повністю відновити здоров'я, ману та сон.
+                                </p>
+                                <button 
+                                    className="place-btn"
+                                    style={{ background: "linear-gradient(135deg, #8e44ad, #6c5ce7)", border: "none", width: "100%", padding: "10px", borderRadius: "8px", color: "#fff", fontWeight: "bold", cursor: "pointer" }}
+                                    onClick={() => {
+                                        const rested = restUntilMorning(character);
+                                        onUpdateCharacter(rested);
+                                        alert("🌅 Ви гарно виспалися у теплому ліжку корчми! Показники відновлено до 100%, настав ранок (08:00 AM).");
+                                    }}
+                                >
+                                    🌙 Відпочити у Корчмі (Перемотати на Ранок)
+                                </button>
+                            </div>
+                        )}
+
                         <div className="interior-divider"></div>
                         
                         <div className="npcs-section">

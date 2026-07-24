@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "../styles/ActionWindow.css";
 import { items } from "../data/items.js";
+import { advanceTime, formatGameTime, getTimePeriod, TimeDisplay } from "../utils/timeSystem.jsx";
 
 function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
     if (!subLocation) return null;
@@ -240,26 +241,58 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
         "desert_ruins_dungeon": ["blue_lady", "underground_flower", "ardruinda"]
     };
 
-    // Зважений вибір трави на основі рідкості
-    const getWeightedHerb = (allowedIds) => {
-        const candidates = items["Alchemical-Herbs"].filter(h => allowedIds.includes(h.id));
+    // Нічні та сяючі рослини
+    const nightHerbIds = [
+        "firefly_grass",      // Трава-Світляшка
+        "mrakovyk",           // Мраковик
+        "bright_lady",        // Яскрава Леді
+        "underground_flower", // Підземна квітка
+        "ardruinda",          // Ардруінда
+        "blue_azure",         // Синя Лазур
+        "pink_crested_lily"   // Рожева плашина лілія
+    ];
+
+    // Зважений вибір трави на основі рідкості та часу доби
+    const getWeightedHerb = (allowedIds, periodId = "day") => {
+        let poolIds = [...allowedIds];
+        const isNight = periodId === "night";
+        const isEvening = periodId === "evening";
+        const isNightOrEvening = isNight || isEvening;
+
+        // Увечері та вночі додаємо сяючі/нічні рослини в басейн знахідок
+        if (isNightOrEvening) {
+            nightHerbIds.forEach(id => {
+                if (!poolIds.includes(id)) {
+                    poolIds.push(id);
+                }
+            });
+        }
+
+        let candidates = items["Alchemical-Herbs"].filter(h => poolIds.includes(h.id));
         if (candidates.length === 0) return null;
-        
-        const weights = {
+
+        const baseWeights = {
             "common": 50,
             "uncommon": 30,
             "rare": 15,
             "epic": 5
         };
-        
-        const candidatesWithWeights = candidates.map(c => ({
-            item: c,
-            weight: weights[c.rarity] || 50
-        }));
-        
+
+        const candidatesWithWeights = candidates.map(c => {
+            let weight = baseWeights[c.rarity] || 50;
+
+            // Нічні рослини мають багаторазово підвищений шанс випадіння у вечірній та нічний час!
+            if (nightHerbIds.includes(c.id)) {
+                if (isNight) weight *= 5;
+                else if (isEvening) weight *= 3;
+            }
+
+            return { item: c, weight };
+        });
+
         const totalWeight = candidatesWithWeights.reduce((sum, c) => sum + c.weight, 0);
         let roll = Math.random() * totalWeight;
-        
+
         for (const cand of candidatesWithWeights) {
             if (roll < cand.weight) {
                 return cand.item;
@@ -272,7 +305,18 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
     const handleAction = (actionId, actionName) => {
         if (!character || !onUpdateCharacter) return;
 
-        const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        // Час ігрової дії: робимо крок у 45 хвилин
+        const timeAdvancedChar = advanceTime(character, 45);
+        const currentPeriod = getTimePeriod(timeAdvancedChar.hour);
+        const periodId = currentPeriod.id;
+        const isNight = periodId === "night";
+        const isEvening = periodId === "evening";
+        const isNightOrEvening = isNight || isEvening;
+
+        const gameTimeString = `${formatGameTime(timeAdvancedChar.hour, timeAdvancedChar.minute)} (${currentPeriod.name})`;
+        const realTimeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const timeString = `⏱️ ${gameTimeString}`;
+
         const inventory = Array.isArray(character.inventory) ? character.inventory : [];
 
         // Перевірка на заповненість інвентарю для пошуку трав
@@ -324,15 +368,27 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
         let foundItem = null;
         let xpGained = 0;
 
+        // Множник досвіду за підвищену ризикованість увечері та вночі
+        const xpMultiplier = isNight ? 1.5 : isEvening ? 1.25 : 1.0;
+
         if (isGatheringAction) {
-            const success = Math.random() < 0.85; // Шанс успіху 85%
+            // Шанс успіху: Ранок/День 85%, Вечір 65%, Ніч 45%
+            const gatherSuccessChance = isNight ? 0.45 : isEvening ? 0.65 : 0.85;
+            const success = Math.random() < gatherSuccessChance;
+
             if (success) {
                 const allowedHerbs = herbDropsByAction[actionId] || [];
-                foundItem = getWeightedHerb(allowedHerbs);
+                foundItem = getWeightedHerb(allowedHerbs, periodId);
                 if (foundItem) {
-                    xpGained = foundItem.rarity === "epic" ? 22 : foundItem.rarity === "rare" ? 16 : foundItem.rarity === "uncommon" ? 12 : 8;
-                    logText = `🌱 Ви ретельно оглянули територію і знайшли чудовий екземпляр: "${foundItem.name}"`;
+                    const baseXP = foundItem.rarity === "epic" ? 22 : foundItem.rarity === "rare" ? 16 : foundItem.rarity === "uncommon" ? 12 : 8;
+                    xpGained = Math.round(baseXP * xpMultiplier);
+
+                    logText = `🌱 Ви ретельно оглянули територію і знайшли: "${foundItem.name}"`;
                     logType = "loot";
+
+                    if (nightHerbIds.includes(foundItem.id) && isNightOrEvening) {
+                        logText += ` (✨ У ${isNight ? "нічній пітьмі" : "вечірніх сутінках"} ця рідкісна рослина яскраво фосфоресцює та сяє!)`;
+                    }
 
                     // Особливі події та механіки при зборі
                     if (foundItem.id === "shvibald") {
@@ -384,59 +440,92 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
                         logText += " (Вонюча квітка у глибокому лісі виділила їдкий запах: -10 HP)";
                     }
                 } else {
-                    xpGained = 4;
+                    xpGained = Math.round(4 * xpMultiplier);
                     logText = "🍂 Ви знайшли лише зів'яле коріння неотруйних рослин.";
                 }
             } else {
-                xpGained = 4;
-                logText = "🔍 Довгі пошуки серед заростей не дали жодних цінних результатів.";
+                xpGained = Math.round(4 * xpMultiplier);
+                if (isNight) {
+                    logText = "🌙 Нічна густа темрява заважає розгледіти стежки. Пошуки трав у сутінках виявилися марними.";
+                } else if (isEvening) {
+                    logText = "🌇 Вечірні сутінки ускладнили огляд заростей. Жодної корисної рослини не помічено.";
+                } else {
+                    logText = "🔍 Довгі пошуки серед заростей не дали жодних цінних результатів.";
+                }
             }
         } 
         else if (actionId === "search_resources") {
-            const success = Math.random() < 0.40; // Шанс знайти будь-яку траву 40%
+            const searchChance = isNight ? 0.25 : isEvening ? 0.32 : 0.40;
+            const success = Math.random() < searchChance;
             if (success) {
                 const allHerbs = items["Alchemical-Herbs"].map(h => h.id);
-                foundItem = getWeightedHerb(allHerbs);
+                foundItem = getWeightedHerb(allHerbs, periodId);
                 if (foundItem) {
-                    xpGained = foundItem.rarity === "epic" ? 18 : foundItem.rarity === "rare" ? 14 : foundItem.rarity === "uncommon" ? 10 : 6;
+                    const baseXP = foundItem.rarity === "epic" ? 18 : foundItem.rarity === "rare" ? 14 : foundItem.rarity === "uncommon" ? 10 : 6;
+                    xpGained = Math.round(baseXP * xpMultiplier);
                     logText = `💎 Випадкова знахідка! Ви знайшли цінну рослину: "${foundItem.name}"`;
                     logType = "loot";
+                    if (nightHerbIds.includes(foundItem.id) && isNightOrEvening) {
+                        logText += " (✨ Сяє у темряві!)";
+                    }
                 }
             } else {
-                xpGained = 5;
-                logText = "⛏️ Ви оглянули скелясті тріщини та суху траву, але корисних ресурсів не виявлено.";
+                xpGained = Math.round(5 * xpMultiplier);
+                logText = isNight 
+                    ? "🌙 Ніч завадила розгледіти корисні мінерали у темряві." 
+                    : "⛏️ Ви оглянули скелясті тріщини та суху траву, але корисних ресурсів не виявлено.";
             }
         }
         else if (actionId === "carrow_monsters") {
-            const success = Math.random() < 0.70;
-            xpGained = success ? 22 : 8;
-            logText = success 
-                ? "⚔️ Битва на Рівнині Карроу! Ви успішно вистежили та здолали степового вовка." 
-                : "⚔️ Ви обійшли всю Рівнину Карроу, але не зустріли жодних небезпечних істот.";
-            logType = success ? "success" : "info";
+            const chance = isNight ? 0.45 : isEvening ? 0.58 : 0.70;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 22 : 8) * xpMultiplier);
+            if (success) {
+                logText = isNight 
+                    ? "⚔️ Нічне полювання на Рівнині Карроу! З пітьми виринув Лютневий Нічний Вовк з палаючими очима! Ви подолали його! (+50% Досвіду)" 
+                    : isEvening
+                    ? "⚔️ У сутінках на Рівнині Карроу ви вистежили та здолали степового вовка! (+25% Досвіду)"
+                    : "⚔️ Битва на Рівнині Карроу! Ви успішно вистежили та здолали степового вовка.";
+                logType = "success";
+            } else {
+                logText = isNightOrEvening 
+                    ? "🌙 Нічні хижаки непомітно пересуваються у пітьмі і змусили вас відступити." 
+                    : "⚔️ Ви обійшли всю Рівнину Карроу, але не зустріли жодних небезпечних істот.";
+                logType = "info";
+            }
         }
         else if (actionId === "dead_plain_undead") {
-            const success = Math.random() < 0.75;
-            xpGained = success ? 26 : 10;
-            logText = success 
-                ? "💀 Ви зустріли блукаючого кістяка на Рівнині мерців та вщент розбили його!" 
-                : "💀 Могильна тиша огортає Рівнину мерців, ворогів наразі не виявлено.";
-            logType = success ? "success" : "info";
+            const chance = isNight ? 0.50 : isEvening ? 0.62 : 0.75;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 26 : 10) * xpMultiplier);
+            if (success) {
+                logText = isNight 
+                    ? "💀 У нічній пітьмі на Рівнині мерців з курганів піднявся Палаючий Нічний Некромант! Ви розтрощили його! (+50% Досвіду)" 
+                    : "💀 Ви зустріли блукаючого кістяка на Рівнині мерців та вщент розбили його!";
+                logType = "success";
+            } else {
+                logText = isNightOrEvening
+                    ? "🌙 Нічна імла огортає кургани, некроманти сховалися у тіні."
+                    : "💀 Могильна тиша огортає Рівнину мерців, ворогів наразі не виявлено.";
+                logType = "info";
+            }
         }
         else if (actionId === "forest_outskirts_mysteries") {
-            const success = Math.random() < 0.50;
-            xpGained = success ? 18 : 6;
+            const chance = isNight ? 0.35 : isEvening ? 0.42 : 0.50;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 18 : 6) * xpMultiplier);
             logText = success 
                 ? "🔍 Досліджуючи околиці лісу, ви знайшли стару покинуту схованку мандрівника." 
-                : "🔍 Околиці лісу виявилися спокійними, нічого дивного не помічено.";
+                : isNight ? "🌙 У суцільній нічній темряві складно розгледіти заховані сліди." : "🔍 Околиці лісу виявилися спокійними, нічого дивного не помічено.";
             logType = success ? "success" : "info";
         }
         else if (actionId === "wild_lands_search") {
-            const success = Math.random() < 0.60;
-            xpGained = success ? 20 : 8;
+            const chance = isNight ? 0.40 : isEvening ? 0.50 : 0.60;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 20 : 8) * xpMultiplier);
             if (success && Math.random() < 0.50) {
                 const allHerbs = items["Alchemical-Herbs"].map(h => h.id);
-                foundItem = getWeightedHerb(allHerbs);
+                foundItem = getWeightedHerb(allHerbs, periodId);
                 if (foundItem) {
                     logText = `🎒 Ви знайшли цінні речі колишніх експедицій у Диких землях, серед яких була: "${foundItem.name}"!`;
                     logType = "loot";
@@ -447,24 +536,26 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             } else {
                 logText = success 
                     ? "🎒 Ви знайшли цінні залишки колишніх експедицій у Диких землях." 
-                    : "🎒 Дикі землі нещадні й пусті, ви знайшли лише пісок та гілки.";
+                    : isNight ? "🌙 Ніч у Диких землях холодна й темна, ви нічого не знайшли." : "🎒 Дикі землі нещадні й пусті, ви знайшли лише пісок та гілки.";
                 logType = success ? "success" : "info";
             }
         }
         else if (actionId === "slums_fight") {
-            const success = Math.random() < 0.65;
-            xpGained = success ? 24 : 12;
+            const chance = isNight ? 0.40 : isEvening ? 0.52 : 0.65;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 24 : 12) * xpMultiplier);
             logText = success 
-                ? "🥊 Перемога у важкому кулачному двобої із зухвалим мешканцем нетрів!" 
-                : "🥊 Противник виявився спритнішим та наніс вам кілька синців, перш ніж ви відступили.";
+                ? (isNight ? "🥊 У завулках нічних нетрів ви розгромили банду Нічних Тіньових Грабіжників! (+50% Досвіду)" : "🥊 Перемога у важкому кулачному двобої із зухвалим мешканцем нетрів!")
+                : "🥊 Противник виявився спритнішим у темряві та наніс вам кілька синців, перш ніж ви відступили.";
             logType = success ? "success" : "info";
         }
         else if (actionId === "slums_search") {
-            const success = Math.random() < 0.55;
-            xpGained = success ? 16 : 6;
+            const chance = isNight ? 0.35 : isEvening ? 0.45 : 0.55;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 16 : 6) * xpMultiplier);
             if (success && Math.random() < 0.40) {
                 const allHerbs = items["Alchemical-Herbs"].map(h => h.id);
-                foundItem = getWeightedHerb(allHerbs);
+                foundItem = getWeightedHerb(allHerbs, periodId);
                 if (foundItem) {
                     logText = `🔍 Порпаючись у темних закутках нетрів, ви знайшли дещо цінне: "${foundItem.name}"!`;
                     logType = "loot";
@@ -480,18 +571,20 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             }
         }
         else if (actionId === "silver_forest_monsters") {
-            const success = Math.random() < 0.70;
-            xpGained = success ? 24 : 10;
+            const chance = isNight ? 0.45 : isEvening ? 0.58 : 0.70;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 24 : 10) * xpMultiplier);
             logText = success 
-                ? "⚔️ У Срібному лісі ви успішно здолали рідкісного срібнокликого вовка!" 
-                : "⚔️ Срібний ліс здавався затишним і спокійним, жодних монстрів.";
+                ? (isNight ? "⚔️ У нічному Срібному лісі зі сховку вискочив Лютий Нічний Тіньовий Вовк! Ви перемогли! (+50% Досвіду)" : "⚔️ У Срібному лісі ви успішно здолали рідкісного срібнокликого вовка!")
+                : "⚔️ Срібний ліс у сутінках здавався затишним і спокійним, жодних монстрів.";
             logType = success ? "success" : "info";
         }
         else if (actionId === "sea_bay_monsters") {
-            const success = Math.random() < 0.70;
-            xpGained = success ? 24 : 10;
+            const chance = isNight ? 0.45 : isEvening ? 0.58 : 0.70;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 24 : 10) * xpMultiplier);
             logText = success 
-                ? "🐉 Ви зустріли та перемогли агресивного річкового ящера у морській бухті!" 
+                ? (isNight ? "🐉 З темних глибин нічної морської бухти виринув Нічний Глибинний Жнець! Ви подолали монстра! (+50% Досвіду)" : "🐉 Ви зустріли та перемогли агресивного річкового ящера у морській бухті!")
                 : "🐉 Хвилі б'ються об каміння, жодних ознак морських монстрів.";
             logType = success ? "success" : "info";
         }
@@ -580,18 +673,20 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             logType = success ? "success" : "info";
         }
         else if (actionId === "desert_lands_bandits") {
-            const success = Math.random() < 0.65;
-            xpGained = success ? 25 : 10;
+            const chance = isNight ? 0.40 : isEvening ? 0.52 : 0.65;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 25 : 10) * xpMultiplier);
             logText = success 
-                ? "⛺ Ви вистежили та успішно розігнали невеликий табір пустельних бандитів!" 
-                : "⛺ Сліди розбійників загубилися серед безмежних гарячих пісків.";
+                ? (isNight ? "⛺ У суцільній пітьмі ви тихо підкралися та розгромили табір Нічних Пустельних Розбійників! (+50% Досвіду)" : "⛺ Ви вистежили та успішно розігнали невеликий табір пустельних бандитів!")
+                : "⛺ Сліди розбійників загубилися серед темних та холодних гарячих пісків.";
             logType = success ? "success" : "info";
         }
         else if (actionId === "desert_sea_forest_monsters") {
-            const success = Math.random() < 0.70;
-            xpGained = success ? 24 : 10;
+            const chance = isNight ? 0.45 : isEvening ? 0.58 : 0.70;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 24 : 10) * xpMultiplier);
             logText = success 
-                ? "👾 Ви здолали отруйного шипохвоста у пустельно-морському лісі!" 
+                ? (isNight ? "👾 Ви зчепилися із Лютим Нічним Шипохвостом у сутінках сухого лісу та здолали його! (+50% Досвіду)" : "👾 Ви здолали отруйного шипохвоста у пустельно-морському лісі!")
                 : "👾 Сухий ліс здається абсолютно мертвим і нерухомим.";
             logType = success ? "success" : "info";
         }
@@ -612,10 +707,11 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             logType = success ? "success" : "info";
         }
         else if (actionId === "old_forest_outskirts_monsters") {
-            const success = Math.random() < 0.70;
-            xpGained = success ? 28 : 12;
+            const chance = isNight ? 0.45 : isEvening ? 0.58 : 0.70;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 28 : 12) * xpMultiplier);
             logText = success 
-                ? "👹 Битва з лісовим тролем на околицях старого лісу завершилися вашою впевненою перемогою!" 
+                ? (isNight ? "👹 У темних надрах нічного пралісу на вас напав Жахливий Нічний Лісовий Троль! У кривавій битві ви перемогли! (+50% Досвіду)" : "👹 Битва з лісовим тролем на околицях старого лісу завершилися вашою впевненою перемогою!")
                 : "👹 Ви чули страшні звуки у гущавині, але вирішили не ризикувати та обійти небезпеку.";
             logType = success ? "success" : "info";
         }
@@ -630,19 +726,21 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             logType = "info";
         }
         else if (actionId === "sea_territory_old_forest_monsters") {
-            const success = Math.random() < 0.65;
-            xpGained = success ? 30 : 12;
+            const chance = isNight ? 0.40 : isEvening ? 0.52 : 0.65;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 30 : 12) * xpMultiplier);
             logText = success 
-                ? "🐉 Битва з велетенським кракеном у морі старого лісу принесла вам велику славу!" 
+                ? (isNight ? "🐉 У бурхливих нічних хвилях ви розгромили Прадавнього Нічного Кракенa! (+50% Досвіду)" : "🐉 Битва з велетенським кракеном у морі старого лісу принесла вам велику славу!")
                 : "🐉 На морі піднявся потужний шторм, завадивши вашому полюванню.";
             logType = success ? "success" : "info";
         }
         else if (actionId === "lake_bay_search") {
-            const success = Math.random() < 0.50;
-            xpGained = success ? 18 : 6;
+            const chance = isNight ? 0.35 : isEvening ? 0.42 : 0.50;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 18 : 6) * xpMultiplier);
             if (success && Math.random() < 0.40) {
                 const allowed = ["seaweed", "sea_herb", "pink_crested_lily"];
-                foundItem = getWeightedHerb(allowed);
+                foundItem = getWeightedHerb(allowed, periodId);
                 if (foundItem) {
                     logText = `🌊 Ви виловили кілька блискучих перлин та чудовий водяний зразок: "${foundItem.name}"!`;
                     logType = "loot";
@@ -663,11 +761,12 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             logType = "info";
         }
         else if (actionId === "hunt_beast") {
-            const success = Math.random() < 0.65;
-            xpGained = success ? 18 : 6;
+            const chance = isNight ? 0.35 : isEvening ? 0.50 : 0.65;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 18 : 6) * xpMultiplier);
             logText = success 
-                ? "🏹 Полювання пройшло успішно! Ви вистежили та вполювали швидкого лісового зайця." 
-                : "🏹 Звір почув ваші кроки за милю та миттєво зник у нетрях лісу.";
+                ? (isNight ? "🏹 Нічне полювання! Ви вистежили рідкісного Нічного Срібного Зайця за його сяючим хутром! (+50% Досвіду)" : "🏹 Полювання пройшло успішно! Ви вистежили та вполювали швидкого лісового зайця.")
+                : isNight ? "🌙 Звір заховався у темноті нічного лісу." : "🏹 Звір почув ваші кроки за милю та миттєво зник у нетрях лісу.";
             logType = success ? "success" : "info";
         }
         else if (actionId === "fishing") {
@@ -695,18 +794,20 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             logType = success ? "success" : "info";
         }
         else if (actionId === "flying_monsters") {
-            const success = Math.random() < 0.60;
-            xpGained = success ? 24 : 12;
+            const chance = isNight ? 0.40 : isEvening ? 0.50 : 0.60;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 24 : 12) * xpMultiplier);
             logText = success 
-                ? "🦅 З неба каменем кинувся гірський яструб! Ви вправно захистилися і здобули цінний бойовий досвід." 
+                ? (isNight ? "🦅 З нічних хмар кинувся Нічний Гранітний Нетопир! Ви здолали летаючий жах! (+50% Досвіду)" : "🦅 З неба каменем кинувся гірський яструб! Ви вправно захистилися і здобули цінний бойовий досвід.")
                 : "🦅 Тінь пролетіла високо над скелями, залишаючи вас у напруженому очікуванні.";
             logType = success ? "success" : "info";
         }
         else if (actionId === "hunt_monsters") {
-            const success = Math.random() < 0.75;
-            xpGained = success ? 20 : 10;
+            const chance = isNight ? 0.45 : isEvening ? 0.60 : 0.75;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 20 : 10) * xpMultiplier);
             logText = success 
-                ? "⚔️ Ви зіткнулися з блукаючим монстром і здолали його у запеклій сутичці!" 
+                ? (isNight ? "⚔️ З пітьми вискочив Тіньовий Нічний Потвор! У жорстокій нічній сутичці ви здобули видатну перемогу! (+50% Досвіду)" : "⚔️ Ви зіткнулися з блукаючим монстром і здолали його у запеклій сутичці!")
                 : "⚔️ Пошуки чудовиськ затягнулися, ви лише поблукали небезпечними стежками.";
             logType = success ? "success" : "info";
         }
@@ -719,11 +820,12 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             logType = success ? "success" : "info";
         }
         else if (actionId === "folford_hunt_animals") {
-            const success = Math.random() < 0.65;
-            xpGained = success ? 20 : 8;
+            const chance = isNight ? 0.35 : isEvening ? 0.50 : 0.65;
+            const success = Math.random() < chance;
+            xpGained = Math.round((success ? 20 : 8) * xpMultiplier);
             logText = success 
-                ? "🦌 Ви заглибилися в лісові хащі й успішно вполювали прекрасного дикого оленя!" 
-                : "🦌 Мисливські стежки виявилися порожніми, жодної дикої тварини не зустрінуто.";
+                ? (isNight ? "🦌 У нічних сутінках лісу Фолфорда ви вполювали рідкісного Нічного Срібнорогого Оленя! (+50% Досвіду)" : "🦌 Ви заглибилися в лісові хащі й успішно вполювали прекрасного дикого оленя!")
+                : "🦌 Мисливські стежки виявилися порожніми у темряві.";
             logType = success ? "success" : "info";
         }
         else if (actionId === "zalda_search_ancient") {
@@ -934,10 +1036,13 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
         // Збереження оновленого персонажа
         const updatedCharacter = {
             ...character,
+            day: timeAdvancedChar.day,
+            hour: timeAdvancedChar.hour,
+            minute: timeAdvancedChar.minute,
             hp: newHp,
-            sleep: newSleep,
-            water: newWater,
-            food: newFood,
+            sleep: levelUpOccurred ? 100 : Math.min(newSleep, timeAdvancedChar.sleep),
+            water: levelUpOccurred ? 100 : Math.min(newWater, timeAdvancedChar.water),
+            food: levelUpOccurred ? 100 : Math.min(newFood, timeAdvancedChar.food),
             xp: newXp,
             level: newLevel,
             maxXp: newMaxXp,
@@ -958,6 +1063,11 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
                             <p className="loc-type">Зона дослідження</p>
                         </div>
                     </div>
+                    {character && (
+                        <div style={{ marginLeft: "auto", marginRight: "16px" }}>
+                            <TimeDisplay character={character} size="small" />
+                        </div>
+                    )}
                     <button className="close-action-btn" onClick={onClose}>×</button>
                 </header>
 

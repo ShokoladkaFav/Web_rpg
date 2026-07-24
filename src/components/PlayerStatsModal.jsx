@@ -1,4 +1,6 @@
 import "../styles/PlayerStatsModal.css";
+import { CoinsDisplay } from "../utils/currency.jsx";
+import { TimeDisplay } from "../utils/timeSystem.jsx";
 
 function PlayerStatsModal({ character, onClose }) {
     const stats = [
@@ -43,6 +45,20 @@ function PlayerStatsModal({ character, onClose }) {
                             <label>Спеціалізація</label>
                             <p className="stat-value trait-value">{character.trait.name}</p>
                             <p className="stat-desc">{character.trait.desc}</p>
+                        </div>
+
+                        <div className="stat-card wallet-section" style={{ background: "rgba(0,0,0,0.25)", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(255,215,0,0.2)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                            <label style={{ color: "#ffd700", fontWeight: "600", fontSize: "12px", textTransform: "uppercase" }}>💰 Гаманець (Монети)</label>
+                            <div style={{ marginTop: "8px" }}>
+                                <CoinsDisplay totalCopper={character.copper || 0} size="large" />
+                            </div>
+                        </div>
+
+                        <div className="stat-card time-section" style={{ background: "rgba(0,0,0,0.25)", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(162,155,254,0.3)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                            <label style={{ color: "#a29bfe", fontWeight: "600", fontSize: "12px", textTransform: "uppercase" }}>⏱️ Ігровий час та Пора дня</label>
+                            <div style={{ marginTop: "8px" }}>
+                                <TimeDisplay character={character} size="medium" />
+                            </div>
                         </div>
 
                         <div className="stats-divider-small"></div>

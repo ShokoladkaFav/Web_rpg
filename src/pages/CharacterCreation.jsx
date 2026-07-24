@@ -39,6 +39,10 @@ function CharacterCreation() {
             sleep: 100,
             locationId: "start_village",
             locationName: "Селище 'Початок'",
+            copper: 150, // 1 срібна монета + 50 мідних
+            day: 1,
+            hour: 8,
+            minute: 0,
             // НОВЕ: Спорядження та Інвентар
             equipment: {
                 head: null,

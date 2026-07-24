@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../styles/NPCDialogue.css";
+import { CoinsDisplay } from "../utils/currency.jsx";
 
 function NPCDialogue({ npc, character, onUpdateCharacter, onClose }) {
     // Обираємо випадкове вітання при відкритті вікна
@@ -117,6 +118,12 @@ function NPCDialogue({ npc, character, onUpdateCharacter, onClose }) {
                     <div className="npc-status-info">
                         <span className="npc-pulse">●</span> Active Dialogue
                     </div>
+                    {character && (
+                        <div style={{ marginLeft: "auto", marginRight: "16px", display: "flex", alignItems: "center", gap: "6px", background: "rgba(0,0,0,0.3)", padding: "3px 10px", borderRadius: "12px", border: "1px solid rgba(255,215,0,0.2)" }}>
+                            <span style={{ fontSize: "11px", color: "#aaa" }}>Ваші монети:</span>
+                            <CoinsDisplay totalCopper={character.copper || 0} size="small" />
+                        </div>
+                    )}
                     <button className="npc-close-btn" onClick={onClose}>×</button>
                 </header>
 
