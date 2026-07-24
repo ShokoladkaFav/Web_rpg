@@ -70,13 +70,13 @@ function AlmanacModal({ onClose }) {
     const [rarityFilter, setRarityFilter] = useState("all");
     const [selectedItemDetail, setSelectedItemDetail] = useState(null);
 
-    const alchemicalHerbs = items["Alchemical-Herbs"] || [];
+    const currentCategoryItems = items[selectedCategory] || [];
 
-    // Фільтрація трав
-    const filteredHerbs = alchemicalHerbs.filter(herb => {
-        const matchesSearch = herb.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              herb.description.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesRarity = rarityFilter === "all" || herb.rarity === rarityFilter;
+    // Фільтрація предметів активної категорії
+    const filteredItems = currentCategoryItems.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                              item.description.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesRarity = rarityFilter === "all" || item.rarity === rarityFilter;
         return matchesSearch && matchesRarity;
     });
 
@@ -85,9 +85,17 @@ function AlmanacModal({ onClose }) {
             id: "Alchemical-Herbs",
             title: "Корисні трави",
             icon: "🌿",
-            count: alchemicalHerbs.length,
+            count: (items["Alchemical-Herbs"] || []).length,
             available: true,
             description: "Лікувальні рослини, рідкісні квіти, магічні водорості та цілющі гриби."
+        },
+        {
+            id: "Food_Berries",
+            title: "Ягоди та Пожива",
+            icon: "🫐",
+            count: (items["Food_Berries"] || []).length,
+            available: true,
+            description: "Соковиті лісові й гірські ягоди, смачні горіхи, насіння та фрукти."
         },
         {
             id: "Weapons",
@@ -196,7 +204,7 @@ function AlmanacModal({ onClose }) {
                                     <span className="search-icon">🔍</span>
                                     <input
                                         type="text"
-                                        placeholder="Пошук трави за назвою чи описом..."
+                                        placeholder={`Пошук у категорії "${categories.find(c => c.id === selectedCategory)?.title || 'предмети'}"...`}
                                         value={searchQuery}
                                         onChange={e => setSearchQuery(e.target.value)}
                                         className="almanac-search-input"
@@ -227,50 +235,54 @@ function AlmanacModal({ onClose }) {
                                 ))}
                             </div>
 
-                            {/* Herbs Grid */}
+                            {/* Items Grid */}
                             <div className="almanac-items-grid-container">
-                                {filteredHerbs.length > 0 ? (
+                                {filteredItems.length > 0 ? (
                                     <div className="almanac-items-grid">
-                                        {filteredHerbs.map(herb => (
+                                        {filteredItems.map(item => (
                                             <div
-                                                key={herb.id}
-                                                className={`almanac-item-card rarity-${herb.rarity}`}
-                                                onClick={() => setSelectedItemDetail(herb)}
+                                                key={item.id}
+                                                className={`almanac-item-card rarity-${item.rarity}`}
+                                                onClick={() => setSelectedItemDetail(item)}
                                             >
                                                 <div className="item-card-top">
                                                     <div className="item-img-wrap">
-                                                        <img
-                                                            src={herb.image}
-                                                            alt={herb.name}
-                                                            className="item-img"
-                                                            onError={e => {
-                                                                e.target.style.display = "none";
-                                                                if (e.target.nextSibling) {
-                                                                    e.target.nextSibling.style.display = "block";
-                                                                }
-                                                            }}
-                                                        />
-                                                        <span className="item-fallback-icon" style={{ display: "none" }}>🌿</span>
+                                                        {item.image ? (
+                                                            <img
+                                                                src={item.image}
+                                                                alt={item.name}
+                                                                className="item-img"
+                                                                onError={e => {
+                                                                    e.target.style.display = "none";
+                                                                    if (e.target.nextSibling) {
+                                                                        e.target.nextSibling.style.display = "block";
+                                                                    }
+                                                                }}
+                                                            />
+                                                        ) : null}
+                                                        <span className="item-fallback-icon" style={{ display: item.image ? "none" : "block", fontSize: "24px" }}>
+                                                            {item.icon || (selectedCategory === "Food_Berries" ? "🫐" : "🌿")}
+                                                        </span>
                                                     </div>
                                                     <div className="item-title-meta">
-                                                        <h4 className="item-name">{herb.name}</h4>
+                                                        <h4 className="item-name">{item.name}</h4>
                                                         <div className="item-pills-row">
-                                                            <span className={`rarity-pill rarity-${herb.rarity}`}>
-                                                                {RARITY_NAMES[herb.rarity] || herb.rarity}
+                                                            <span className={`rarity-pill rarity-${item.rarity}`}>
+                                                                {RARITY_NAMES[item.rarity] || item.rarity}
                                                             </span>
                                                             <span className="value-pill" style={{ display: "inline-flex", alignItems: "center" }}>
-                                                                <CoinsDisplay totalCopper={herb.value} size="small" />
+                                                                <CoinsDisplay totalCopper={item.value} size="small" />
                                                             </span>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <p className="item-desc">{herb.description}</p>
+                                                <p className="item-desc">{item.description}</p>
 
-                                                {HERB_LOCATIONS[herb.id] && (
+                                                {HERB_LOCATIONS[item.id] && (
                                                     <div className="item-location-info">
                                                         <span className="loc-icon">📍</span>
-                                                        <span className="loc-text">{HERB_LOCATIONS[herb.id]}</span>
+                                                        <span className="loc-text">{HERB_LOCATIONS[item.id]}</span>
                                                     </div>
                                                 )}
                                             </div>
@@ -279,7 +291,7 @@ function AlmanacModal({ onClose }) {
                                 ) : (
                                     <div className="almanac-empty-state">
                                         <span className="empty-icon">🍃</span>
-                                        <p>Трав за вашим запитом не знайдено.</p>
+                                        <p>Предметів за вашим запитом не знайдено.</p>
                                         <button className="reset-filter-btn" onClick={() => { setSearchQuery(""); setRarityFilter("all"); }}>
                                             Скинути фільтри
                                         </button>

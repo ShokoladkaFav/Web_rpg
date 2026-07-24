@@ -213,32 +213,32 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
 
     const currentUniqueActions = uniqueActions[subLocation.id] || [];
 
-    // Зони випадіння трав
+    // Зони випадіння трав та ягід
     const herbDropsByAction = {
-        "forest_plants": ["young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
-        "forest_outskirts_herbs": ["young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
-        "silver_forest_herbs": ["young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint"],
-        "grand_forest_herbs": ["wooden_grass", "young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus"],
-        "deep_old_forest_herbs": ["wooden_grass", "twin_flower", "lovers_pair", "branch_healthy_tree", "leaves_healthy_tree", "stinky_flower", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "four_leaf_clover", "golden_flower", "hermit_herb", "gribiscus"],
-        "carrow_herbs": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "mint", "birds_herb", "gribiscus"],
-        "shimmerglen_fruit_plains": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "mint", "birds_herb"],
-        "shraudy_fruit_plains": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "mint"],
-        "mudfrost_fruit_plains": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower"],
-        "water_plants": ["marine_algae", "sea_laminaria", "sea_tentacles", "pink_crested_lily", "seaweed", "sea_herb", "mint"],
-        "oasis_herbs": ["marine_algae", "sea_laminaria", "mint", "pink_crested_lily", "seaweed", "sea_herb"],
-        "rock_plants": ["dye_flower", "blue_eyed_maiden", "blue_rose", "red_rose", "blue_azure", "gerdalf_grass", "golden_flower", "rozrovochky", "hermit_herb", "spicy_herb"],
-        "desert_rocks_fruits": ["dye_flower", "blue_eyed_maiden", "blue_rose", "red_rose", "blue_azure", "gerdalf_grass", "rozrovochky", "spicy_herb", "hermit_herb"],
-        "desert_land_herbs": ["dope_flower", "vera_aloe", "brambook", "bloody_lady", "lyapotyazhma", "spicy_herb", "rozrovochky", "hermit_herb"],
-        "amber_desert_resources": ["dope_flower", "vera_aloe", "brambook", "bloody_lady", "lyapotyazhma", "spicy_herb", "rozrovochky", "hermit_herb"],
-        "wasteland_search": ["mary_drop", "spicy_herb", "hermit_herb", "brambook", "lyapotyazhma"],
-        "desert_wasteland_search": ["mary_drop", "spicy_herb", "hermit_herb", "brambook", "lyapotyazhma"],
+        "forest_plants": ["young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint", "blue_drapula", "black_smartberry", "raspberry", "strawberry", "kalyna", "violet_flower_berry", "adventurer_berries", "young_nut"],
+        "forest_outskirts_herbs": ["young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint", "blue_drapula", "black_smartberry", "raspberry", "strawberry", "kalyna", "cherry", "ahariyd", "violet_flower_berry", "adventurer_berries", "young_nut"],
+        "silver_forest_herbs": ["young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "spicy_herb", "birds_herb", "mint", "blue_drapula", "black_smartberry", "raspberry", "strawberry", "kalyna", "violet_flower_berry", "adventurer_berries", "young_nut"],
+        "grand_forest_herbs": ["wooden_grass", "young_tree_branch", "dope_flower", "twin_flower", "nettle", "flycatcher_grass", "forest_flower", "four_leaf_clover", "firefly_grass", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "golden_flower", "hermit_herb", "gribiscus", "blue_drapula", "black_smartberry", "raspberry", "strawberry", "kalyna", "violet_flower_berry", "old_tree_nut"],
+        "deep_old_forest_herbs": ["wooden_grass", "twin_flower", "lovers_pair", "branch_healthy_tree", "leaves_healthy_tree", "stinky_flower", "shvibald", "firuerta", "forest_persheval", "bright_lady", "mrakovyk", "four_leaf_clover", "golden_flower", "hermit_herb", "gribiscus", "black_smartberry", "cherry", "ahariyd", "violet_flower_berry", "old_tree_nut"],
+        "carrow_herbs": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "mint", "birds_herb", "gribiscus", "blue_drapula", "orange_lagur", "adventurer_berries", "porkovyk", "hostrovyk", "big_nut"],
+        "shimmerglen_fruit_plains": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "mint", "birds_herb", "blue_drapula", "orange_lagur", "adventurer_berries", "porkovyk", "hostrovyk", "big_nut"],
+        "shraudy_fruit_plains": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "mint", "blue_drapula", "orange_lagur", "adventurer_berries", "porkovyk", "hostrovyk", "big_nut"],
+        "mudfrost_fruit_plains": ["dye_flower", "tea_sprout", "nettle", "romanshka", "golden_flower", "blue_drapula", "orange_lagur", "adventurer_berries", "porkovyk", "hostrovyk", "big_nut"],
+        "water_plants": ["marine_algae", "sea_laminaria", "sea_tentacles", "pink_crested_lily", "seaweed", "sea_herb", "mint", "brunika", "brusa_berry", "red_sea_berry"],
+        "oasis_herbs": ["marine_algae", "sea_laminaria", "mint", "pink_crested_lily", "seaweed", "sea_herb", "vodovyk", "feyerla_nut"],
+        "rock_plants": ["dye_flower", "blue_eyed_maiden", "blue_rose", "red_rose", "blue_azure", "gerdalf_grass", "golden_flower", "rozrovochky", "hermit_herb", "spicy_herb", "orange_lagur", "bird_berry", "brausa_berry", "adventurer_berries", "fichkovyk", "piorkovyk", "rare_beans", "peanut"],
+        "desert_rocks_fruits": ["dye_flower", "blue_eyed_maiden", "blue_rose", "red_rose", "blue_azure", "gerdalf_grass", "rozrovochky", "spicy_herb", "hermit_herb", "orange_lagur", "bird_berry", "brausa_berry", "fichkovyk", "piorkovyk", "rare_beans", "peanut"],
+        "desert_land_herbs": ["dope_flower", "vera_aloe", "brambook", "bloody_lady", "lyapotyazhma", "spicy_herb", "rozrovochky", "hermit_herb", "blue_raspberry", "paladin_berry", "chysnolvik"],
+        "amber_desert_resources": ["dope_flower", "vera_aloe", "brambook", "bloody_lady", "lyapotyazhma", "spicy_herb", "rozrovochky", "hermit_herb", "blue_raspberry", "paladin_berry", "chysnolvik"],
+        "wasteland_search": ["mary_drop", "spicy_herb", "hermit_herb", "brambook", "lyapotyazhma", "kravatus", "paladin_berry", "chysnolvik", "dragon_berry", "vodovyk", "fayerukh", "bayeri"],
+        "desert_wasteland_search": ["mary_drop", "spicy_herb", "hermit_herb", "brambook", "lyapotyazhma", "kravatus", "paladin_berry", "chysnolvik", "dragon_berry", "vodovyk", "fayerukh", "bayeri"],
         "old_settlement_ruins": ["pretrushka", "spicy_herb", "hermit_herb"],
-        "desert_ruins": ["pretrushka", "spicy_herb", "hermit_herb"],
+        "desert_ruins": ["pretrushka", "spicy_herb", "hermit_herb", "alahay"],
         "old_settlements_ruins_search": ["pretrushka", "spicy_herb", "hermit_herb"],
         "search_caves": ["blue_eyed_maiden", "underground_flower", "ardruinda", "hermit_herb"],
         "outskirts_dungeon": ["blue_lady", "underground_flower", "ardruinda"],
         "old_settlement_ruins_dungeon": ["blue_lady", "underground_flower", "ardruinda"],
-        "desert_ruins_dungeon": ["blue_lady", "underground_flower", "ardruinda"]
+        "desert_ruins_dungeon": ["blue_lady", "underground_flower", "ardruinda", "alahay"]
     };
 
     // Нічні та сяючі рослини
@@ -268,7 +268,8 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             });
         }
 
-        let candidates = items["Alchemical-Herbs"].filter(h => poolIds.includes(h.id));
+        const allGatherables = [...(items["Alchemical-Herbs"] || []), ...(items["Food_Berries"] || [])];
+        let candidates = allGatherables.filter(h => poolIds.includes(h.id));
         if (candidates.length === 0) return null;
 
         const baseWeights = {

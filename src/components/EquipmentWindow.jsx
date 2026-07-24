@@ -12,7 +12,7 @@ function ItemImageOrIcon({ item, className, fallbackSize = "20px" }) {
     const itemImage = dbItem ? dbItem.image : item.image;
 
     if (imgError || !itemImage) {
-        const fallbackEmoji = item.icon || (item.category === "Alchemical-Herbs" ? "🌿" : "📦");
+        const fallbackEmoji = item.icon || (item.category === "Alchemical-Herbs" ? "🌿" : item.category === "Food_Berries" ? "🫐" : "📦");
         return <span className="item-emoji-fallback" style={{ fontSize: fallbackSize }}>{fallbackEmoji}</span>;
     }
 
@@ -93,8 +93,26 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
         let mpGain = 0;
         let message = "";
 
-        // Розраховуємо відновлення відповідно до унікальних властивостей трави
-        switch (item.id) {
+        // Розраховуємо відновлення відповідно до унікальних властивостей трави чи ягоди
+        if (item.category === "Food_Berries" || item.satietyRestore !== undefined || item.thirstRestore !== undefined || item.hpRestore !== undefined || item.manaRestore !== undefined) {
+            foodGain = item.satietyRestore ?? 0;
+            waterGain = item.thirstRestore ?? 0;
+            hpGain = item.hpRestore ?? 0;
+            mpGain = item.manaRestore ?? 0;
+
+            const effects = [];
+            if (foodGain > 0) effects.push(`+${foodGain} їжа`);
+            if (waterGain > 0) effects.push(`+${waterGain} вода`);
+            if (hpGain > 0) effects.push(`+${hpGain} здоров'я`);
+            if (mpGain > 0) effects.push(`+${mpGain} мана`);
+
+            if (effects.length > 0) {
+                message = `${item.icon || "🫐"} Ви спожили "${item.name}". (${effects.join(", ")})`;
+            } else {
+                message = `${item.icon || "🫐"} "${item.name}" не дає корисних ефектів при споживанні.`;
+            }
+        } else {
+            switch (item.id) {
             case "mint":
                 sleepGain = 15;
                 foodGain = 2;
@@ -327,6 +345,7 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                 hpGain = 5;
                 message = `Ви використали предмет "${item.name}".`;
         }
+        }
 
         // Перевіряємо, чи має предмет користь при споживанні
         const hasEffect = hpGain > 0 || mpGain > 0 || sleepGain > 0 || foodGain > 0 || waterGain > 0;
@@ -503,7 +522,7 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                             <CoinsDisplay totalCopper={selectedItem.value || 0} size="small" />
                                         </span>
                                         <div className="details-actions-modern">
-                                            {selectedItem.category === "Alchemical-Herbs" && (
+                                            {(selectedItem.category === "Alchemical-Herbs" || selectedItem.category === "Food_Berries") && (
                                                 <button className="btn-use-modern" onClick={handleConsumeItem}>Спожити</button>
                                             )}
                                             <button className="btn-discard-modern" onClick={handleDiscardItem}>Викинути</button>
