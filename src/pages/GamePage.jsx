@@ -9,6 +9,7 @@ import PlayerStatsModal from "../components/PlayerStatsModal.jsx";
 import ActionWindow from "../components/ActionWindow.jsx";
 import EquipmentWindow from "../components/EquipmentWindow.jsx";
 import AlmanacModal from "../components/AlmanacModal.jsx";
+import CraftingModal from "../components/CraftingModal.jsx";
 import { CoinsDisplay } from "../utils/currency.jsx";
 import { TimeDisplay, advanceTime, getTimePeriod } from "../utils/timeSystem.jsx";
 
@@ -22,6 +23,7 @@ function GamePage() {
     const [isActionWindowOpen, setIsActionWindowOpen] = useState(false);
     const [isEquipmentOpen, setIsEquipmentOpen] = useState(false);
     const [isAlmanacOpen, setIsAlmanacOpen] = useState(false);
+    const [isCraftOpen, setIsCraftOpen] = useState(false);
     
     const [character, setCharacter] = useState(null);
     const [activeSubLocation, setActiveSubLocation] = useState(null);
@@ -67,11 +69,12 @@ function GamePage() {
         setIsActionWindowOpen(true);
     };
 
-    const toggleMove = () => { setIsLocationMenuOpen(!isLocationMenuOpen); setIsMapOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); };
-    const toggleTravel = () => { setIsMapOpen(!isMapOpen); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); };
-    const toggleSettlement = () => { setIsSettlementMenuOpen(!isSettlementMenuOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); };
-    const toggleEquipment = () => { setIsEquipmentOpen(!isEquipmentOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsAlmanacOpen(false); };
-    const toggleAlmanac = () => { setIsAlmanacOpen(!isAlmanacOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); };
+    const toggleMove = () => { setIsLocationMenuOpen(!isLocationMenuOpen); setIsMapOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); setIsCraftOpen(false); };
+    const toggleTravel = () => { setIsMapOpen(!isMapOpen); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); setIsCraftOpen(false); };
+    const toggleSettlement = () => { setIsSettlementMenuOpen(!isSettlementMenuOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); setIsCraftOpen(false); };
+    const toggleEquipment = () => { setIsEquipmentOpen(!isEquipmentOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsAlmanacOpen(false); setIsCraftOpen(false); };
+    const toggleAlmanac = () => { setIsAlmanacOpen(!isAlmanacOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); setIsCraftOpen(false); };
+    const toggleCraft = () => { setIsCraftOpen(!isCraftOpen); setIsMapOpen(false); setIsLocationMenuOpen(false); setIsSettlementMenuOpen(false); setIsEquipmentOpen(false); setIsAlmanacOpen(false); };
 
     if (!character) return null;
 
@@ -118,6 +121,7 @@ function GamePage() {
                         onSettlementClick={toggleSettlement} isSettlementOpen={isSettlementMenuOpen}
                         onEquipmentClick={toggleEquipment} isEquipmentOpen={isEquipmentOpen}
                         onAlmanacClick={toggleAlmanac} isAlmanacOpen={isAlmanacOpen}
+                        onCraftClick={toggleCraft} isCraftOpen={isCraftOpen}
                     />
                     
                     {isLocationMenuOpen && <LocationMenu onClose={() => setIsLocationMenuOpen(false)} currentLocationId={character.locationId} onSelectSubLocation={handleSelectSubLocation} />}
@@ -147,6 +151,10 @@ function GamePage() {
 
                 {isAlmanacOpen && (
                     <AlmanacModal onClose={() => setIsAlmanacOpen(false)} />
+                )}
+
+                {isCraftOpen && (
+                    <CraftingModal onClose={() => setIsCraftOpen(false)} />
                 )}
 
                 {isMapOpen && <GameMap onClose={() => setIsMapOpen(false)} playerLocationId={character.locationId} onSelectLocation={updateLocation} />}

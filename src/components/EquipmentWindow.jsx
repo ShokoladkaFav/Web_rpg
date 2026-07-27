@@ -352,7 +352,7 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
 
         if (!hasEffect) {
             // Рослина не має корисних ефектів при вживанні — показуємо сповіщення та залишаємо предмет в інвентарі
-            alert(message || "Ця корисна рослина не дає корисних ефектів при вживанні.");
+            alert(message || "Цей предмет не дає корисних ефектів при вживанні.");
             return;
         }
 
@@ -522,7 +522,7 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                             <CoinsDisplay totalCopper={selectedItem.value || 0} size="small" />
                                         </span>
                                         <div className="details-actions-modern">
-                                            {(selectedItem.category === "Alchemical-Herbs" || selectedItem.category === "Food_Berries") && (
+                                            {(selectedItem.category === "Alchemical-Herbs" || selectedItem.category === "Food_Berries" || selectedItem.category === "Food_Cooked" || selectedItem.satietyRestore !== undefined || selectedItem.hpRestore !== undefined) && (
                                                 <button className="btn-use-modern" onClick={handleConsumeItem}>Спожити</button>
                                             )}
                                             <button className="btn-discard-modern" onClick={handleDiscardItem}>Викинути</button>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/NPCDialogue.css";
 import { CoinsDisplay } from "../utils/currency.jsx";
+import FoodShopModal from "./FoodShopModal.jsx";
 
 function NPCDialogue({ npc, character, onUpdateCharacter, onClose }) {
     // Обираємо випадкове вітання при відкритті вікна
@@ -8,6 +9,7 @@ function NPCDialogue({ npc, character, onUpdateCharacter, onClose }) {
     const [actionLog, setActionLog] = useState("");
     const [isActionDone, setIsActionDone] = useState(false);
     const [imgError, setImgError] = useState(false);
+    const [isFoodShopOpen, setIsFoodShopOpen] = useState(false);
 
     useEffect(() => {
         if (npc && npc.greetings) {
@@ -100,6 +102,9 @@ function NPCDialogue({ npc, character, onUpdateCharacter, onClose }) {
                 break;
             case "get_licence":
                 // Проста дія відмова за сценарієм
+                break;
+            case "buy_cooked_food":
+                setIsFoodShopOpen(true);
                 break;
             default:
                 break;
@@ -197,6 +202,14 @@ function NPCDialogue({ npc, character, onUpdateCharacter, onClose }) {
                     </div>
                 </div>
             </div>
+
+            {isFoodShopOpen && (
+                <FoodShopModal 
+                    character={character} 
+                    onUpdateCharacter={onUpdateCharacter} 
+                    onClose={() => setIsFoodShopOpen(false)} 
+                />
+            )}
         </div>
     );
 }

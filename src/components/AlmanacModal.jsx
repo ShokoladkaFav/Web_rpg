@@ -98,6 +98,14 @@ function AlmanacModal({ onClose }) {
             description: "Соковиті лісові й гірські ягоди, смачні горіхи, насіння та фрукти."
         },
         {
+            id: "Food_Cooked",
+            title: "Приготована їжа",
+            icon: "🍲",
+            count: (items["Food_Cooked"] || []).length,
+            available: true,
+            description: "Ситні страви, ароматне м'ясо, гарячі бульйони, пироги та напої з корчми."
+        },
+        {
             id: "Weapons",
             title: "Зброя",
             icon: "⚔️",
@@ -261,7 +269,7 @@ function AlmanacModal({ onClose }) {
                                                             />
                                                         ) : null}
                                                         <span className="item-fallback-icon" style={{ display: item.image ? "none" : "block", fontSize: "24px" }}>
-                                                            {item.icon || (selectedCategory === "Food_Berries" ? "🫐" : "🌿")}
+                                                            {item.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Cooked" ? "🍲" : "🌿")}
                                                         </span>
                                                     </div>
                                                     <div className="item-title-meta">
@@ -320,7 +328,9 @@ function AlmanacModal({ onClose }) {
                                             }
                                         }}
                                     />
-                                    <span className="detail-fallback-icon" style={{ display: "none" }}>🌿</span>
+                                    <span className="detail-fallback-icon" style={{ display: "none" }}>
+                                        {selectedItemDetail.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Cooked" ? "🍲" : "🌿")}
+                                    </span>
                                 </div>
                                 <div className="detail-header-meta">
                                     <span className={`rarity-pill rarity-${selectedItemDetail.rarity}`}>
@@ -336,7 +346,15 @@ function AlmanacModal({ onClose }) {
 
                             <div className="detail-body">
                                 <div className="detail-section">
-                                    <h5>Опис рослини:</h5>
+                                    <h5>
+                                        {selectedCategory === "Alchemical-Herbs" ? "Опис рослини:" :
+                                         selectedCategory === "Food_Berries" ? "Опис ягоди / фрукта:" :
+                                         selectedCategory === "Food_Cooked" ? "Опис страви:" :
+                                         selectedCategory === "Weapons" ? "Опис зброї:" :
+                                         selectedCategory === "Armor" ? "Опис обладунків:" :
+                                         selectedCategory === "Potions" ? "Опис зілля:" :
+                                         selectedCategory === "Resources" ? "Опис ресурсу:" : "Опис предмету:"}
+                                    </h5>
                                     <p>{selectedItemDetail.description}</p>
                                 </div>
 

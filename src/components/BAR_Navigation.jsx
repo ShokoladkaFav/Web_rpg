@@ -10,7 +10,9 @@ function BAR_Navigation({
     onEquipmentClick,
     isEquipmentOpen,
     onAlmanacClick,
-    isAlmanacOpen
+    isAlmanacOpen,
+    onCraftClick,
+    isCraftOpen
 }) {
     const actions = [
         { id: "move", label: "Переміститися", icon: "📍" },
@@ -22,12 +24,12 @@ function BAR_Navigation({
     ];
 
     const handleActionClick = (id) => {
-        if (id === "travel") onTravelClick();
-        else if (id === "move") onMoveClick();
-        else if (id === "settlement") onSettlementClick();
-        else if (id === "equipment") onEquipmentClick();
-        else if (id === "almanac") onAlmanacClick();
-        else console.log(`Action: ${id}`);
+        if (id === "travel") onTravelClick && onTravelClick();
+        else if (id === "move") onMoveClick && onMoveClick();
+        else if (id === "settlement") onSettlementClick && onSettlementClick();
+        else if (id === "equipment") onEquipmentClick && onEquipmentClick();
+        else if (id === "almanac") onAlmanacClick && onAlmanacClick();
+        else if (id === "craft") onCraftClick && onCraftClick();
     };
 
     return (
@@ -42,6 +44,7 @@ function BAR_Navigation({
                         if (action.id === "settlement") isActive = isSettlementOpen;
                         if (action.id === "equipment") isActive = isEquipmentOpen;
                         if (action.id === "almanac") isActive = isAlmanacOpen;
+                        if (action.id === "craft") isActive = isCraftOpen;
                         
                         return (
                             <button 
