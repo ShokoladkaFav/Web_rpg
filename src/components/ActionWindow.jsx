@@ -303,6 +303,18 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
         return candidatesWithWeights[0].item;
     };
 
+    // Зважений або випадковий вибір луту з монстрів
+    const getRandomMonsterLoot = (poolIds = null) => {
+        const lootList = items["Monsters_Loot"] || [];
+        if (!lootList.length) return null;
+        let candidates = lootList;
+        if (poolIds && poolIds.length > 0) {
+            candidates = lootList.filter(item => poolIds.includes(item.id));
+            if (!candidates.length) candidates = lootList;
+        }
+        return candidates[Math.floor(Math.random() * candidates.length)];
+    };
+
     const handleAction = (actionId, actionName) => {
         if (!character || !onUpdateCharacter) return;
 
@@ -482,12 +494,18 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             const success = Math.random() < chance;
             xpGained = Math.round((success ? 22 : 8) * xpMultiplier);
             if (success) {
+                foundItem = getRandomMonsterLoot(["wolf_hide", "monster_meat", "monster_ribs", "meat_on_bone", "strong_monster_teeth"]);
                 logText = isNight 
                     ? "⚔️ Нічне полювання на Рівнині Карроу! З пітьми виринув Лютневий Нічний Вовк з палаючими очима! Ви подолали його! (+50% Досвіду)" 
                     : isEvening
                     ? "⚔️ У сутінках на Рівнині Карроу ви вистежили та здолали степового вовка! (+25% Досвіду)"
                     : "⚔️ Битва на Рівнині Карроу! Ви успішно вистежили та здолали степового вовка.";
-                logType = "success";
+                if (foundItem) {
+                    logText += ` (🎁 Здобуто трофей: "${foundItem.name}")`;
+                    logType = "loot";
+                } else {
+                    logType = "success";
+                }
             } else {
                 logText = isNightOrEvening 
                     ? "🌙 Нічні хижаки непомітно пересуваються у пітьмі і змусили вас відступити." 
@@ -500,10 +518,16 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             const success = Math.random() < chance;
             xpGained = Math.round((success ? 26 : 10) * xpMultiplier);
             if (success) {
+                foundItem = getRandomMonsterLoot(["monster_bones", "strong_monster_teeth", "monster_eye", "monster_heart"]);
                 logText = isNight 
                     ? "💀 У нічній пітьмі на Рівнині мерців з курганів піднявся Палаючий Нічний Некромант! Ви розтрощили його! (+50% Досвіду)" 
                     : "💀 Ви зустріли блукаючого кістяка на Рівнині мерців та вщент розбили його!";
-                logType = "success";
+                if (foundItem) {
+                    logText += ` (🎁 Здобуто трофей: "${foundItem.name}")`;
+                    logType = "loot";
+                } else {
+                    logType = "success";
+                }
             } else {
                 logText = isNightOrEvening
                     ? "🌙 Нічна імла огортає кургани, некроманти сховалися у тіні."
@@ -575,19 +599,41 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             const chance = isNight ? 0.45 : isEvening ? 0.58 : 0.70;
             const success = Math.random() < chance;
             xpGained = Math.round((success ? 24 : 10) * xpMultiplier);
-            logText = success 
-                ? (isNight ? "⚔️ У нічному Срібному лісі зі сховку вискочив Лютий Нічний Тіньовий Вовк! Ви перемогли! (+50% Досвіду)" : "⚔️ У Срібному лісі ви успішно здолали рідкісного срібнокликого вовка!")
-                : "⚔️ Срібний ліс у сутінках здавався затишним і спокійним, жодних монстрів.";
-            logType = success ? "success" : "info";
+            if (success) {
+                foundItem = getRandomMonsterLoot(["wolf_hide", "deep_forest_beast_fur", "forest_monster_horn", "monster_hide", "boar_steak", "forest_creature_remains"]);
+                logText = isNight 
+                    ? "⚔️ У нічному Срібному лісі зі сховку вискочив Лютий Нічний Тіньовий Вовк! Ви перемогли! (+50% Досвіду)" 
+                    : "⚔️ У Срібному лісі ви успішно здолали рідкісного срібнокликого вовка!";
+                if (foundItem) {
+                    logText += ` (🎁 Здобуто трофей: "${foundItem.name}")`;
+                    logType = "loot";
+                } else {
+                    logType = "success";
+                }
+            } else {
+                logText = "⚔️ Срібний ліс у сутінках здавався затишним і спокійним, жодних монстрів.";
+                logType = "info";
+            }
         }
         else if (actionId === "sea_bay_monsters") {
             const chance = isNight ? 0.45 : isEvening ? 0.58 : 0.70;
             const success = Math.random() < chance;
             xpGained = Math.round((success ? 24 : 10) * xpMultiplier);
-            logText = success 
-                ? (isNight ? "🐉 З темних глибин нічної морської бухти виринув Нічний Глибинний Жнець! Ви подолали монстра! (+50% Досвіду)" : "🐉 Ви зустріли та перемогли агресивного річкового ящера у морській бухті!")
-                : "🐉 Хвилі б'ються об каміння, жодних ознак морських монстрів.";
-            logType = success ? "success" : "info";
+            if (success) {
+                foundItem = getRandomMonsterLoot(["sea_monster_meat", "octopus_tentacle", "sea_octopus_tentacle", "fish_fillet"]);
+                logText = isNight 
+                    ? "🐉 З темних глибин нічної морської бухти виринув Нічний Глибинний Жнець! Ви подолали монстра! (+50% Досвіду)" 
+                    : "🐉 Ви зустріли та перемогли агресивного річкового ящера у морській бухті!";
+                if (foundItem) {
+                    logText += ` (🎁 Здобуто трофей: "${foundItem.name}")`;
+                    logType = "loot";
+                } else {
+                    logType = "success";
+                }
+            } else {
+                logText = "🐉 Хвилі б'ються об каміння, жодних ознак морських монстрів.";
+                logType = "info";
+            }
         }
         else if (actionId === "outskirts_dungeon" || actionId === "old_settlement_ruins_dungeon" || actionId === "desert_ruins_dungeon") {
             const success = Math.random() < 0.60;
@@ -686,10 +732,21 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             const chance = isNight ? 0.45 : isEvening ? 0.58 : 0.70;
             const success = Math.random() < chance;
             xpGained = Math.round((success ? 24 : 10) * xpMultiplier);
-            logText = success 
-                ? (isNight ? "👾 Ви зчепилися із Лютим Нічним Шипохвостом у сутінках сухого лісу та здолали його! (+50% Досвіду)" : "👾 Ви здолали отруйного шипохвоста у пустельно-морському лісі!")
-                : "👾 Сухий ліс здається абсолютно мертвим і нерухомим.";
-            logType = success ? "success" : "info";
+            if (success) {
+                foundItem = getRandomMonsterLoot(["snake_meat", "desert_monster_fur", "desert_creature_remains", "sand_bird_feather", "sharp_tail_big_monster"]);
+                logText = isNight 
+                    ? "👾 Ви зчепилися із Лютим Нічним Шипохвостом у сутінках сухого лісу та здолали його! (+50% Досвіду)" 
+                    : "👾 Ви здолали отруйного шипохвоста у пустельно-морському лісі!";
+                if (foundItem) {
+                    logText += ` (🎁 Здобуто трофей: "${foundItem.name}")`;
+                    logType = "loot";
+                } else {
+                    logType = "success";
+                }
+            } else {
+                logText = "👾 Сухий ліс здається абсолютно мертвим і нерухомим.";
+                logType = "info";
+            }
         }
         else if (actionId === "grand_bay_search") {
             const success = Math.random() < 0.55;
@@ -711,10 +768,21 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             const chance = isNight ? 0.45 : isEvening ? 0.58 : 0.70;
             const success = Math.random() < chance;
             xpGained = Math.round((success ? 28 : 12) * xpMultiplier);
-            logText = success 
-                ? (isNight ? "👹 У темних надрах нічного пралісу на вас напав Жахливий Нічний Лісовий Троль! У кривавій битві ви перемогли! (+50% Досвіду)" : "👹 Битва з лісовим тролем на околицях старого лісу завершилися вашою впевненою перемогою!")
-                : "👹 Ви чули страшні звуки у гущавині, але вирішили не ризикувати та обійти небезпеку.";
-            logType = success ? "success" : "info";
+            if (success) {
+                foundItem = getRandomMonsterLoot(["juicy_monster_meat", "troll_meat", "big_beast_meat", "monster_heart", "forest_monster_horn", "giant_leg"]);
+                logText = isNight 
+                    ? "👹 У темних надрах нічного пралісу на вас напав Жахливий Нічний Лісовий Троль! У кривавій битві ви перемогли! (+50% Досвіду)" 
+                    : "👹 Битва з лісовим тролем на околицях старого лісу завершилися вашою впевненою перемогою!";
+                if (foundItem) {
+                    logText += ` (🎁 Здобуто трофей: "${foundItem.name}")`;
+                    logType = "loot";
+                } else {
+                    logType = "success";
+                }
+            } else {
+                logText = "👹 Ви чули страшні звуки у гущавині, але вирішили не ризикувати та обійти небезпеку.";
+                logType = "info";
+            }
         }
         else if (actionId === "ancient_lands_expedition") {
             xpGained = 15;
@@ -730,10 +798,21 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             const chance = isNight ? 0.40 : isEvening ? 0.52 : 0.65;
             const success = Math.random() < chance;
             xpGained = Math.round((success ? 30 : 12) * xpMultiplier);
-            logText = success 
-                ? (isNight ? "🐉 У бурхливих нічних хвилях ви розгромили Прадавнього Нічного Кракенa! (+50% Досвіду)" : "🐉 Битва з велетенським кракеном у морі старого лісу принесла вам велику славу!")
-                : "🐉 На морі піднявся потужний шторм, завадивши вашому полюванню.";
-            logType = success ? "success" : "info";
+            if (success) {
+                foundItem = getRandomMonsterLoot(["sea_monster_meat", "sea_octopus_tentacle", "monster_eye", "octopus_tentacle"]);
+                logText = isNight 
+                    ? "🐉 У бурхливих нічних хвилях ви розгромили Прадавнього Нічного Кракенa! (+50% Досвіду)" 
+                    : "🐉 Битва з велетенським кракеном у морі старого лісу принесла вам велику славу!";
+                if (foundItem) {
+                    logText += ` (🎁 Здобуто трофей: "${foundItem.name}")`;
+                    logType = "loot";
+                } else {
+                    logType = "success";
+                }
+            } else {
+                logText = "🐉 На морі піднявся потужний шторм, завадивши вашому полюванню.";
+                logType = "info";
+            }
         }
         else if (actionId === "lake_bay_search") {
             const chance = isNight ? 0.35 : isEvening ? 0.42 : 0.50;
@@ -798,19 +877,41 @@ function ActionWindow({ subLocation, onClose, character, onUpdateCharacter }) {
             const chance = isNight ? 0.40 : isEvening ? 0.50 : 0.60;
             const success = Math.random() < chance;
             xpGained = Math.round((success ? 24 : 12) * xpMultiplier);
-            logText = success 
-                ? (isNight ? "🦅 З нічних хмар кинувся Нічний Гранітний Нетопир! Ви здолали летаючий жах! (+50% Досвіду)" : "🦅 З неба каменем кинувся гірський яструб! Ви вправно захистилися і здобули цінний бойовий досвід.")
-                : "🦅 Тінь пролетіла високо над скелями, залишаючи вас у напруженому очікуванні.";
-            logType = success ? "success" : "info";
+            if (success) {
+                foundItem = getRandomMonsterLoot(["crow_feather", "small_monster_wing", "flying_monster_paw", "rare_bird_feather", "sand_bird_feather"]);
+                logText = isNight 
+                    ? "🦅 З нічних хмар кинувся Нічний Гранітний Нетопир! Ви здолали летаючий жах! (+50% Досвіду)" 
+                    : "🦅 З неба каменем кинувся гірський яструб! Ви вправно захистилися і здобули цінний бойовий досвід.";
+                if (foundItem) {
+                    logText += ` (🎁 Здобуто трофей: "${foundItem.name}")`;
+                    logType = "loot";
+                } else {
+                    logType = "success";
+                }
+            } else {
+                logText = "🦅 Тінь пролетіла високо над скелями, залишаючи вас у напруженому очікуванні.";
+                logType = "info";
+            }
         }
         else if (actionId === "hunt_monsters") {
             const chance = isNight ? 0.45 : isEvening ? 0.60 : 0.75;
             const success = Math.random() < chance;
             xpGained = Math.round((success ? 20 : 10) * xpMultiplier);
-            logText = success 
-                ? (isNight ? "⚔️ З пітьми вискочив Тіньовий Нічний Потвор! У жорстокій нічній сутичці ви здобули видатну перемогу! (+50% Досвіду)" : "⚔️ Ви зіткнулися з блукаючим монстром і здолали його у запеклій сутичці!")
-                : "⚔️ Пошуки чудовиськ затягнулися, ви лише поблукали небезпечними стежками.";
-            logType = success ? "success" : "info";
+            if (success) {
+                foundItem = getRandomMonsterLoot();
+                logText = isNight 
+                    ? "⚔️ З пітьми вискочив Тіньовий Нічний Потвор! У жорстокій нічній сутичці ви здобули видатну перемогу! (+50% Досвіду)" 
+                    : "⚔️ Ви зіткнулися з блукаючим монстром і здолали його у запеклій сутичці!";
+                if (foundItem) {
+                    logText += ` (🎁 Здобуто трофей: "${foundItem.name}")`;
+                    logType = "loot";
+                } else {
+                    logType = "success";
+                }
+            } else {
+                logText = "⚔️ Пошуки чудовиськ затягнулися, ви лише поблукали небезпечними стежками.";
+                logType = "info";
+            }
         }
         else if (actionId === "catch_fish") {
             const success = Math.random() < 0.70;

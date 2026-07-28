@@ -106,6 +106,14 @@ function AlmanacModal({ onClose }) {
             description: "Ситні страви, ароматне м'ясо, гарячі бульйони, пироги та напої з корчми."
         },
         {
+            id: "Monsters_Loot",
+            title: "Лут з монстрів",
+            icon: "🍖",
+            count: (items["Monsters_Loot"] || []).length,
+            available: true,
+            description: "М'ясо, шкури, кістки, ікла та рідкісні трофеї, здобуті з повалених монстрів та істот."
+        },
+        {
             id: "Weapons",
             title: "Зброя",
             icon: "⚔️",
@@ -350,6 +358,7 @@ function AlmanacModal({ onClose }) {
                                         {selectedCategory === "Alchemical-Herbs" ? "Опис рослини:" :
                                          selectedCategory === "Food_Berries" ? "Опис ягоди / фрукта:" :
                                          selectedCategory === "Food_Cooked" ? "Опис страви:" :
+                                         selectedCategory === "Monsters_Loot" ? "Опис трофею з монстра:" :
                                          selectedCategory === "Weapons" ? "Опис зброї:" :
                                          selectedCategory === "Armor" ? "Опис обладунків:" :
                                          selectedCategory === "Potions" ? "Опис зілля:" :
