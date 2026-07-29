@@ -12,7 +12,7 @@ function ItemImageOrIcon({ item, className, fallbackSize = "20px" }) {
     const itemImage = dbItem ? dbItem.image : item.image;
 
     if (imgError || !itemImage) {
-        const fallbackEmoji = item.icon || (item.category === "Alchemical-Herbs" ? "🌿" : item.category === "Food_Berries" ? "🫐" : "📦");
+        const fallbackEmoji = item.icon || (item.category === "Alchemical-Herbs" ? "🌿" : item.category === "Food_Berries" ? "🫐" : item.category === "Food_Vegetables" ? "🥦" : "📦");
         return <span className="item-emoji-fallback" style={{ fontSize: fallbackSize }}>{fallbackEmoji}</span>;
     }
 
@@ -522,7 +522,7 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                             <CoinsDisplay totalCopper={selectedItem.value || 0} size="small" />
                                         </span>
                                         <div className="details-actions-modern">
-                                            {(selectedItem.category === "Alchemical-Herbs" || selectedItem.category === "Food_Berries" || selectedItem.category === "Food_Cooked" || selectedItem.satietyRestore !== undefined || selectedItem.hpRestore !== undefined) && (
+                                            {(selectedItem.category === "Alchemical-Herbs" || selectedItem.category === "Food_Berries" || selectedItem.category === "Food_Cooked" || selectedItem.category === "Food_Vegetables" || selectedItem.satietyRestore !== undefined || selectedItem.hpRestore !== undefined) && (
                                                 <button className="btn-use-modern" onClick={handleConsumeItem}>Спожити</button>
                                             )}
                                             <button className="btn-discard-modern" onClick={handleDiscardItem}>Викинути</button>

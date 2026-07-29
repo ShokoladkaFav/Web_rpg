@@ -106,6 +106,14 @@ function AlmanacModal({ onClose }) {
             description: "Ситні страви, ароматне м'ясо, гарячі бульйони, пироги та напої з корчми."
         },
         {
+            id: "Food_Vegetables",
+            title: "Овочі та Інгредієнти",
+            icon: "🥦",
+            count: (items["Food_Vegetables"] || []).length,
+            available: true,
+            description: "Свіжі овочі, зелень, молочні продукти, спеції та кулінарні заготовки."
+        },
+        {
             id: "Monsters_Loot",
             title: "Лут з монстрів",
             icon: "🍖",
@@ -277,7 +285,7 @@ function AlmanacModal({ onClose }) {
                                                             />
                                                         ) : null}
                                                         <span className="item-fallback-icon" style={{ display: item.image ? "none" : "block", fontSize: "24px" }}>
-                                                            {item.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Cooked" ? "🍲" : "🌿")}
+                                                            {item.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Cooked" ? "🍲" : selectedCategory === "Food_Vegetables" ? "🥦" : "🌿")}
                                                         </span>
                                                     </div>
                                                     <div className="item-title-meta">
@@ -358,6 +366,7 @@ function AlmanacModal({ onClose }) {
                                         {selectedCategory === "Alchemical-Herbs" ? "Опис рослини:" :
                                          selectedCategory === "Food_Berries" ? "Опис ягоди / фрукта:" :
                                          selectedCategory === "Food_Cooked" ? "Опис страви:" :
+                                         selectedCategory === "Food_Vegetables" ? "Опис овоча / інгредієнта:" :
                                          selectedCategory === "Monsters_Loot" ? "Опис трофею з монстра:" :
                                          selectedCategory === "Weapons" ? "Опис зброї:" :
                                          selectedCategory === "Armor" ? "Опис обладунків:" :
