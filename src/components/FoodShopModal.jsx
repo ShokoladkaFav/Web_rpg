@@ -92,7 +92,7 @@ export function FoodShopModal({ character, onUpdateCharacter, onClose }) {
     };
 
     return (
-        <div className="food-shop-overlay" onClick={onClose}>
+        <div className="food-shop-overlay" onClick={(e) => { e.stopPropagation(); onClose(); }}>
             <div className="food-shop-modal" onClick={(e) => e.stopPropagation()}>
                 {/* Заголовок */}
                 <div className="food-shop-header">
@@ -109,7 +109,17 @@ export function FoodShopModal({ character, onUpdateCharacter, onClose }) {
                         <CoinsDisplay totalCopper={character?.copper || 0} size="medium" />
                     </div>
 
-                    <button className="food-shop-close-btn" onClick={onClose}>✖</button>
+                    <button 
+                        type="button"
+                        className="food-shop-close-btn" 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClose();
+                        }}
+                        title="Закрити"
+                    >
+                        ✖
+                    </button>
                 </div>
 
                 {/* Повідомлення про купівлю */}
