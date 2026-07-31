@@ -1,5 +1,6 @@
 import { alchemicalHerbs } from "./items_AlchemicalHerbs.js";
 import { foodBerries } from "./items_FoodBerries.js";
+import { foodFruits } from "./items_FoodFruits.js";
 import { foodCooked } from "./items_FoodCooked.js";
 import { foodVegetables } from "./items_FoodVegetables.js";
 import { weapons } from "./items_Weapons.js";
@@ -11,6 +12,7 @@ import { monstersLoot } from "./items_MonstersLoot.js";
 export const items = {
     "Alchemical-Herbs": alchemicalHerbs,
     "Food_Berries": foodBerries,
+    "Food_Fruits": foodFruits,
     "Food_Cooked": foodCooked,
     "Food_Vegetables": foodVegetables,
     "Monsters_Loot": monstersLoot,

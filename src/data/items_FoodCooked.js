@@ -364,9 +364,9 @@ export const foodCooked = [
         value: 45,
         satietyRestore: 35,
         thirstRestore: 10,
-        buyable: true,
-        craftable: false,
-        description: "Ніжне смажене рибне філе. Можна купити. Ефект: Шкода по морським ворогам +10, +10% шанс вилову риби, +10% шанс пошуку рослин та ягід (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Ніжне смажене рибне філе. Можна створити або знайти. Ефект: Шкода по морським ворогам +10, +10% шанс вилову риби, +10% шанс пошуку рослин та ягід (тривалість 10 ігрових годин)."
     },
     {
         id: "cooked_chicken",
@@ -378,9 +378,9 @@ export const foodCooked = [
         value: 50,
         satietyRestore: 40,
         thirstRestore: 10,
-        buyable: true,
-        craftable: false,
-        description: "Соковита смажена курка зі спеціями. Можна купити. Ефект: +20% додаткової здобичі з монстрів та тварин (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Соковита смажена курка зі спеціями. Можна створити. Ефект: +20% додаткової здобичі з монстрів та тварин (тривалість 10 ігрових годин)."
     },
     {
         id: "dwarven_ribs",
@@ -392,9 +392,9 @@ export const foodCooked = [
         value: 70,
         satietyRestore: 45,
         thirstRestore: 5,
-        buyable: true,
-        craftable: false,
-        description: "Ситі запечені м'ясні реберця. Можна купити. Ефект: +20% на успішний пошук матеріалів для крафту (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Ситі запечені м'ясні реберця. Можна створити. Ефект: +20% на успішний пошук матеріалів для крафту (тривалість 10 ігрових годин)."
     },
     {
         id: "mountain_snack",
@@ -406,9 +406,9 @@ export const foodCooked = [
         value: 30,
         satietyRestore: 25,
         thirstRestore: 15,
-        buyable: true,
-        craftable: false,
-        description: "Поживний набір для сходження в гори. Можна купити. Ефект: +20% на успішний пошук рослин (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Поживний набір для сходження в гори. Можна створити. Ефект: +20% на успішний пошук рослин (тривалість 10 ігрових годин)."
     },
     {
         id: "desert_lunch",
@@ -420,9 +420,9 @@ export const foodCooked = [
         value: 48,
         satietyRestore: 30,
         thirstRestore: 25,
-        buyable: true,
-        craftable: false,
-        description: "Освіжаючий та поживний обід для спекотних мандрів. Можна купити. Ефект: +30% на успішний пошук в пустелі (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Освіжаючий та поживний обід для спекотних мандрів. Можна створити. Ефект: +30% на успішний пошук в пустелі (тривалість 10 ігрових годин)."
     },
     {
         id: "hearty_soup",
@@ -436,9 +436,9 @@ export const foodCooked = [
         manaRestore: 20,
         satietyRestore: 20,
         thirstRestore: 20,
-        buyable: true,
-        craftable: false,
-        description: "Гарячий густий м'ясний бульйон. Можна купити. Ефект: +20 до здоров'я, мани, ситості, спраги, енергії."
+        buyable: false,
+        craftable: true,
+        description: "Гарячий густий м'ясний бульйон. Можна створити. Ефект: +20 до здоров'я, мани, ситості, спраги, енергії."
     },
     {
         id: "mushroom_broth",
@@ -450,9 +450,9 @@ export const foodCooked = [
         value: 35,
         satietyRestore: 25,
         thirstRestore: 20,
-        buyable: true,
-        craftable: false,
-        description: "Ароматний бульйон із білих лісових грибів. Можна купити. Ефект: +10 відновлення здоров'я за 1 годину (тривалість 10 годин)."
+        buyable: false,
+        craftable: true,
+        description: "Ароматний бульйон із білих лісових грибів. Можна створити. Ефект: +10 відновлення здоров'я за 1 годину (тривалість 10 годин)."
     },
     {
         id: "eastern_broth",
@@ -465,9 +465,9 @@ export const foodCooked = [
         hpRestore: 50,
         satietyRestore: 50,
         thirstRestore: 50,
-        buyable: true,
-        craftable: false,
-        description: "Пряний духмяний східний бульйон. Можна купити. Ефект: +50 до здоров'я, ситості та спраги, +30 до енергії."
+        buyable: false,
+        craftable: true,
+        description: "Пряний духмяний східний бульйон. Можна створити. Ефект: +50 до здоров'я, ситості та спраги, +30 до енергії."
     },
     {
         id: "eastern_rice_balls",
@@ -479,9 +479,9 @@ export const foodCooked = [
         value: 45,
         satietyRestore: 30,
         thirstRestore: 10,
-        buyable: true,
-        craftable: false,
-        description: "Ніжні рисові кульки з спеціями. Можна купити. Ефект: +20 енергії та ситості за кожну годину (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Ніжні рисові кульки з спеціями. Можна створити. Ефект: +20 енергії та ситості за кожну годину (тривалість 10 ігрових годин)."
     },
     {
         id: "juicy_bbq",
@@ -493,9 +493,9 @@ export const foodCooked = [
         value: 60,
         satietyRestore: 45,
         thirstRestore: 5,
-        buyable: true,
-        craftable: false,
-        description: "Підсмажені шматочки м'яса на вогні. Можна купити. Ефект: захист від шкоди 10 (тривалість 5 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Підсмажені шматочки м'яса на вогні. Можна створити. Ефект: захист від шкоди 10 (тривалість 5 ігрових годин)."
     },
     {
         id: "elven_broth",
@@ -507,9 +507,9 @@ export const foodCooked = [
         value: 50,
         satietyRestore: 30,
         thirstRestore: 20,
-        buyable: true,
-        craftable: false,
-        description: "Легкий вишуканий бульйон. Можна купити. Ефект: +10% до шкоди луками, +10% шкоди лісовим ворогам (тривалість 7 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Легкий вишуканий бульйон. Можна створити. Ефект: +10% до шкоди луками, +10% шкоди лісовим ворогам (тривалість 7 ігрових годин)."
     },
     {
         id: "northern_broth",
@@ -521,9 +521,9 @@ export const foodCooked = [
         value: 55,
         satietyRestore: 35,
         thirstRestore: 20,
-        buyable: true,
-        craftable: false,
-        description: "Густий зігріваючий суп півночі. Можна купити. Ефект: +20% до фізичної шкоди та фізичного захисту (тривалість 7 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Густий зігріваючий суп півночі. Можна створити. Ефект: +20% до фізичної шкоди та фізичного захисту (тривалість 7 ігрових годин)."
     },
     {
         id: "khinkali",
@@ -535,9 +535,9 @@ export const foodCooked = [
         value: 80,
         satietyRestore: 40,
         thirstRestore: 15,
-        buyable: true,
-        craftable: false,
-        description: "Соковиті м'ясні хінкалі. Можна купити. Ефект: Макс.HP +100 (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Соковиті м'ясні хінкалі. Можна створити. Ефект: Макс.HP +100 (тривалість 10 ігрових годин)."
     },
     {
         id: "fried_mushrooms",
@@ -549,9 +549,9 @@ export const foodCooked = [
         value: 28,
         satietyRestore: 25,
         thirstRestore: 5,
-        buyable: true,
+        buyable: false,
         craftable: true,
-        description: "Смажені лісові гриби. Можна купити та створити. Ефект: +10% на пошук ресурсів в лісах та бухтах (тривалість 10 ігрових годин)."
+        description: "Смажені лісові гриби. Можна створити. Ефект: +10% на пошук ресурсів в лісах та бухтах (тривалість 10 ігрових годин)."
     },
     {
         id: "borscht",
@@ -563,9 +563,9 @@ export const foodCooked = [
         value: 45,
         satietyRestore: 35,
         thirstRestore: 25,
-        buyable: true,
-        craftable: false,
-        description: "Традиційний насичений червоний борщ. Можна купити. Ефект: шкода гірським монстрам +20% (тривалість 5 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Традиційний насичений червоний борщ. Можна створити. Ефект: шкода гірським монстрам +20% (тривалість 5 ігрових годин)."
     },
     {
         id: "mountain_borscht",
@@ -577,9 +577,9 @@ export const foodCooked = [
         value: 70,
         satietyRestore: 40,
         thirstRestore: 25,
-        buyable: true,
-        craftable: false,
-        description: "Густий борщ гірського народу. Можна купити. Ефект: шкода в підземеллі +20% (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Густий борщ гірського народу. Можна створити. Ефект: шкода в підземеллі +20% (тривалість 10 ігрових годин)."
     },
     {
         id: "light_eastern_broth",
@@ -591,9 +591,9 @@ export const foodCooked = [
         value: 48,
         satietyRestore: 25,
         thirstRestore: 25,
-        buyable: true,
-        craftable: false,
-        description: "Прозорий освіжаючий бульйон зі спеціями. Можна купити. Ефект: шкода морським монстрам +20% (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Прозорий освіжаючий бульйон зі спеціями. Можна створити. Ефект: шкода морським монстрам +20% (тривалість 10 ігрових годин)."
     },
     {
         id: "stuffed_peppers",
@@ -605,9 +605,9 @@ export const foodCooked = [
         value: 50,
         satietyRestore: 35,
         thirstRestore: 10,
-        buyable: true,
-        craftable: false,
-        description: "Соковиті перці з м'ясом та рисом. Можна купити. Ефект: Шкода по людям +20% (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Соковиті перці з м'ясом та рисом. Можна створити. Ефект: Шкода по людям +20% (тривалість 10 ігрових годин)."
     },
     {
         id: "salad",
@@ -633,9 +633,9 @@ export const foodCooked = [
         value: 85,
         satietyRestore: 30,
         thirstRestore: 30,
-        buyable: true,
-        craftable: false,
-        description: "Наваристий бульйон який містить інгредієнти які відновлюють ману. Можна купити. Ефект: відновлення мани та здоров'я +20 за годину (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Легендарний магічний напій високої кухні. Можна створити. Ефект: відновлення мани та здоров'я +20 за годину (тривалість 10 ігрових годин)."
     },
     {
         id: "juicy_steak",
@@ -647,9 +647,9 @@ export const foodCooked = [
         value: 55,
         satietyRestore: 40,
         thirstRestore: 5,
-        buyable: true,
+        buyable: false,
         craftable: true,
-        description: "Апетитний соковитий стейк. Можна купити та створити. Ефект: шкода +5% (тривалість 5 ігрових годин)."
+        description: "Апетитний соковитий стейк. Можна створити. Ефект: шкода +5% (тривалість 5 ігрових годин)."
     },
     {
         id: "dwarven_slop",
@@ -661,9 +661,9 @@ export const foodCooked = [
         value: 30,
         satietyRestore: 30,
         thirstRestore: 10,
-        buyable: true,
-        craftable: false,
-        description: "Густа поживна похльовка підземних майстрів. Можна купити. Ефект: фізичний та магічний опір +5% (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Густа поживна похльовка підземних майстрів. Можна створити. Ефект: фізичний та магічний опір +5% (тривалість 10 ігрових годин)."
     },
     {
         id: "dark_elf_rice_ball",
@@ -675,9 +675,9 @@ export const foodCooked = [
         value: 40,
         satietyRestore: 25,
         thirstRestore: 10,
-        buyable: true,
-        craftable: false,
-        description: "Чорна рисова кулька з особливими прянощами. Можна купити. Ефект: +10% шкоди, якщо ворог людина або лісовий ельф."
+        buyable: false,
+        craftable: true,
+        description: "Чорна рисова кулька з особливими прянощами. Можна створити. Ефект: +10% шкоди, якщо ворог людина або лісовий ельф."
     },
     {
         id: "ham",
@@ -689,9 +689,9 @@ export const foodCooked = [
         value: 90,
         satietyRestore: 50,
         thirstRestore: 5,
-        buyable: true,
-        craftable: false,
-        description: "Делікатесна копчена шинка. Можна купити. Ефект: Макс.HP +200, відновлення 50 HP/год, опір шкоді 10% (тривалість 10 ігрових годин)."
+        buyable: false,
+        craftable: true,
+        description: "Делікатесна копчена шинка. Можна створити. Ефект: Макс.HP +200, відновлення 50 HP/год, опір шкоді 10% (тривалість 10 ігрових годин)."
     },
     {
         id: "strange_slop",

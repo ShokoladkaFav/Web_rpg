@@ -3,6 +3,7 @@ import "../styles/FoodShopModal.css";
 import { foodCooked } from "../data/items_FoodCooked.js";
 import { foodBerries } from "../data/items_FoodBerries.js";
 import { foodVegetables } from "../data/items_FoodVegetables.js";
+import { foodFruits } from "../data/items_FoodFruits.js";
 import { CoinsDisplay } from "../utils/currency.jsx";
 
 function ItemImageOrIcon({ item, className, fallbackSize = "32px" }) {
@@ -21,7 +22,7 @@ function ItemImageOrIcon({ item, className, fallbackSize = "32px" }) {
 
     return (
         <span className="shop-fallback-icon" style={{ fontSize: fallbackSize }}>
-            {item?.icon || (item?.category === "Food_Berries" ? "🫐" : item?.category === "Food_Vegetables" ? "🥦" : "🍲")}
+            {item?.icon || (item?.category === "Food_Berries" ? "🫐" : item?.category === "Food_Fruits" ? "🍎" : item?.category === "Food_Vegetables" ? "🥦" : "🍲")}
         </span>
     );
 }
@@ -40,16 +41,18 @@ export function FoodShopModal({ character, onUpdateCharacter, onClose }) {
     const [purchaseLog, setPurchaseLog] = useState("");
 
     // Отримуємо всі товари, які можна купити
-    const shopCooked = foodCooked.filter(i => i.buyable !== false);
-    const shopBerries = foodBerries.filter(i => i.buyable !== false);
+    const shopCooked = foodCooked.filter(i => i.buyable === true);
+    const shopBerries = foodBerries.filter(i => i.buyable === true);
+    const shopFruits = foodFruits.filter(i => i.buyable === true);
     const shopVegetables = foodVegetables.filter(i => i.buyable !== false);
 
-    const allShopItems = [...shopCooked, ...shopBerries, ...shopVegetables];
+    const allShopItems = [...shopCooked, ...shopBerries, ...shopFruits, ...shopVegetables];
 
     const filteredItems = allShopItems.filter(item => {
         const matchesCategory = activeTab === "all" ||
             (activeTab === "Food_Cooked" && item.category === "Food_Cooked") ||
             (activeTab === "Food_Berries" && item.category === "Food_Berries") ||
+            (activeTab === "Food_Fruits" && item.category === "Food_Fruits") ||
             (activeTab === "Food_Vegetables" && item.category === "Food_Vegetables");
 
         const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -135,7 +138,13 @@ export function FoodShopModal({ character, onUpdateCharacter, onClose }) {
                             className={`shop-tab-btn ${activeTab === "Food_Berries" ? "active" : ""}`}
                             onClick={() => setActiveTab("Food_Berries")}
                         >
-                            🫐 Ягоди та Фрукти ({shopBerries.length})
+                            🫐 Ягоди ({shopBerries.length})
+                        </button>
+                        <button
+                            className={`shop-tab-btn ${activeTab === "Food_Fruits" ? "active" : ""}`}
+                            onClick={() => setActiveTab("Food_Fruits")}
+                        >
+                            🍎 Фрукти ({shopFruits.length})
                         </button>
                         <button
                             className={`shop-tab-btn ${activeTab === "Food_Vegetables" ? "active" : ""}`}
@@ -181,7 +190,7 @@ export function FoodShopModal({ character, onUpdateCharacter, onClose }) {
                                                     {rarityInfo.name}
                                                 </span>
                                                 <span className="shop-category-badge">
-                                                    {item.category === "Food_Berries" ? "🫐 Ягода" : item.category === "Food_Vegetables" ? "🥦 Овоч" : "🍲 Страва"}
+                                                    {item.category === "Food_Berries" ? "🫐 Ягода" : item.category === "Food_Fruits" ? "🍎 Фрукт" : item.category === "Food_Vegetables" ? "🥦 Овоч" : "🍲 Страва"}
                                                 </span>
                                             </div>
                                         </div>

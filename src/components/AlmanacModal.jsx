@@ -95,7 +95,15 @@ function AlmanacModal({ onClose }) {
             icon: "🫐",
             count: (items["Food_Berries"] || []).length,
             available: true,
-            description: "Соковиті лісові й гірські ягоди, смачні горіхи, насіння та фрукти."
+            description: "Соковиті лісові й гірські ягоди, смачні горіхи та насіння."
+        },
+        {
+            id: "Food_Fruits",
+            title: "Соковиті Фрукти",
+            icon: "🍎",
+            count: (items["Food_Fruits"] || []).length,
+            available: true,
+            description: "Соковиті фрукти з усіх куточків світу: з лісів, рівнин, гір, пустель та від торговців."
         },
         {
             id: "Food_Cooked",
@@ -285,7 +293,7 @@ function AlmanacModal({ onClose }) {
                                                             />
                                                         ) : null}
                                                         <span className="item-fallback-icon" style={{ display: item.image ? "none" : "block", fontSize: "24px" }}>
-                                                            {item.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Cooked" ? "🍲" : selectedCategory === "Food_Vegetables" ? "🥦" : "🌿")}
+                                                            {item.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Fruits" ? "🍎" : selectedCategory === "Food_Cooked" ? "🍲" : selectedCategory === "Food_Vegetables" ? "🥦" : "🌿")}
                                                         </span>
                                                     </div>
                                                     <div className="item-title-meta">
@@ -345,7 +353,7 @@ function AlmanacModal({ onClose }) {
                                         }}
                                     />
                                     <span className="detail-fallback-icon" style={{ display: "none" }}>
-                                        {selectedItemDetail.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Cooked" ? "🍲" : "🌿")}
+                                        {selectedItemDetail.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Fruits" ? "🍎" : selectedCategory === "Food_Cooked" ? "🍲" : "🌿")}
                                     </span>
                                 </div>
                                 <div className="detail-header-meta">
@@ -364,7 +372,8 @@ function AlmanacModal({ onClose }) {
                                 <div className="detail-section">
                                     <h5>
                                         {selectedCategory === "Alchemical-Herbs" ? "Опис рослини:" :
-                                         selectedCategory === "Food_Berries" ? "Опис ягоди / фрукта:" :
+                                         selectedCategory === "Food_Berries" ? "Опис ягоди:" :
+                                         selectedCategory === "Food_Fruits" ? "Опис фрукта:" :
                                          selectedCategory === "Food_Cooked" ? "Опис страви:" :
                                          selectedCategory === "Food_Vegetables" ? "Опис овоча / інгредієнта:" :
                                          selectedCategory === "Monsters_Loot" ? "Опис трофею з монстра:" :
