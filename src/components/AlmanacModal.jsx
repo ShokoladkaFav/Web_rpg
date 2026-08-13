@@ -130,6 +130,14 @@ function AlmanacModal({ onClose }) {
             description: "М'ясо, шкури, кістки, ікла та рідкісні трофеї, здобуті з повалених монстрів та істот."
         },
         {
+            id: "Loot_QuestItems",
+            title: "Квестовий лут",
+            icon: "📜",
+            count: (items["Loot_QuestItems"] || []).length,
+            available: true,
+            description: "Особливі та таємничі предмети, стародавні реліквії, листи та квестові трофеї."
+        },
+        {
             id: "Weapons",
             title: "Зброя",
             icon: "⚔️",
@@ -377,6 +385,7 @@ function AlmanacModal({ onClose }) {
                                          selectedCategory === "Food_Cooked" ? "Опис страви:" :
                                          selectedCategory === "Food_Vegetables" ? "Опис овоча / інгредієнта:" :
                                          selectedCategory === "Monsters_Loot" ? "Опис трофею з монстра:" :
+                                         selectedCategory === "Loot_QuestItems" ? "Опис квестового предмета:" :
                                          selectedCategory === "Weapons" ? "Опис зброї:" :
                                          selectedCategory === "Armor" ? "Опис обладунків:" :
                                          selectedCategory === "Potions" ? "Опис зілля:" :
