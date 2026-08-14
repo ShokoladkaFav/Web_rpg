@@ -164,10 +164,10 @@ function AlmanacModal({ onClose }) {
         {
             id: "Resources",
             title: "Ресурси та Матеріали",
-            icon: "🏺",
-            count: 0,
-            available: false,
-            description: "Руда, деревина, дорогоцінне каміння та побутові предмети."
+            icon: "🪵",
+            count: (items["Resources"] || []).length,
+            available: true,
+            description: "Руда, злитки, деревина, тканини, шкіри та матеріали для крафту."
         }
     ];
 
