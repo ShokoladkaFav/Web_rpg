@@ -138,6 +138,14 @@ function AlmanacModal({ onClose }) {
             description: "Особливі та таємничі предмети, стародавні реліквії, листи та квестові трофеї."
         },
         {
+            id: "Loot_Goblin",
+            title: "Гоблінський лут",
+            icon: "👺",
+            count: (items["Loot_Goblin"] || []).length,
+            available: true,
+            description: "Трофеї, зброя, зілля, амулети та дрібнички з гоблінських таборів і печер."
+        },
+        {
             id: "Weapons",
             title: "Зброя",
             icon: "⚔️",
@@ -386,6 +394,7 @@ function AlmanacModal({ onClose }) {
                                          selectedCategory === "Food_Vegetables" ? "Опис овоча / інгредієнта:" :
                                          selectedCategory === "Monsters_Loot" ? "Опис трофею з монстра:" :
                                          selectedCategory === "Loot_QuestItems" ? "Опис квестового предмета:" :
+                                         selectedCategory === "Loot_Goblin" ? "Опис гоблінського луту:" :
                                          selectedCategory === "Weapons" ? "Опис зброї:" :
                                          selectedCategory === "Armor" ? "Опис обладунків:" :
                                          selectedCategory === "Potions" ? "Опис зілля:" :
