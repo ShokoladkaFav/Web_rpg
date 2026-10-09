@@ -146,6 +146,14 @@ function AlmanacModal({ onClose }) {
             description: "Трофеї, зброя, зілля, амулети та дрібнички з гоблінських таборів і печер."
         },
         {
+            id: "Liquid",
+            title: "Рідини та Напої",
+            icon: "🧪",
+            count: (items["Liquid"] || []).length,
+            available: true,
+            description: "Напої, олії, настійки, вода, розчинники та алхімічні рідини."
+        },
+        {
             id: "Weapons",
             title: "Зброя",
             icon: "⚔️",
@@ -395,6 +403,7 @@ function AlmanacModal({ onClose }) {
                                          selectedCategory === "Monsters_Loot" ? "Опис трофею з монстра:" :
                                          selectedCategory === "Loot_QuestItems" ? "Опис квестового предмета:" :
                                          selectedCategory === "Loot_Goblin" ? "Опис гоблінського луту:" :
+                                         selectedCategory === "Liquid" ? "Опис рідини / напою:" :
                                          selectedCategory === "Weapons" ? "Опис зброї:" :
                                          selectedCategory === "Armor" ? "Опис обладунків:" :
                                          selectedCategory === "Potions" ? "Опис зілля:" :

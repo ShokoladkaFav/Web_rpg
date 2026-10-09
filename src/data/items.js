@@ -10,6 +10,7 @@ import { resources } from "./items_Resources.js";
 import { monstersLoot } from "./items_MonstersLoot.js";
 import { lootQuestItems } from "./items_LootQuestItems.js";
 import { lootGoblin } from "./items_LootGoblin.js";
+import { liquid } from "./items_Liquid.js";
 
 export const items = {
     "Alchemical-Herbs": alchemicalHerbs,
@@ -20,6 +21,7 @@ export const items = {
     "Monsters_Loot": monstersLoot,
     "Loot_QuestItems": lootQuestItems,
     "Loot_Goblin": lootGoblin,
+    "Liquid": liquid,
     "Weapons": weapons,
     "Armor": armor,
     "Potions": potions,
