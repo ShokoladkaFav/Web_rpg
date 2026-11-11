@@ -139,18 +139,18 @@
 
 .eq-slots-grid-modern {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
 }
 
 .eq-slot-card-modern {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
-    padding: 10px 14px;
-    border-radius: 16px;
+    padding: 8px 10px;
+    border-radius: 14px;
     transition: all 0.2s ease;
 }
 
@@ -454,4 +454,3 @@
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
- 

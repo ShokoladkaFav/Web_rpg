@@ -163,11 +163,11 @@ function AlmanacModal({ onClose }) {
         },
         {
             id: "Armor",
-            title: "Обрудунок та Броня",
+            title: "Обладунки та Броня",
             icon: "🛡️",
-            count: 0,
-            available: false,
-            description: "Шоломи, обладунки, щити та захисне спорядження."
+            count: (items["Armor"] || []).length,
+            available: true,
+            description: "Шоломи, нагрудники, пояси, наручі, штани та чоботи для захисту в пригодах."
         },
         {
             id: "Potions",
@@ -326,6 +326,11 @@ function AlmanacModal({ onClose }) {
                                                             <span className={`rarity-pill rarity-${item.rarity}`}>
                                                                 {RARITY_NAMES[item.rarity] || item.rarity}
                                                             </span>
+                                                            {item.defense !== undefined && (
+                                                                <span className="rarity-pill" style={{ background: "rgba(59, 130, 246, 0.15)", color: "#3b82f6", fontWeight: "700" }}>
+                                                                    🛡️ +{item.defense}
+                                                                </span>
+                                                            )}
                                                             <span className="value-pill" style={{ display: "inline-flex", alignItems: "center" }}>
                                                                 <CoinsDisplay totalCopper={item.value} size="small" />
                                                             </span>
@@ -411,6 +416,26 @@ function AlmanacModal({ onClose }) {
                                     </h5>
                                     <p>{selectedItemDetail.description}</p>
                                 </div>
+
+                                {selectedItemDetail.defense !== undefined && (
+                                    <div className="detail-section" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                                        <span style={{ background: "rgba(59, 130, 246, 0.15)", color: "#2563eb", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
+                                            🛡️ Захист: +{selectedItemDetail.defense}
+                                        </span>
+                                        {selectedItemDetail.slot && (
+                                            <span style={{ background: "#f1f5f9", color: "#475569", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "600" }}>
+                                                Слот: {
+                                                    selectedItemDetail.slot === "head" ? "Голова" :
+                                                    selectedItemDetail.slot === "chest" ? "Тіло" :
+                                                    selectedItemDetail.slot === "belt" ? "Пояс" :
+                                                    selectedItemDetail.slot === "gloves" ? "Рукавиці" :
+                                                    selectedItemDetail.slot === "legs" ? "Штани" :
+                                                    selectedItemDetail.slot === "boots" ? "Взуття" : selectedItemDetail.slot
+                                                }
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
 
                                 {HERB_LOCATIONS[selectedItemDetail.id] && (
                                     <div className="detail-section">

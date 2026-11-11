@@ -36,7 +36,10 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
     const equipmentSlots = [
         { id: "head", label: "Голова", icon: "🪖" },
         { id: "chest", label: "Тіло", icon: "🛡️" },
-        { id: "legs", label: "Ноги", icon: "👖" },
+        { id: "gloves", label: "Рукавиці", icon: "🧤" },
+        { id: "belt", label: "Пояс", icon: "🎗️" },
+        { id: "legs", label: "Штани", icon: "👖" },
+        { id: "boots", label: "Взуття", icon: "👢" },
         { id: "weapon", label: "Зброя", icon: "⚔️" },
         { id: "shield", label: "Щит", icon: "🛡️" },
     ];
@@ -60,6 +63,73 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
         }
         setSelectedItem(item);
         setSelectedItemIndex(index);
+    };
+
+    // Розрахунок загального захисту від усього надітого спорядження
+    const totalDefense = Object.values(equipment).reduce((sum, item) => sum + (item?.defense || 0), 0);
+
+    // Дія: Одягнути предмет зі спорядження
+    const handleEquipItem = () => {
+        if (selectedItemIndex === null || !onUpdateCharacter || !selectedItem) return;
+
+        const slot = selectedItem.slot || (
+            selectedItem.subCategory === "Helmets" ? "head" :
+            selectedItem.subCategory === "Armor" ? "chest" :
+            selectedItem.subCategory === "Belt" ? "belt" :
+            selectedItem.subCategory === "Glove" ? "gloves" :
+            selectedItem.subCategory === "Greaves" ? "legs" :
+            selectedItem.subCategory === "Boot" ? "boots" :
+            selectedItem.category === "Weapons" ? "weapon" : null
+        );
+
+        if (!slot) {
+            alert("Цей предмет не можна екіпірувати.");
+            return;
+        }
+
+        const currentEquipped = equipment[slot];
+        const updatedInventory = [...inventory];
+        updatedInventory.splice(selectedItemIndex, 1);
+
+        if (currentEquipped) {
+            updatedInventory.push(currentEquipped);
+        }
+
+        const updatedEquipment = {
+            ...equipment,
+            [slot]: selectedItem
+        };
+
+        onUpdateCharacter({
+            ...character,
+            equipment: updatedEquipment,
+            inventory: updatedInventory
+        });
+
+        setSelectedItem(null);
+        setSelectedItemIndex(null);
+    };
+
+    // Дія: Зняти предмет зі слота екіпірування назад у рюкзак
+    const handleUnequipSlot = (slotId) => {
+        if (!equipment[slotId] || !onUpdateCharacter) return;
+        if (inventory.length >= inventorySize) {
+            alert("Рюкзак заповнений! Звільніть місце в інвентарі, щоб зняти цей предмет.");
+            return;
+        }
+
+        const itemToUnequip = equipment[slotId];
+        const updatedEquipment = {
+            ...equipment,
+            [slotId]: null
+        };
+        const updatedInventory = [...inventory, itemToUnequip];
+
+        onUpdateCharacter({
+            ...character,
+            equipment: updatedEquipment,
+            inventory: updatedInventory
+        });
     };
 
     // Дія: Викинути предмет з рюкзака
@@ -441,6 +511,12 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                     <div className="eq-bar-outer"><div className="eq-bar-inner sleep" style={{ width: `${character.sleep}%` }}></div></div>
                                     <span className="eq-stat-val">{character.sleep}/100</span>
                                 </div>
+                                <div className="eq-stat-row-bar">
+                                    <span className="eq-stat-lbl">🛡️ Захист</span>
+                                    <div style={{ flex: 1, textAlign: "right", color: "#2563eb", fontWeight: "800" }}>
+                                        +{totalDefense}
+                                    </div>
+                                </div>
                                 <div className="eq-stat-row-bar" style={{ marginTop: "4px", paddingTop: "4px", borderTop: "1px dashed rgba(255,255,255,0.1)" }}>
                                     <span className="eq-stat-lbl">💰 Монети</span>
                                     <div style={{ flex: 1, textAlign: "right" }}>
@@ -454,7 +530,13 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                             <label className="sub-label">Поточне Екіпірування</label>
                             <div className="eq-slots-grid-modern">
                                 {equipmentSlots.map(slot => (
-                                    <div key={slot.id} className="eq-slot-card-modern">
+                                    <div 
+                                        key={slot.id} 
+                                        className="eq-slot-card-modern"
+                                        onClick={() => equipment[slot.id] && handleUnequipSlot(slot.id)}
+                                        style={{ cursor: equipment[slot.id] ? "pointer" : "default" }}
+                                        title={equipment[slot.id] ? "Натисніть, щоб зняти назад у рюкзак" : slot.label}
+                                    >
                                         <div className="mini-slot-box-modern">
                                             {equipment[slot.id] ? (
                                                 <ItemImageOrIcon item={equipment[slot.id]} className="eq-slot-img" fallbackSize="18px" />
@@ -462,12 +544,15 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                                 <span className="slot-placeholder-modern">{slot.icon}</span>
                                             )}
                                         </div>
-                                        <div className="eq-slot-label-box">
+                                        <div className="eq-slot-label-box" style={{ flex: 1, minWidth: 0 }}>
                                             <span className="eq-slot-lbl-type">{slot.label}</span>
-                                            <span className="eq-slot-lbl-name">
+                                            <span className="eq-slot-lbl-name" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                                 {equipment[slot.id] ? equipment[slot.id].name : "Порожньо"}
                                             </span>
                                         </div>
+                                        {equipment[slot.id] && (
+                                            <span style={{ fontSize: "11px", color: "#94a3b8" }} title="Зняти">✕</span>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -507,12 +592,24 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                         </span>
                                         <div className="details-meta-modern">
                                             <h4 className="details-name-modern">{selectedItem.name}</h4>
-                                            <span 
-                                                className="details-rarity-badge-modern"
-                                                style={{ color: curRarity.color, background: curRarity.bg }}
-                                            >
-                                                {curRarity.name}
-                                            </span>
+                                            <div style={{ display: "flex", gap: "6px", alignItems: "center", flexWrap: "wrap", marginTop: "4px" }}>
+                                                <span 
+                                                    className="details-rarity-badge-modern"
+                                                    style={{ color: curRarity.color, background: curRarity.bg }}
+                                                >
+                                                    {curRarity.name}
+                                                </span>
+                                                {selectedItem.defense !== undefined && (
+                                                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#2563eb", background: "rgba(59, 130, 246, 0.12)", padding: "2px 8px", borderRadius: "6px" }}>
+                                                        🛡️ +{selectedItem.defense}
+                                                    </span>
+                                                )}
+                                                {selectedItem.slot && (
+                                                    <span style={{ fontSize: "11px", fontWeight: "600", color: "#64748b", background: "#f1f5f9", padding: "2px 8px", borderRadius: "6px" }}>
+                                                        {selectedItem.slot === "head" ? "Голова" : selectedItem.slot === "chest" ? "Тіло" : selectedItem.slot === "belt" ? "Пояс" : selectedItem.slot === "gloves" ? "Рукавиці" : selectedItem.slot === "legs" ? "Штани" : selectedItem.slot === "boots" ? "Взуття" : selectedItem.slot}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                     <p className="details-description-modern">{selectedItem.description}</p>
@@ -522,6 +619,11 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                             <CoinsDisplay totalCopper={selectedItem.value || 0} size="small" />
                                         </span>
                                         <div className="details-actions-modern">
+                                            {(selectedItem.category === "Armor" || selectedItem.slot) && (
+                                                <button className="btn-use-modern" style={{ background: "#2563eb", color: "#ffffff" }} onClick={handleEquipItem}>
+                                                    Одягнути
+                                                </button>
+                                            )}
                                             {(selectedItem.category === "Alchemical-Herbs" || selectedItem.category === "Food_Berries" || selectedItem.category === "Food_Fruits" || selectedItem.category === "Food_Cooked" || selectedItem.category === "Food_Vegetables" || selectedItem.satietyRestore !== undefined || selectedItem.hpRestore !== undefined) && (
                                                 <button className="btn-use-modern" onClick={handleConsumeItem}>Спожити</button>
                                             )}
