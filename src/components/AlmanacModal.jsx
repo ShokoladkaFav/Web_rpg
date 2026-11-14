@@ -155,11 +155,11 @@ function AlmanacModal({ onClose }) {
         },
         {
             id: "Weapons",
-            title: "Зброя",
+            title: "Зброя та Щити",
             icon: "⚔️",
-            count: 0,
-            available: false,
-            description: "Мечі, сокири, луки та посохи для бою та захисту."
+            count: (items["Weapons"] || []).length,
+            available: true,
+            description: "Мечі, сокири, луки, кинджали, палиці, посохи та щити для бою і захисту."
         },
         {
             id: "Armor",
@@ -326,9 +326,24 @@ function AlmanacModal({ onClose }) {
                                                             <span className={`rarity-pill rarity-${item.rarity}`}>
                                                                 {RARITY_NAMES[item.rarity] || item.rarity}
                                                             </span>
+                                                            {item.attack !== undefined && (
+                                                                <span className="rarity-pill" style={{ background: "rgba(239, 68, 68, 0.14)", color: "#dc2626", fontWeight: "700" }}>
+                                                                    ⚔️ +{item.attack}
+                                                                </span>
+                                                            )}
+                                                            {item.magicAttack !== undefined && (
+                                                                <span className="rarity-pill" style={{ background: "rgba(147, 51, 234, 0.14)", color: "#9333ea", fontWeight: "700" }}>
+                                                                    ✨ +{item.magicAttack}
+                                                                </span>
+                                                            )}
                                                             {item.defense !== undefined && (
                                                                 <span className="rarity-pill" style={{ background: "rgba(59, 130, 246, 0.15)", color: "#3b82f6", fontWeight: "700" }}>
                                                                     🛡️ +{item.defense}
+                                                                </span>
+                                                            )}
+                                                            {item.craftOnly && (
+                                                                <span className="rarity-pill" style={{ background: "rgba(245, 158, 11, 0.15)", color: "#d97706", fontWeight: "700" }}>
+                                                                    🔨 Крафт
                                                                 </span>
                                                             )}
                                                             <span className="value-pill" style={{ display: "inline-flex", alignItems: "center" }}>
@@ -417,11 +432,28 @@ function AlmanacModal({ onClose }) {
                                     <p>{selectedItemDetail.description}</p>
                                 </div>
 
-                                {selectedItemDetail.defense !== undefined && (
+                                {(selectedItemDetail.attack !== undefined || selectedItemDetail.magicAttack !== undefined || selectedItemDetail.defense !== undefined || selectedItemDetail.craftOnly) && (
                                     <div className="detail-section" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                                        <span style={{ background: "rgba(59, 130, 246, 0.15)", color: "#2563eb", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
-                                            🛡️ Захист: +{selectedItemDetail.defense}
-                                        </span>
+                                        {selectedItemDetail.attack !== undefined && (
+                                            <span style={{ background: "rgba(239, 68, 68, 0.14)", color: "#dc2626", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
+                                                ⚔️ Атака: +{selectedItemDetail.attack}
+                                            </span>
+                                        )}
+                                        {selectedItemDetail.magicAttack !== undefined && (
+                                            <span style={{ background: "rgba(147, 51, 234, 0.14)", color: "#9333ea", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
+                                                ✨ Маг. атака: +{selectedItemDetail.magicAttack}
+                                            </span>
+                                        )}
+                                        {selectedItemDetail.defense !== undefined && (
+                                            <span style={{ background: "rgba(59, 130, 246, 0.15)", color: "#2563eb", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
+                                                🛡️ Захист: +{selectedItemDetail.defense}
+                                            </span>
+                                        )}
+                                        {selectedItemDetail.craftOnly && (
+                                            <span style={{ background: "rgba(245, 158, 11, 0.15)", color: "#d97706", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
+                                                🔨 Тільки крафт
+                                            </span>
+                                        )}
                                         {selectedItemDetail.slot && (
                                             <span style={{ background: "#f1f5f9", color: "#475569", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "600" }}>
                                                 Слот: {
@@ -430,7 +462,9 @@ function AlmanacModal({ onClose }) {
                                                     selectedItemDetail.slot === "belt" ? "Пояс" :
                                                     selectedItemDetail.slot === "gloves" ? "Рукавиці" :
                                                     selectedItemDetail.slot === "legs" ? "Штани" :
-                                                    selectedItemDetail.slot === "boots" ? "Взуття" : selectedItemDetail.slot
+                                                    selectedItemDetail.slot === "boots" ? "Взуття" :
+                                                    selectedItemDetail.slot === "weapon" ? "Зброя" :
+                                                    selectedItemDetail.slot === "shield" ? "Щит" : selectedItemDetail.slot
                                                 }
                                             </span>
                                         )}

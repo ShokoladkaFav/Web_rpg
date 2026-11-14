@@ -65,8 +65,10 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
         setSelectedItemIndex(index);
     };
 
-    // Розрахунок загального захисту від усього надітого спорядження
+    // Розрахунок загальної атаки та захисту від усього надітого спорядження
     const totalDefense = Object.values(equipment).reduce((sum, item) => sum + (item?.defense || 0), 0);
+    const totalAttack = Object.values(equipment).reduce((sum, item) => sum + (item?.attack || 0), 0);
+    const totalMagicAttack = Object.values(equipment).reduce((sum, item) => sum + (item?.magicAttack || 0), 0);
 
     // Дія: Одягнути предмет зі спорядження
     const handleEquipItem = () => {
@@ -79,6 +81,7 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
             selectedItem.subCategory === "Glove" ? "gloves" :
             selectedItem.subCategory === "Greaves" ? "legs" :
             selectedItem.subCategory === "Boot" ? "boots" :
+            selectedItem.subCategory === "Shields" ? "shield" :
             selectedItem.category === "Weapons" ? "weapon" : null
         );
 
@@ -512,6 +515,20 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                     <span className="eq-stat-val">{character.sleep}/100</span>
                                 </div>
                                 <div className="eq-stat-row-bar">
+                                    <span className="eq-stat-lbl">⚔️ Атака</span>
+                                    <div style={{ flex: 1, textAlign: "right", color: "#dc2626", fontWeight: "800" }}>
+                                        +{totalAttack}
+                                    </div>
+                                </div>
+                                {totalMagicAttack > 0 && (
+                                    <div className="eq-stat-row-bar">
+                                        <span className="eq-stat-lbl">✨ Маг. атака</span>
+                                        <div style={{ flex: 1, textAlign: "right", color: "#9333ea", fontWeight: "800" }}>
+                                            +{totalMagicAttack}
+                                        </div>
+                                    </div>
+                                )}
+                                <div className="eq-stat-row-bar">
                                     <span className="eq-stat-lbl">🛡️ Захист</span>
                                     <div style={{ flex: 1, textAlign: "right", color: "#2563eb", fontWeight: "800" }}>
                                         +{totalDefense}
@@ -599,6 +616,16 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                                 >
                                                     {curRarity.name}
                                                 </span>
+                                                {selectedItem.attack !== undefined && (
+                                                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#dc2626", background: "rgba(239, 68, 68, 0.12)", padding: "2px 8px", borderRadius: "6px" }}>
+                                                        ⚔️ +{selectedItem.attack}
+                                                    </span>
+                                                )}
+                                                {selectedItem.magicAttack !== undefined && (
+                                                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#9333ea", background: "rgba(147, 51, 234, 0.12)", padding: "2px 8px", borderRadius: "6px" }}>
+                                                        ✨ +{selectedItem.magicAttack}
+                                                    </span>
+                                                )}
                                                 {selectedItem.defense !== undefined && (
                                                     <span style={{ fontSize: "11px", fontWeight: "700", color: "#2563eb", background: "rgba(59, 130, 246, 0.12)", padding: "2px 8px", borderRadius: "6px" }}>
                                                         🛡️ +{selectedItem.defense}
@@ -606,7 +633,7 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                                 )}
                                                 {selectedItem.slot && (
                                                     <span style={{ fontSize: "11px", fontWeight: "600", color: "#64748b", background: "#f1f5f9", padding: "2px 8px", borderRadius: "6px" }}>
-                                                        {selectedItem.slot === "head" ? "Голова" : selectedItem.slot === "chest" ? "Тіло" : selectedItem.slot === "belt" ? "Пояс" : selectedItem.slot === "gloves" ? "Рукавиці" : selectedItem.slot === "legs" ? "Штани" : selectedItem.slot === "boots" ? "Взуття" : selectedItem.slot}
+                                                        {selectedItem.slot === "head" ? "Голова" : selectedItem.slot === "chest" ? "Тіло" : selectedItem.slot === "belt" ? "Пояс" : selectedItem.slot === "gloves" ? "Рукавиці" : selectedItem.slot === "legs" ? "Штани" : selectedItem.slot === "boots" ? "Взуття" : selectedItem.slot === "weapon" ? "Зброя" : selectedItem.slot === "shield" ? "Щит" : selectedItem.slot}
                                                     </span>
                                                 )}
                                             </div>
@@ -619,7 +646,7 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                             <CoinsDisplay totalCopper={selectedItem.value || 0} size="small" />
                                         </span>
                                         <div className="details-actions-modern">
-                                            {(selectedItem.category === "Armor" || selectedItem.slot) && (
+                                            {(selectedItem.category === "Armor" || selectedItem.category === "Weapons" || selectedItem.slot) && (
                                                 <button className="btn-use-modern" style={{ background: "#2563eb", color: "#ffffff" }} onClick={handleEquipItem}>
                                                     Одягнути
                                                 </button>
