@@ -170,20 +170,28 @@ function AlmanacModal({ onClose }) {
             description: "Шоломи, нагрудники, пояси, наручі, штани та чоботи для захисту в пригодах."
         },
         {
-            id: "Potions",
-            title: "Зілля та Алхімія",
-            icon: "🧪",
-            count: 0,
-            available: false,
-            description: "Цілющі відвари, еліксири сили та магічні розчини."
-        },
-        {
             id: "Resources",
             title: "Ресурси та Матеріали",
             icon: "🪵",
             count: (items["Resources"] || []).length,
             available: true,
             description: "Руда, злитки, деревина, тканини, шкіри та матеріали для крафту."
+        },
+        {
+            id: "Books",
+            title: "Книги прокачки",
+            icon: "📚",
+            count: (items["Books"] || []).length,
+            available: true,
+            description: "Магічні фоліанти та бойові трактати для покращення навичок героя."
+        },
+        {
+            id: "Potions",
+            title: "Зілля та Алхімія",
+            icon: "🧪",
+            count: 0,
+            available: false,
+            description: "Цілющі відвари, еліксири сили та магічні розчини."
         }
     ];
 
@@ -197,8 +205,8 @@ function AlmanacModal({ onClose }) {
                         <div>
                             <h2 className="almanac-title">Альманах Світу</h2>
                             <p className="almanac-subtitle">
-                                {selectedCategory === "Alchemical-Herbs"
-                                    ? "Категорія: Корисні трави"
+                                {selectedCategory
+                                    ? `Категорія: ${categories.find(c => c.id === selectedCategory)?.title || selectedCategory}`
                                     : "Енциклопедія предметів та інгредієнтів"}
                             </p>
                         </div>
@@ -317,7 +325,7 @@ function AlmanacModal({ onClose }) {
                                                             />
                                                         ) : null}
                                                         <span className="item-fallback-icon" style={{ display: item.image ? "none" : "block", fontSize: "24px" }}>
-                                                            {item.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Fruits" ? "🍎" : selectedCategory === "Food_Cooked" ? "🍲" : selectedCategory === "Food_Vegetables" ? "🥦" : "🌿")}
+                                                            {item.icon || (selectedCategory === "Food_Berries" ? "🫐" : selectedCategory === "Food_Fruits" ? "🍎" : selectedCategory === "Food_Cooked" ? "🍲" : selectedCategory === "Food_Vegetables" ? "🥦" : selectedCategory === "Books" ? "📚" : "🌿")}
                                                         </span>
                                                     </div>
                                                     <div className="item-title-meta">
@@ -344,6 +352,11 @@ function AlmanacModal({ onClose }) {
                                                             {item.craftOnly && (
                                                                 <span className="rarity-pill" style={{ background: "rgba(245, 158, 11, 0.15)", color: "#d97706", fontWeight: "700" }}>
                                                                     🔨 Крафт
+                                                                </span>
+                                                            )}
+                                                            {item.skillName && (
+                                                                <span className="rarity-pill" style={{ background: "rgba(16, 185, 129, 0.14)", color: "#059669", fontWeight: "700" }}>
+                                                                    📘 {item.skillName} +{item.skillBonus || 1}
                                                                 </span>
                                                             )}
                                                             <span className="value-pill" style={{ display: "inline-flex", alignItems: "center" }}>
@@ -427,13 +440,19 @@ function AlmanacModal({ onClose }) {
                                          selectedCategory === "Weapons" ? "Опис зброї:" :
                                          selectedCategory === "Armor" ? "Опис обладунків:" :
                                          selectedCategory === "Potions" ? "Опис зілля:" :
-                                         selectedCategory === "Resources" ? "Опис ресурсу:" : "Опис предмету:"}
+                                         selectedCategory === "Resources" ? "Опис ресурсу:" :
+                                         selectedCategory === "Books" ? "Опис книги:" : "Опис предмету:"}
                                     </h5>
                                     <p>{selectedItemDetail.description}</p>
                                 </div>
 
-                                {(selectedItemDetail.attack !== undefined || selectedItemDetail.magicAttack !== undefined || selectedItemDetail.defense !== undefined || selectedItemDetail.craftOnly) && (
+                                {(selectedItemDetail.attack !== undefined || selectedItemDetail.magicAttack !== undefined || selectedItemDetail.defense !== undefined || selectedItemDetail.craftOnly || selectedItemDetail.skillName) && (
                                     <div className="detail-section" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                                        {selectedItemDetail.skillName && (
+                                            <span style={{ background: "rgba(16, 185, 129, 0.15)", color: "#059669", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
+                                                📘 Поліпшує: {selectedItemDetail.skillName} (+{selectedItemDetail.skillBonus || 1})
+                                            </span>
+                                        )}
                                         {selectedItemDetail.attack !== undefined && (
                                             <span style={{ background: "rgba(239, 68, 68, 0.14)", color: "#dc2626", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
                                                 ⚔️ Атака: +{selectedItemDetail.attack}

@@ -73,6 +73,37 @@ function PlayerStatsModal({ character, onClose }) {
                             </div>
                         ))}
                     </div>
+
+                    {character.skills && Object.keys(character.skills).length > 0 && (
+                        <>
+                            <div className="stats-divider-small"></div>
+                            <div className="stat-card" style={{ marginTop: "8px" }}>
+                                <label>📚 Вивчені вміння та магія</label>
+                                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "8px" }}>
+                                    {Object.entries({
+                                        light_magic: "✨ Магія світла",
+                                        earth_magic: "🪨 Магія землі",
+                                        ice_magic: "❄️ Магія льоду",
+                                        fire_magic: "🔥 Магія вогню",
+                                        axe_mastery: "🪓 Володіння сокирою",
+                                        dagger_mastery: "🗡️ Володіння кинджалами",
+                                        ranged_mastery: "🏹 Стрілецька зброя",
+                                        sword_mastery: "⚔️ Володіння мечами",
+                                        staff_mastery: "🪄 Володіння посохами",
+                                        forbidden_magic: "💀 Заборонена магія"
+                                    }).map(([key, label]) => {
+                                        const lvl = character.skills[key];
+                                        if (!lvl) return null;
+                                        return (
+                                            <span key={key} style={{ background: "#f1f5f9", color: "#0f172a", padding: "4px 10px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", border: "1px solid #e2e8f0" }}>
+                                                {label}: +{lvl}
+                                            </span>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 <footer className="stats-footer">

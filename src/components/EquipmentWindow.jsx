@@ -31,6 +31,7 @@ function ItemImageOrIcon({ item, className, fallbackSize = "20px" }) {
 function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
     const [selectedItem, setSelectedItem] = useState(null);
     const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+    const [bookFeedback, setBookFeedback] = useState(null);
 
     // Слоти спорядження
     const equipmentSlots = [
@@ -148,6 +149,36 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
         };
 
         onUpdateCharacter(updatedCharacter);
+        setSelectedItem(null);
+        setSelectedItemIndex(null);
+    };
+
+    // Дія: Вивчити книгу прокачки
+    const handleReadBook = () => {
+        if (selectedItemIndex === null || !onUpdateCharacter || !selectedItem) return;
+        const dbItem = selectedItem.id ? itemsById[selectedItem.id] : null;
+        const skillKey = selectedItem.skillKey || dbItem?.skillKey;
+        const skillName = selectedItem.skillName || dbItem?.skillName || selectedItem.name;
+        const skillBonus = selectedItem.skillBonus || dbItem?.skillBonus || 1;
+
+        if (!skillKey) return;
+
+        const currentSkills = character.skills || {};
+        const newSkillLevel = (currentSkills[skillKey] || 0) + skillBonus;
+
+        const updatedInventory = [...inventory];
+        updatedInventory.splice(selectedItemIndex, 1);
+
+        onUpdateCharacter({
+            ...character,
+            skills: {
+                ...currentSkills,
+                [skillKey]: newSkillLevel
+            },
+            inventory: updatedInventory
+        });
+
+        setBookFeedback(`📖 Ви вивчили "${selectedItem.name}"! Навичка "${skillName}" підвищена до рівня +${newSkillLevel}.`);
         setSelectedItem(null);
         setSelectedItemIndex(null);
     };
@@ -600,6 +631,13 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                 })}
                             </div>
 
+                            {bookFeedback && (
+                                <div style={{ margin: "0 0 12px 0", padding: "10px 14px", borderRadius: "12px", background: "rgba(16, 185, 129, 0.12)", border: "1px solid rgba(16, 185, 129, 0.3)", color: "#065f46", fontSize: "12px", fontWeight: "700", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
+                                    <span>{bookFeedback}</span>
+                                    <button onClick={() => setBookFeedback(null)} style={{ background: "none", border: "none", cursor: "pointer", color: "#065f46", fontWeight: "800" }}>✕</button>
+                                </div>
+                            )}
+
                             {/* Блок з інформацією про вибраний предмет */}
                             {selectedItem ? (
                                 <div className="item-details-panel-modern">
@@ -631,6 +669,11 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                                         🛡️ +{selectedItem.defense}
                                                     </span>
                                                 )}
+                                                {selectedItem.skillName && (
+                                                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#059669", background: "rgba(16, 185, 129, 0.14)", padding: "2px 8px", borderRadius: "6px" }}>
+                                                        📘 {selectedItem.skillName} +{selectedItem.skillBonus || 1}
+                                                    </span>
+                                                )}
                                                 {selectedItem.slot && (
                                                     <span style={{ fontSize: "11px", fontWeight: "600", color: "#64748b", background: "#f1f5f9", padding: "2px 8px", borderRadius: "6px" }}>
                                                         {selectedItem.slot === "head" ? "Голова" : selectedItem.slot === "chest" ? "Тіло" : selectedItem.slot === "belt" ? "Пояс" : selectedItem.slot === "gloves" ? "Рукавиці" : selectedItem.slot === "legs" ? "Штани" : selectedItem.slot === "boots" ? "Взуття" : selectedItem.slot === "weapon" ? "Зброя" : selectedItem.slot === "shield" ? "Щит" : selectedItem.slot}
@@ -646,6 +689,11 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                             <CoinsDisplay totalCopper={selectedItem.value || 0} size="small" />
                                         </span>
                                         <div className="details-actions-modern">
+                                            {(selectedItem.category === "Books" || selectedItem.skillKey) && (
+                                                <button className="btn-use-modern" style={{ background: "#059669", color: "#ffffff" }} onClick={handleReadBook}>
+                                                    Вивчити
+                                                </button>
+                                            )}
                                             {(selectedItem.category === "Armor" || selectedItem.category === "Weapons" || selectedItem.slot) && (
                                                 <button className="btn-use-modern" style={{ background: "#2563eb", color: "#ffffff" }} onClick={handleEquipItem}>
                                                     Одягнути

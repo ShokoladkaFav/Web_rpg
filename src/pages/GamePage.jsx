@@ -36,6 +36,7 @@ function GamePage() {
             // "Латка" для старого персонажа: додаємо поля, якщо їх немає
             const migratedCharacter = {
                 inventory: [],
+                skills: {},
                 equipment: { head: null, chest: null, legs: null, weapon: null, shield: null },
                 subLocationName: "Центр",
                 xp: 0,
@@ -176,5 +177,3 @@ function GamePage() {
 }
 
 export default GamePage;
-
-

@@ -51,7 +51,8 @@ function CharacterCreation() {
                 weapon: null,
                 shield: null
             },
-            inventory: [] 
+            inventory: [],
+            skills: {}
         };
 
         localStorage.setItem("player_character", JSON.stringify(characterData));

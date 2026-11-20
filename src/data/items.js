@@ -11,6 +11,7 @@ import { monstersLoot } from "./items_MonstersLoot.js";
 import { lootQuestItems } from "./items_LootQuestItems.js";
 import { lootGoblin } from "./items_LootGoblin.js";
 import { liquid } from "./items_Liquid.js";
+import { books } from "./items_Books.js";
 
 export const items = {
     "Alchemical-Herbs": alchemicalHerbs,
@@ -25,7 +26,8 @@ export const items = {
     "Weapons": weapons,
     "Armor": armor,
     "Potions": potions,
-    "Resources": resources
+    "Resources": resources,
+    "Books": books
 };
 
 // Плоский список для швидкого пошуку предметів за ID
