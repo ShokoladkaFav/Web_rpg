@@ -74,8 +74,11 @@ function AlmanacModal({ onClose }) {
 
     // Фільтрація предметів активної категорії
     const filteredItems = currentCategoryItems.filter(item => {
-        const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              item.description.toLowerCase().includes(searchQuery.toLowerCase());
+        const q = searchQuery.toLowerCase();
+        const matchesSearch = item.name.toLowerCase().includes(q) ||
+                              item.description.toLowerCase().includes(q) ||
+                              (item.functionality && item.functionality.toLowerCase().includes(q)) ||
+                              (item.bookType && item.bookType.toLowerCase().includes(q));
         const matchesRarity = rarityFilter === "all" || item.rarity === rarityFilter;
         return matchesSearch && matchesRarity;
     });
@@ -179,11 +182,11 @@ function AlmanacModal({ onClose }) {
         },
         {
             id: "Books",
-            title: "Книги прокачки",
+            title: "Книги та Рецепти",
             icon: "📚",
             count: (items["Books"] || []).length,
             available: true,
-            description: "Магічні фоліанти та бойові трактати для покращення навичок героя."
+            description: "Книги прокачки, рецепти крафту й кулінарії, медичні довідники, ботаніка та бестіарії."
         },
         {
             id: "Potions",
@@ -354,6 +357,11 @@ function AlmanacModal({ onClose }) {
                                                                     🔨 Крафт
                                                                 </span>
                                                             )}
+                                                            {item.bookType && !item.skillName && (
+                                                                <span className="rarity-pill" style={{ background: "rgba(99, 102, 241, 0.14)", color: "#4f46e5", fontWeight: "700" }}>
+                                                                    📖 {item.bookType}
+                                                                </span>
+                                                            )}
                                                             {item.skillName && (
                                                                 <span className="rarity-pill" style={{ background: "rgba(16, 185, 129, 0.14)", color: "#059669", fontWeight: "700" }}>
                                                                     📘 {item.skillName} +{item.skillBonus || 1}
@@ -367,6 +375,13 @@ function AlmanacModal({ onClose }) {
                                                 </div>
 
                                                 <p className="item-desc">{item.description}</p>
+
+                                                {item.functionality && (
+                                                    <div className="item-location-info" style={{ background: "rgba(59, 130, 246, 0.08)", borderColor: "rgba(59, 130, 246, 0.2)" }}>
+                                                        <span className="loc-icon">⚙️</span>
+                                                        <span className="loc-text" style={{ color: "#1e40af" }}><strong>Функціонал:</strong> {item.functionality}</span>
+                                                    </div>
+                                                )}
 
                                                 {HERB_LOCATIONS[item.id] && (
                                                     <div className="item-location-info">
@@ -446,8 +461,22 @@ function AlmanacModal({ onClose }) {
                                     <p>{selectedItemDetail.description}</p>
                                 </div>
 
-                                {(selectedItemDetail.attack !== undefined || selectedItemDetail.magicAttack !== undefined || selectedItemDetail.defense !== undefined || selectedItemDetail.craftOnly || selectedItemDetail.skillName) && (
+                                {selectedItemDetail.functionality && (
+                                    <div className="detail-section">
+                                        <h5>Функціонал:</h5>
+                                        <p className="location-detail-p" style={{ background: "rgba(59, 130, 246, 0.08)", borderColor: "rgba(59, 130, 246, 0.2)", color: "#1e3a8a" }}>
+                                            ⚙️ {selectedItemDetail.functionality}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {(selectedItemDetail.attack !== undefined || selectedItemDetail.magicAttack !== undefined || selectedItemDetail.defense !== undefined || selectedItemDetail.craftOnly || selectedItemDetail.skillName || selectedItemDetail.bookType) && (
                                     <div className="detail-section" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                                        {selectedItemDetail.bookType && (
+                                            <span style={{ background: "rgba(99, 102, 241, 0.14)", color: "#4f46e5", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
+                                                📖 Тип: {selectedItemDetail.bookType}
+                                            </span>
+                                        )}
                                         {selectedItemDetail.skillName && (
                                             <span style={{ background: "rgba(16, 185, 129, 0.15)", color: "#059669", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "700" }}>
                                                 📘 Поліпшує: {selectedItemDetail.skillName} (+{selectedItemDetail.skillBonus || 1})

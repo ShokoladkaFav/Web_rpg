@@ -1,9 +1,13 @@
 export const books = [
+    // ==========================================
+    // Книги прокачки магії та бойових умінь
+    // ==========================================
     {
         id: "book_saint",
         name: "Книга святого",
         category: "Books",
         subCategory: "Magic",
+        bookType: "Магія",
         skillKey: "light_magic",
         skillName: "Магія світла",
         skillBonus: 1,
@@ -11,13 +15,15 @@ export const books = [
         icon: "📖",
         rarity: "rare",
         value: 120,
-        description: "Стародавній фоліант у білій палітурці із золотим тисненням. Поліпшує магію світла (+1 рівень)."
+        description: "Стародавній фоліант у білій палітурці із золотим тисненням.",
+        functionality: "Після прочитання поліпшує навичку «Магія світла» на +1 рівень."
     },
     {
         id: "book_geomancer",
         name: "Книга геоманта",
         category: "Books",
         subCategory: "Magic",
+        bookType: "Магія",
         skillKey: "earth_magic",
         skillName: "Магія землі",
         skillBonus: 1,
@@ -25,13 +31,15 @@ export const books = [
         icon: "📘",
         rarity: "rare",
         value: 120,
-        description: "Трактат про камінь, мінерали та тектонічну силу надр. Поліпшує магію землі (+1 рівень)."
+        description: "Трактат про камінь, мінерали та тектонічну силу надр.",
+        functionality: "Після прочитання поліпшує навичку «Магія землі» на +1 рівень."
     },
     {
         id: "book_cryomancer",
         name: "Книга кріомага",
         category: "Books",
         subCategory: "Magic",
+        bookType: "Магія",
         skillKey: "ice_magic",
         skillName: "Магія льоду",
         skillBonus: 1,
@@ -39,13 +47,15 @@ export const books = [
         icon: "❄️",
         rarity: "rare",
         value: 120,
-        description: "Холодна на дотик книга, сторінки якої вкриті морозними візерунками. Поліпшує магію льоду (+1 рівень)."
+        description: "Холодна на дотик книга, сторінки якої вкриті морозними візерунками.",
+        functionality: "Після прочитання поліпшує навичку «Магія льоду» на +1 рівень."
     },
     {
         id: "book_pyromancer",
         name: "Книга мага вогню",
         category: "Books",
         subCategory: "Magic",
+        bookType: "Магія",
         skillKey: "fire_magic",
         skillName: "Магія вогню",
         skillBonus: 1,
@@ -53,13 +63,15 @@ export const books = [
         icon: "📕",
         rarity: "rare",
         value: 120,
-        description: "Обпалений по краях манускрипт із рунами полум'я. Поліпшує магію вогню (+1 рівень)."
+        description: "Обпалений по краях манускрипт із рунами полум'я.",
+        functionality: "Після прочитання поліпшує навичку «Магія вогню» на +1 рівень."
     },
     {
         id: "combat_treatise_lumberjack",
         name: 'Бойовий трактат "Лісоруба"',
         category: "Books",
         subCategory: "Combat",
+        bookType: "Бойове вміння",
         skillKey: "axe_mastery",
         skillName: "Володіння сокирою",
         skillBonus: 1,
@@ -67,13 +79,15 @@ export const books = [
         icon: "📙",
         rarity: "uncommon",
         value: 95,
-        description: "Ілюстрований збірник прийомів розмашистого рубання та нищівних ударів. Поліпшує бойові вміння із сокирою (+1 рівень)."
+        description: "Ілюстрований збірник прийомів розмашистого рубання та нищівних ударів.",
+        functionality: "Після прочитання поліпшує бойові вміння із сокирою на +1 рівень."
     },
     {
         id: "combat_manual_thief",
         name: 'Бойовий посібник "Злодія"',
         category: "Books",
         subCategory: "Combat",
+        bookType: "Бойове вміння",
         skillKey: "dagger_mastery",
         skillName: "Володіння кинджалами",
         skillBonus: 1,
@@ -81,13 +95,15 @@ export const books = [
         icon: "📓",
         rarity: "uncommon",
         value: 95,
-        description: "Потертий посібник про блискавичні випади та влучні удари у вразливі місця. Поліпшує бойові вміння із короткими кинджалами (+1 рівень)."
+        description: "Потертий посібник про блискавичні випади та влучні удари у вразливі місця.",
+        functionality: "Після прочитання поліпшує бойові вміння із короткими кинджалами на +1 рівень."
     },
     {
         id: "combat_book_bullseye",
         name: 'Бойова книга "В яблучко"',
         category: "Books",
         subCategory: "Combat",
+        bookType: "Бойове вміння",
         skillKey: "ranged_mastery",
         skillName: "Стрілецька зброя",
         skillBonus: 1,
@@ -95,13 +111,15 @@ export const books = [
         icon: "📗",
         rarity: "uncommon",
         value: 95,
-        description: "Практичний порадник щодо поправки на вітер, натягу тятиви та балістики. Поліпшує бойові вміння зі стрілецькою зброєю (+1 рівень)."
+        description: "Практичний порадник щодо поправки на вітер, натягу тятиви та балістики.",
+        functionality: "Після прочитання поліпшує бойові вміння зі стрілецькою зброєю на +1 рівень."
     },
     {
         id: "combat_almanac_warrior",
         name: 'Бойовий альманах "Воїна"',
         category: "Books",
         subCategory: "Combat",
+        bookType: "Бойове вміння",
         skillKey: "sword_mastery",
         skillName: "Володіння мечами",
         skillBonus: 1,
@@ -109,13 +127,15 @@ export const books = [
         icon: "📘",
         rarity: "uncommon",
         value: 100,
-        description: "Класичне керівництво з фехтування, стійок, парирування та контратак. Поліпшує бойові вміння з мечами (+1 рівень)."
+        description: "Класичне керівництво з фехтування, стійок, парирування та контратак.",
+        functionality: "Після прочитання поліпшує бойові вміння з мечами на +1 рівень."
     },
     {
         id: "combat_training_mages",
         name: 'Бойове навчання "Магів"',
         category: "Books",
         subCategory: "Combat",
+        bookType: "Бойове вміння",
         skillKey: "staff_mastery",
         skillName: "Володіння посохами",
         skillBonus: 1,
@@ -123,13 +143,15 @@ export const books = [
         icon: "📖",
         rarity: "uncommon",
         value: 100,
-        description: "Записи академічних наставників про поєднання ближньої оборони та спрямування чар. Поліпшує бойові вміння із посохами (+1 рівень)."
+        description: "Записи академічних наставників про поєднання ближньої оборони та спрямування чар.",
+        functionality: "Після прочитання поліпшує бойові вміння із посохами на +1 рівень."
     },
     {
         id: "book_forbidden_knowledge",
         name: "Книга заборонених знань",
         category: "Books",
         subCategory: "Magic",
+        bookType: "Магія",
         skillKey: "forbidden_magic",
         skillName: "Заборонена магія",
         skillBonus: 1,
@@ -137,7 +159,90 @@ export const books = [
         icon: "📓",
         rarity: "epic",
         value: 180,
-        description: "Похмурий том у чорній шкіряній обкладинці, запечатаний темним сургучем. Поліпшує бойові вміння із забороненою магією (+1 рівень)."
+        description: "Похмурий том у чорній шкіряній обкладинці, запечатаний темним сургучем.",
+        functionality: "Після прочитання поліпшує бойові вміння із забороненою магією на +1 рівень."
+    },
+
+    // ==========================================
+    // Книги рецептів, довідники та бестіарії
+    // ==========================================
+    {
+        id: "book_recipe_item",
+        name: 'Рецепт "[НАЗВА ПРЕДМЕТА]"',
+        category: "Books",
+        subCategory: "Recipe",
+        bookType: "Рецепт крафту",
+        image: "/src/assets/items/RRPG-Book/recipe_item.png",
+        icon: "📜",
+        rarity: "uncommon",
+        value: 60,
+        description: "Детальне креслення та перелік необхідних матеріалів для створення предмета.",
+        functionality: "Після прочитання цієї книги гравець вивчає схему та отримує можливість самостійно виготовити вказаний предмет."
+    },
+    {
+        id: "book_negative_effects",
+        name: "Книга про негативні ефекти",
+        category: "Books",
+        subCategory: "Guide",
+        bookType: "Медичний довідник",
+        image: "/src/assets/items/RRPG-Book/negative_effects_book.png",
+        icon: "🩺",
+        rarity: "rare",
+        value: 110,
+        description: "Ілюстрований довідник цілителів про небезпечні рани, отрути та травми мандрівників.",
+        functionality: "Після прочитання гравцю стає відомо, як правильно лікувати негативні ефекти: яд, термічний опік, укус, поріз, перелом та інші стани."
+    },
+    {
+        id: "book_culinary_recipe",
+        name: 'Кулінарний рецепт "[НАЗВА КУЛІНАРНОГО РЕЦЕПТУ]"',
+        category: "Books",
+        subCategory: "Culinary",
+        bookType: "Кулінарний рецепт",
+        image: "/src/assets/items/RRPG-Book/culinary_recipe.png",
+        icon: "🍳",
+        rarity: "common",
+        value: 45,
+        description: "Запис досвідченого кухаря з точними пропорціями інгредієнтів та часом приготування.",
+        functionality: "Після прочитання цієї книги гравець відкриває рецепт і зможе самостійно приготувати вказану в назві страву."
+    },
+    {
+        id: "book_plant_guide",
+        name: 'Книга про рослину "[НАЗВА РОСЛИНИ]"',
+        category: "Books",
+        subCategory: "Encyclopedia",
+        bookType: "Ботаніка",
+        image: "/src/assets/items/RRPG-Book/plant_book.png",
+        icon: "🌿",
+        rarity: "uncommon",
+        value: 55,
+        description: "Ботанічні нотатки дослідників природи з замальовками листя, квітів і коренів.",
+        functionality: "Після прочитання відкриває повну інформацію про вказану рослину: де вона росте, які властивості й ефекти дає, та як її отримати."
+    },
+    {
+        id: "book_dungeon_monster",
+        name: 'Книга про підземного монстра "[НАЗВА МОНСТРА ІЗ ПІДЗЕМЕЛЛЯ]"',
+        category: "Books",
+        subCategory: "Bestiary",
+        bookType: "Бестіарій підземель",
+        image: "/src/assets/items/RRPG-Book/dungeon_monster_book.png",
+        icon: "🦇",
+        rarity: "rare",
+        value: 95,
+        description: "Польовий щоденник мисливця на чудовиськ, зібраний у глибоких печерах і руїнах.",
+        functionality: "Після прочитання відкриває докладні відомості про вказаного підземного монстра: де він мешкає, який лут дає, а також як і чим атакує."
+    },
+    {
+        id: "book_world_monster",
+        name: 'Книга про "[НАЗВА ВОРОГА/МОНСТРА]"',
+        category: "Books",
+        subCategory: "Bestiary",
+        bookType: "Бестіарій світу",
+        image: "/src/assets/items/RRPG-Book/world_monster_book.png",
+        icon: "👹",
+        rarity: "uncommon",
+        value: 80,
+        description: "Збірка свідчень шукачів пригод про небезпечних створінь і розбійників наземного світу.",
+        functionality: "Після прочитання відкриває інформацію про вказаного ворога чи монстра світу: місця зустрічі, можливі трофеї, а також способи і типи його атак."
     }
 ];
 

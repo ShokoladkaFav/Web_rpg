@@ -153,32 +153,47 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
         setSelectedItemIndex(null);
     };
 
-    // Дія: Вивчити книгу прокачки
+    // Дія: Вивчити книгу
     const handleReadBook = () => {
         if (selectedItemIndex === null || !onUpdateCharacter || !selectedItem) return;
         const dbItem = selectedItem.id ? itemsById[selectedItem.id] : null;
         const skillKey = selectedItem.skillKey || dbItem?.skillKey;
         const skillName = selectedItem.skillName || dbItem?.skillName || selectedItem.name;
         const skillBonus = selectedItem.skillBonus || dbItem?.skillBonus || 1;
-
-        if (!skillKey) return;
-
-        const currentSkills = character.skills || {};
-        const newSkillLevel = (currentSkills[skillKey] || 0) + skillBonus;
+        const functionality = selectedItem.functionality || dbItem?.functionality;
 
         const updatedInventory = [...inventory];
         updatedInventory.splice(selectedItemIndex, 1);
 
-        onUpdateCharacter({
-            ...character,
-            skills: {
-                ...currentSkills,
-                [skillKey]: newSkillLevel
-            },
-            inventory: updatedInventory
-        });
+        if (skillKey) {
+            const currentSkills = character.skills || {};
+            const newSkillLevel = (currentSkills[skillKey] || 0) + skillBonus;
 
-        setBookFeedback(`📖 Ви вивчили "${selectedItem.name}"! Навичка "${skillName}" підвищена до рівня +${newSkillLevel}.`);
+            onUpdateCharacter({
+                ...character,
+                skills: {
+                    ...currentSkills,
+                    [skillKey]: newSkillLevel
+                },
+                inventory: updatedInventory
+            });
+
+            setBookFeedback(`📖 Ви вивчили "${selectedItem.name}"! Навичка "${skillName}" підвищена до рівня +${newSkillLevel}.`);
+        } else {
+            const learnedBooks = Array.isArray(character.learnedBooks) ? character.learnedBooks : [];
+            const updatedLearned = learnedBooks.includes(selectedItem.id || selectedItem.name)
+                ? learnedBooks
+                : [...learnedBooks, selectedItem.id || selectedItem.name];
+
+            onUpdateCharacter({
+                ...character,
+                learnedBooks: updatedLearned,
+                inventory: updatedInventory
+            });
+
+            setBookFeedback(`📖 Ви прочитали "${selectedItem.name}"! ${functionality || "Нові знання успішно засвоєно."}`);
+        }
+
         setSelectedItem(null);
         setSelectedItemIndex(null);
     };
@@ -669,6 +684,11 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                                         🛡️ +{selectedItem.defense}
                                                     </span>
                                                 )}
+                                                {selectedItem.bookType && !selectedItem.skillName && (
+                                                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#4f46e5", background: "rgba(99, 102, 241, 0.14)", padding: "2px 8px", borderRadius: "6px" }}>
+                                                        📖 {selectedItem.bookType}
+                                                    </span>
+                                                )}
                                                 {selectedItem.skillName && (
                                                     <span style={{ fontSize: "11px", fontWeight: "700", color: "#059669", background: "rgba(16, 185, 129, 0.14)", padding: "2px 8px", borderRadius: "6px" }}>
                                                         📘 {selectedItem.skillName} +{selectedItem.skillBonus || 1}
@@ -683,6 +703,11 @@ function EquipmentWindow({ character, onClose, onUpdateCharacter }) {
                                         </div>
                                     </div>
                                     <p className="details-description-modern">{selectedItem.description}</p>
+                                    {selectedItem.functionality && (
+                                        <p style={{ fontSize: "11px", color: "#1e40af", background: "rgba(59, 130, 246, 0.08)", padding: "6px 10px", borderRadius: "8px", margin: "6px 0 8px 0", lineHeight: "1.4" }}>
+                                            <strong>⚙️ Функціонал:</strong> {selectedItem.functionality}
+                                        </p>
+                                    )}
                                     <div className="details-footer-modern">
                                         <span className="details-price-modern" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
                                             <span>Цінність:</span>
